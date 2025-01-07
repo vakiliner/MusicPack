@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Fabric-Jar-Type: classes
+Fabric-Loom-Mixin-Remap-Type: mixin
+Fabric-Gradle-Version: 8.11.1
+Fabric-Loom-Version: 1.9.2
+Fabric-Mixin-Compile-Extensions-Version: 0.6.0
+Fabric-Minecraft-Version: 1.16.5
+Fabric-Tiny-Remapper-Version: 0.10.4
+Fabric-Loader-Version: 0.16.9
+Fabric-Mixin-Version: 0.15.4+mixin.0.8.7
+Fabric-Mixin-Group: net.fabricmc
+Fabric-Mapping-Namespace: intermediary
+Specification-Title: musicpack
+Specification-Vendor: VAKiliner
+Specification-Version: 1
+Implementation-Title: Music Pack
+Implementation-Version: 1.0.0
+Implementation-Vendor: VAKiliner
+MixinConfigs: mixins.musicpack.forge.json
+FMLCorePluginContainsFMLMod: true
+ForceLoadAsMod: true
+Implementation-Timestamp: 2025-01-06T13:11:09+0300
+

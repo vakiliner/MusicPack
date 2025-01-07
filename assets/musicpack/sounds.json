@@ -1,0 +1,42 @@
+{
+	"seek": {
+		"sounds": [
+			{
+				"name": "musicpack:seek",
+				"stream": true
+			}
+		]
+	},
+	"hide.0": {
+		"sounds": [
+			{
+				"name": "musicpack:hide/0",
+				"stream": true
+			}
+		]
+	},
+	"hide.1": {
+		"sounds": [
+			{
+				"name": "musicpack:hide/1",
+				"stream": true
+			}
+		]
+	},
+	"hide.2": {
+		"sounds": [
+			{
+				"name": "musicpack:hide/2",
+				"stream": true
+			}
+		]
+	},
+	"hide.g": {
+		"sounds": [
+			{
+				"name": "musicpack:hide/g",
+				"stream": true
+			}
+		]
+	}
+}

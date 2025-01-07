@@ -1,0 +1,7 @@
+{
+	"text.autoconfig.musicpack.title": "Настройки музыкального пакета",
+	"text.autoconfig.musicpack.option.enabled": "Включено",
+	"text.autoconfig.musicpack.option.hidersMusic": "Музыка Прячущихся",
+	"text.autoconfig.musicpack.option.seekersMusic": "Музыка Искателей",
+	"text.autoconfig.musicpack.option.disableDefaultMusic": "Отключить Музыку По Умолчанию"
+}

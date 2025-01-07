@@ -1,0 +1,13 @@
+{
+	"required": true,
+	"package": "vakiliner.musicpack.fabric.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"client": [
+		"SoundMixin",
+		"SoundEngineMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"refmap": "musicpack-fabric-refmap.json"
+}

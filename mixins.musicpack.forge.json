@@ -1,0 +1,10 @@
+{
+	"minVersion": "0.7.11",
+	"package": "vakiliner.musicpack.forge.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"client": [
+		"LocatableSoundMixin",
+		"SoundEngineMixin"
+	],
+	"refmap": "musicpack-forge-refmap.json"
+}
