@@ -1,21 +1,22 @@
 modLoader="javafml"
 loaderVersion="[32,)"
 license="CC0-1.0"
+issueTrackerURL="https://github.com/vakiliner/MusicPack/issues"
 
 [[mods]]
 modId="musicpack"
-version="1.0.0"
+version="1.0.1"
 displayName="Music Pack"
-displayURL="https://discord.gg/rsDWHrHbEr"
-logoFile="pack.png"
-authors="VAKiliner"
 description='''
 Музыкальный пакет для VAKiliner Hide And Seek
 '''
+logoFile="pack.png"
+updateJSONURL="https://raw.githubusercontent.com/vakiliner/MusicPack/refs/heads/main/update.json"
+authors="VAKiliner"
+displayURL="https://discord.gg/rsDWHrHbEr"
 
 [[dependencies.musicpack]]
 	modId="minecraft"
 	mandatory=true
-	versionRange="[1.16,1.16.5]"
+	versionRange="[1.16,1.17)"
 	ordering="NONE"
-	side="BOTH"

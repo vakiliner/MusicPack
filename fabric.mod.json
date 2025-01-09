@@ -1,17 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicpack",
-	"version": "1.0.0",
-	"name": "Music Pack",
-	"description": "Музыкальный пакет для VAKiliner Hide And Seek",
-	"authors": [
-		"VAKiliner"
-	],
-	"contact": {
-		"issues": "https://discord.gg/rsDWHrHbEr"
-	},
-	"license": "CC0-1.0",
-	"icon": "pack.png",
+	"version": "1.0.1",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
@@ -27,9 +17,16 @@
 	"depends": {
 		"minecraft": "1.16.x"
 	},
-	"jars": [
-		{
-			"file": "META-INF/jars/cloth-config-4.17.132-fabric-1.16.5.jar"
-		}
-	]
+	"name": "Music Pack",
+	"description": "Музыкальный пакет для VAKiliner Hide And Seek",
+	"contact": {
+		"homepage": "https://github.com/vakiliner/MusicPack",
+		"issues": "https://github.com/vakiliner/MusicPack/issues",
+		"sources": "https://github.com/vakiliner/MusicPack"
+	},
+	"authors": [
+		"VAKiliner"
+	],
+	"license": "CC0-1.0",
+	"icon": "pack.png"
 }

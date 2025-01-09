@@ -1,7 +1,11 @@
 {
-	"text.autoconfig.musicpack.title": "Music Pack Settings",
-	"text.autoconfig.musicpack.option.enabled": "Enabled",
-	"text.autoconfig.musicpack.option.hidersMusic": "Hiders Music",
-	"text.autoconfig.musicpack.option.seekersMusic": "Seekers Music",
-	"text.autoconfig.musicpack.option.disableDefaultMusic": "Disable Default Music"
+	"vakiliner.musicpack.title": "Music Pack Settings",
+	"vakiliner.musicpack.enabled": "Enabled",
+	"vakiliner.musicpack.disabled": "Disabled",
+	"vakiliner.musicpack.enable": "Enable",
+	"vakiliner.musicpack.disable": "Disable",
+	"vakiliner.musicpack.option.hidersMusic": "Hiders Music",
+	"vakiliner.musicpack.option.seekersMusic": "Seekers Music",
+	"vakiliner.musicpack.option.defaultMusic": "%s Default Music",
+	"vakiliner.musicpack.option.disableDefaultMusic": "Disable Default Music"
 }

@@ -17,11 +17,11 @@ import net.minecraft.util.SoundEvent;
 @Mod(MusicPack.MOD_ID)
 @EventBusSubscriber(modid = MusicPack.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
-	public static final SoundEvent SEEK;
-	public static final SoundEvent HIDE_0;
-	public static final SoundEvent HIDE_1;
-	public static final SoundEvent HIDE_2;
-	public static final SoundEvent HIDE_G;
+	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
+	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
+	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));
+	public static final SoundEvent HIDE_2 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.2"));
+	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.g"));
 
 	public MusicPack() {
 		ModLoadingContext.get().registerConfig(Type.CLIENT, ModConfig.getSpec(), MusicPack.MOD_ID + ".toml");
@@ -40,13 +40,5 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	@SubscribeEvent
 	public void registerSounds(RegistryEvent.Register<SoundEvent> event) {
 		event.getRegistry().registerAll(new SoundEvent[] { SEEK, HIDE_0, HIDE_1, HIDE_2, HIDE_G });
-	}
-
-	static {
-		SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
-		HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
-		HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));
-		HIDE_2 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.2"));
-		HIDE_G = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.g"));
 	}
 }

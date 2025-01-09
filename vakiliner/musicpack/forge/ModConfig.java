@@ -13,10 +13,10 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	public final ConfigValue<Boolean> disableDefaultMusic;
 
 	public ModConfig(ForgeConfigSpec.Builder builder) {
-		enabled = builder.translation("text.autoconfig.musicpack.option.enabled").define("enabled", true);
-		hidersMusic = builder.translation("text.autoconfig.musicpack.option.hidersMusic").define("hiders_music", true);
-		seekersMusic = builder.translation("text.autoconfig.musicpack.option.seekersMusic").define("seekers_music", true);
-		disableDefaultMusic = builder.translation("text.autoconfig.musicpack.option.disableDefaultMusic").define("disable_default_music", true);
+		enabled = builder.translation("vakiliner.musicpack.enabled").define("enabled", true);
+		hidersMusic = builder.translation("vakiliner.musicpack.option.hidersMusic").define("hiders_music", true);
+		seekersMusic = builder.translation("vakiliner.musicpack.option.seekersMusic").define("seekers_music", true);
+		disableDefaultMusic = builder.translation("vakiliner.musicpack.option.disableDefaultMusic").define("disable_default_music", true);
 	}
 
 	public static ModConfig get() {
@@ -28,15 +28,31 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	public boolean hidersMusicEnabled() {
-		return this.enabled() && this.hidersMusic.get();
+		return this.hidersMusic.get();
 	}
 
 	public boolean seekersMusicEnabled() {
-		return this.enabled() && this.seekersMusic.get();
+		return this.seekersMusic.get();
 	}
 
 	public boolean disableDefaultMusic() {
-		return this.enabled() && this.disableDefaultMusic.get();
+		return this.disableDefaultMusic.get();
+	}
+
+	public void enabled(boolean enabled) {
+		this.enabled.set(enabled);
+	}
+
+	public void hidersMusicEnabled(boolean hidersMusic) {
+		this.hidersMusic.set(hidersMusic);
+	}
+
+	public void seekersMusicEnabled(boolean seekersMusic) {
+		this.seekersMusic.set(seekersMusic);
+	}
+
+	public void disableDefaultMusic(boolean disableDefaultMusic) {
+		this.disableDefaultMusic.set(disableDefaultMusic);
 	}
 
 	public static ForgeConfigSpec getSpec() {

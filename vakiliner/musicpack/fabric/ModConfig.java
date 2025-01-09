@@ -1,10 +1,6 @@
 package vakiliner.musicpack.fabric;
 
-import me.shedaniel.autoconfig.ConfigData;
-import me.shedaniel.autoconfig.annotation.Config;
-
-@Config(name = MusicPack.MOD_ID)
-class ModConfig implements vakiliner.musicpack.base.ModConfig, ConfigData {
+class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	private boolean enabled = true;
 	private boolean hidersMusic = true;
 	private boolean seekersMusic = true;
@@ -15,14 +11,30 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig, ConfigData {
 	}
 
 	public boolean hidersMusicEnabled() {
-		return this.enabled() && this.hidersMusic;
+		return this.hidersMusic;
 	}
 
 	public boolean seekersMusicEnabled() {
-		return this.enabled() && this.seekersMusic;
+		return this.seekersMusic;
 	}
 
 	public boolean disableDefaultMusic() {
-		return this.enabled() && this.disableDefaultMusic;
+		return this.disableDefaultMusic;
+	}
+
+	public void enabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void hidersMusicEnabled(boolean hidersMusic) {
+		this.hidersMusic = hidersMusic;
+	}
+
+	public void seekersMusicEnabled(boolean seekersMusic) {
+		this.seekersMusic = seekersMusic;
+	}
+
+	public void disableDefaultMusic(boolean disableDefaultMusic) {
+		this.disableDefaultMusic = disableDefaultMusic;
 	}
 }

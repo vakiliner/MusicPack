@@ -1,21 +1,32 @@
 package vakiliner.musicpack.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.class_2378;
-import net.minecraft.class_2960;
-import net.minecraft.class_3414;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import com.google.gson.Gson;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 public class MusicPack extends vakiliner.musicpack.base.MusicPack implements ClientModInitializer {
-	public static final class_3414 SEEK;
-	public static final class_3414 HIDE_0;
-	public static final class_3414 HIDE_1;
-	public static final class_3414 HIDE_2;
-	public static final class_3414 HIDE_G;
-	private static final ModConfig config = AutoConfig.register(ModConfig.class, Toml4jConfigSerializer::new).getConfig();
+	private static final Type TYPE = new TypeToken<ModConfig>() { }.getType();
+	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(MusicPack.MOD_ID + ".json").toFile();
+	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
+	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
+	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));
+	public static final SoundEvent HIDE_2 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.2"));
+	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.g"));
+	private static ModConfig config;
 
 	public void onInitializeClient() {
+		loadConfig();
 		LOGGER.info("Музыкальный пакет активирован");
 	}
 
@@ -23,16 +34,37 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 		return config;
 	}
 
+	public static void saveConfig() throws IOException {
+		byte[] bytes = new Gson().toJson(config).getBytes();
+		Files.newOutputStream(CONFIG_FILE.toPath()).write(bytes);
+	}
+
+	public static void loadConfig() {
+		if (CONFIG_FILE.exists()) {
+			try {
+				config = new Gson().fromJson(new JsonReader(new FileReader(CONFIG_FILE)), TYPE);
+			} catch (FileNotFoundException err) {
+				err.printStackTrace();
+			}
+		} else {
+			config = new ModConfig();
+			try {
+				saveConfig();
+			} catch (IOException err) {
+				err.printStackTrace();
+			}
+		}
+	}
+
+	private static void registerSound(SoundEvent soundEvent) {
+		Registry.register(Registry.SOUND_EVENT, soundEvent.getLocation(), soundEvent);
+	}
+
 	static {
-		class_2960 resourceLocationSeek = new class_2960(MusicPack.MOD_ID, "seek");
-		class_2960 resourceLocationHide0 = new class_2960(MusicPack.MOD_ID, "hide.0");
-		class_2960 resourceLocationHide1 = new class_2960(MusicPack.MOD_ID, "hide.1");
-		class_2960 resourceLocationHide2 = new class_2960(MusicPack.MOD_ID, "hide.2");
-		class_2960 resourceLocationHideG = new class_2960(MusicPack.MOD_ID, "hide.g");
-		SEEK = class_2378.method_10230(class_2378.field_11156, resourceLocationSeek, new class_3414(resourceLocationSeek));
-		HIDE_0 = class_2378.method_10230(class_2378.field_11156, resourceLocationHide0, new class_3414(resourceLocationHide0));
-		HIDE_1 = class_2378.method_10230(class_2378.field_11156, resourceLocationHide1, new class_3414(resourceLocationHide1));
-		HIDE_2 = class_2378.method_10230(class_2378.field_11156, resourceLocationHide2, new class_3414(resourceLocationHide2));
-		HIDE_G = class_2378.method_10230(class_2378.field_11156, resourceLocationHideG, new class_3414(resourceLocationHideG));
+		registerSound(SEEK);
+		registerSound(HIDE_0);
+		registerSound(HIDE_1);
+		registerSound(HIDE_2);
+		registerSound(HIDE_G);
 	}
 }

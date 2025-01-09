@@ -1,7 +1,11 @@
 {
-	"text.autoconfig.musicpack.title": "Настройки музыкального пакета",
-	"text.autoconfig.musicpack.option.enabled": "Включено",
-	"text.autoconfig.musicpack.option.hidersMusic": "Музыка Прячущихся",
-	"text.autoconfig.musicpack.option.seekersMusic": "Музыка Искателей",
-	"text.autoconfig.musicpack.option.disableDefaultMusic": "Отключить Музыку По Умолчанию"
+	"vakiliner.musicpack.title": "Настройки Музыкального Пакета",
+	"vakiliner.musicpack.enabled": "Включено",
+	"vakiliner.musicpack.disabled": "Выключено",
+	"vakiliner.musicpack.enable": "Включить",
+	"vakiliner.musicpack.disable": "Отключить",
+	"vakiliner.musicpack.option.hidersMusic": "Музыка Прячущихся",
+	"vakiliner.musicpack.option.seekersMusic": "Музыка Искателей",
+	"vakiliner.musicpack.option.defaultMusic": "%s Музыку По Умолчанию",
+	"vakiliner.musicpack.option.disableDefaultMusic": "Отключить Музыку По Умолчанию"
 }
