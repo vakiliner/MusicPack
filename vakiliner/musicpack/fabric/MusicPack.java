@@ -34,9 +34,13 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 		return config;
 	}
 
-	public static void saveConfig() throws IOException {
+	public static void saveConfig() {
 		byte[] bytes = new Gson().toJson(config).getBytes();
-		Files.newOutputStream(CONFIG_FILE.toPath()).write(bytes);
+		try {
+			Files.newOutputStream(CONFIG_FILE.toPath()).write(bytes);
+		} catch (IOException err) {
+			err.printStackTrace();
+		}
 	}
 
 	public static void loadConfig() {
@@ -48,11 +52,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 			}
 		} else {
 			config = new ModConfig();
-			try {
-				saveConfig();
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
+			saveConfig();
 		}
 	}
 

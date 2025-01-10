@@ -4,6 +4,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import vakiliner.musicpack.base.ModConfig;
 
 public class MusicPackSound extends SimpleSoundInstance {
 	public static final MusicPackSound seek = new MusicPackSound(MusicPack.SEEK, false);
@@ -19,6 +20,11 @@ public class MusicPackSound extends SimpleSoundInstance {
 
 	private MusicPackSound(SoundEvent soundEvent, boolean looping) {
 		super(soundEvent.getLocation(), SoundSource.MUSIC, 1, 1, looping, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, false);
+	}
+
+	public float getVolume() {
+		ModConfig config = MusicPack.getConfig();
+		return super.getVolume() * (float) (this == seek ? config.seekersMusicVolume() : config.hidersMusicVolume());
 	}
 
 	public MusicPackSound setVolume(float f) {

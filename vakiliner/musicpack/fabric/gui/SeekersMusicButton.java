@@ -14,7 +14,9 @@ public class SeekersMusicButton extends BooleanButton {
 
 	public void onPress() {
 		ModConfig config = MusicPack.getConfig();
-		config.seekersMusicEnabled(!config.seekersMusicEnabled());
+		boolean enabled = !config.seekersMusicEnabled();
+		config.seekersMusicEnabled(enabled);
+		this.screen.seekersMusicSlider.active = enabled;
 		super.onPress(getComponent());
 	}
 

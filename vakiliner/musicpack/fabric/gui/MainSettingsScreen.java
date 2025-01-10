@@ -1,6 +1,5 @@
 package vakiliner.musicpack.fabric.gui;
 
-import java.io.IOException;
 import com.mojang.blaze3d.audio.Channel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
@@ -22,6 +21,8 @@ public class MainSettingsScreen extends Screen {
 	public HidersMusicButton hidersMusicButton;
 	public SeekersMusicButton seekersMusicButton;
 	public DefaultMusicButton defaultMusicButton;
+	public HidersMusicSlider hidersMusicSlider;
+	public SeekersMusicSlider seekersMusicSlider;
 	public DoneButton doneButton;
 
 	public MainSettingsScreen(Screen parent) {
@@ -30,20 +31,19 @@ public class MainSettingsScreen extends Screen {
 	}
 
 	protected void init() {
-		boolean enabled = MusicPack.getConfig().enabled();
+		ModConfig config = MusicPack.getConfig();
+		boolean enabled = config.enabled();
 		enableButton = this.addButton(new EnableButton(this));
 		hidersMusicButton = this.addButton(new HidersMusicButton(this, enabled));
 		seekersMusicButton = this.addButton(new SeekersMusicButton(this, enabled));
 		defaultMusicButton = this.addButton(new DefaultMusicButton(this, enabled));
+		hidersMusicSlider = this.addButton(new HidersMusicSlider(this, enabled && config.hidersMusicEnabled()));
+		seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, enabled && config.seekersMusicEnabled()));
 		doneButton = this.addButton(new DoneButton(this));
 	}
 
 	public void onClose() {
-		try {
-			MusicPack.saveConfig();
-		} catch (IOException err) {
-			err.printStackTrace();
-		}
+		MusicPack.saveConfig();
 		this.minecraft.setScreen(this.parent);
 		SoundManager soundManager = this.minecraft.getSoundManager();
 		ModConfig config = MusicPack.getConfig();

@@ -14,7 +14,9 @@ public class HidersMusicButton extends BooleanButton {
 
 	public void onPress() {
 		ModConfig config = MusicPack.getConfig();
-		config.hidersMusicEnabled(!config.hidersMusicEnabled());
+		boolean enabled = !config.hidersMusicEnabled();
+		config.hidersMusicEnabled(enabled);
+		this.screen.hidersMusicSlider.active = enabled;
 		super.onPress(getComponent());
 	}
 

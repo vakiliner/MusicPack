@@ -5,6 +5,8 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	private boolean hidersMusic = true;
 	private boolean seekersMusic = true;
 	private boolean disableDefaultMusic = true;
+	private double hidersMusicVolume = 1;
+	private double seekersMusicVolume = 1;
 
 	public boolean enabled() {
 		return this.enabled;
@@ -22,6 +24,14 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		return this.disableDefaultMusic;
 	}
 
+	public double hidersMusicVolume() {
+		return this.hidersMusicVolume;
+	}
+
+	public double seekersMusicVolume() {
+		return this.seekersMusicVolume;
+	}
+
 	public void enabled(boolean enabled) {
 		this.enabled = enabled;
 	}
@@ -36,5 +46,13 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 
 	public void disableDefaultMusic(boolean disableDefaultMusic) {
 		this.disableDefaultMusic = disableDefaultMusic;
+	}
+
+	public void hidersMusicVolume(double hidersMusicVolume) {
+		this.hidersMusicVolume = hidersMusicVolume;
+	}
+
+	public void seekersMusicVolume(double seekersMusicVolume) {
+		this.seekersMusicVolume = seekersMusicVolume;
 	}
 }

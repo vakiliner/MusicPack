@@ -9,7 +9,7 @@ import vakiliner.musicpack.fabric.MusicPack;
 @Environment(EnvType.CLIENT)
 public class DefaultMusicButton extends BooleanButton {
 	public DefaultMusicButton(MainSettingsScreen screen, boolean active) {
-		super(screen, getComponent(), 0, 2, active);
+		super(screen, getComponent(), 0, 3, active);
 	}
 
 	public void onPress() {

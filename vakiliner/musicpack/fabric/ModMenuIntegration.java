@@ -9,8 +9,6 @@ import vakiliner.musicpack.fabric.gui.MainSettingsScreen;
 
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
-	public ModMenuIntegration() { }
-
 	public String getModId() {
 		return MusicPack.MOD_ID;
 	}

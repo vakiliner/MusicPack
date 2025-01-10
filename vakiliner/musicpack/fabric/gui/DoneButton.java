@@ -10,7 +10,7 @@ public class DoneButton extends AbstractButton {
 	private final MainSettingsScreen screen;
 
 	protected DoneButton(MainSettingsScreen screen) {
-		super(screen.width / 2 - 100, 150, 200, 20, new TranslatableComponent("gui.done"));
+		super(screen.width / 2 - 100, 175, 200, 20, new TranslatableComponent("gui.done"));
 		this.screen = screen;
 	}
 

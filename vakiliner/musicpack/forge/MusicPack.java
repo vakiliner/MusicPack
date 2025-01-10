@@ -32,6 +32,10 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 		return ModConfig.get();
 	}
 
+	public static void saveConfig() {
+		ModConfig.getSpec().save();
+	}
+
 	private void setup(FMLCommonSetupEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 		LOGGER.info("Музыкальный пакет активирован");

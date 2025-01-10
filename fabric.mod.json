@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicpack",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
@@ -28,5 +28,14 @@
 		"VAKiliner"
 	],
 	"license": "CC0-1.0",
-	"icon": "pack.png"
+	"icon": "pack.png",
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.gg/rsDWHrHbEr",
+				"modmenu.youtube": "https://youtube.com/channel/UCrJCX5gqOkVwH-Qq9HYyoxg"
+			},
+			"update_checker": false
+		}
+	}
 }

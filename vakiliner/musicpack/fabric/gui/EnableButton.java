@@ -20,6 +20,8 @@ public class EnableButton extends BooleanButton {
 		this.screen.hidersMusicButton.active = enabled;
 		this.screen.seekersMusicButton.active = enabled;
 		this.screen.defaultMusicButton.active = enabled;
+		this.screen.hidersMusicSlider.active = enabled && config.hidersMusicEnabled();
+		this.screen.seekersMusicSlider.active = enabled && config.seekersMusicEnabled();
 	}
 
 	public static TranslatableComponent getComponent() {
