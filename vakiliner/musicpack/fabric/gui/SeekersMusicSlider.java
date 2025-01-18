@@ -1,5 +1,7 @@
 package vakiliner.musicpack.fabric.gui;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.sounds.ChannelAccess.ChannelHandle;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -8,6 +10,7 @@ import vakiliner.musicpack.fabric.MusicPackSound;
 import vakiliner.musicpack.fabric.mixin.SoundEngineMixin;
 import vakiliner.musicpack.fabric.mixin.SoundManagerMixin;
 
+@Environment(EnvType.CLIENT)
 public class SeekersMusicSlider extends Slider {
 	public SeekersMusicSlider(MainSettingsScreen screen, boolean active) {
 		super(screen, getComponent(), 1, 2, MusicPack.getConfig().seekersMusicVolume(), active);

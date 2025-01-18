@@ -1,5 +1,7 @@
 package vakiliner.musicpack.fabric.gui;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -10,6 +12,7 @@ import vakiliner.musicpack.fabric.MusicPackSound;
 import vakiliner.musicpack.fabric.mixin.SoundEngineMixin;
 import vakiliner.musicpack.fabric.mixin.SoundManagerMixin;
 
+@Environment(EnvType.CLIENT)
 public class HidersMusicSlider extends Slider {
 	public HidersMusicSlider(MainSettingsScreen screen, boolean active) {
 		super(screen, getComponent(), -1, 2, MusicPack.getConfig().hidersMusicVolume(), active);

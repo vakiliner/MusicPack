@@ -9,21 +9,19 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import com.google.gson.Gson;
-import com.google.common.reflect.TypeToken;
+import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 public class MusicPack extends vakiliner.musicpack.base.MusicPack implements ClientModInitializer {
-	private static final Type TYPE = new TypeToken<ModConfig>() { }.getType();
 	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(MusicPack.MOD_ID + ".json").toFile();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));
 	public static final SoundEvent HIDE_2 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.2"));
 	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.g"));
-	private static ModConfig config;
+	private static ModConfig config = null;
 
 	public void onInitializeClient() {
 		loadConfig();
@@ -46,11 +44,12 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	public static void loadConfig() {
 		if (CONFIG_FILE.exists()) {
 			try {
-				config = new Gson().fromJson(new JsonReader(new FileReader(CONFIG_FILE)), TYPE);
+				config = new ModConfig(new Gson().fromJson(new JsonReader(new FileReader(CONFIG_FILE)), JsonObject.class));
 			} catch (FileNotFoundException err) {
 				err.printStackTrace();
 			}
-		} else {
+		}
+		if (config == null) {
 			config = new ModConfig();
 			saveConfig();
 		}

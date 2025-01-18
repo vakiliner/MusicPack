@@ -10,6 +10,9 @@
     "vakiliner/musicpack/forge/mixin/SoundEngineMixin2": {
       "play": "Lnet/minecraft/client/audio/SoundEngine;func_148611_c(Lnet/minecraft/client/audio/ISound;)V",
       "stop(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V": "Lnet/minecraft/client/audio/SoundEngine;func_195855_a(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V"
+    },
+    "vakiliner/musicpack/forge/mixin/SoundHandlerMixin": {
+      "soundEngine": "field_147694_f:Lnet/minecraft/client/audio/SoundEngine"
     }
   },
   "data": {
@@ -24,6 +27,9 @@
       "vakiliner/musicpack/forge/mixin/SoundEngineMixin2": {
         "play": "Lnet/minecraft/client/audio/SoundEngine;func_148611_c(Lnet/minecraft/client/audio/ISound;)V",
         "stop(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V": "Lnet/minecraft/client/audio/SoundEngine;func_195855_a(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V"
+      },
+      "vakiliner/musicpack/forge/mixin/SoundHandlerMixin": {
+        "soundEngine": "field_147694_f:Lnet/minecraft/client/audio/SoundEngine"
       }
     }
   }

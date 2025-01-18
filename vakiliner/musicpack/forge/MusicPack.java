@@ -4,41 +4,66 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.fml.config.ModConfig.Type;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import vakiliner.musicpack.forge.gui.MainSettingsScreen;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
 @Mod(MusicPack.MOD_ID)
 @EventBusSubscriber(modid = MusicPack.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
+	private static final File CONFIG_FILE = new File(".").toPath().resolve("config").resolve(MusicPack.MOD_ID + ".json").toFile();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));
 	public static final SoundEvent HIDE_2 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.2"));
 	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.g"));
+	private static ModConfig config = null;
 
 	public MusicPack() {
-		ModLoadingContext.get().registerConfig(Type.CLIENT, ModConfig.getSpec(), MusicPack.MOD_ID + ".toml");
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (minecraft, parent) -> new MainSettingsScreen(parent));
+		MinecraftForge.EVENT_BUS.register(this);
+		loadConfig();
+		LOGGER.info("Музыкальный пакет активирован");
 	}
 
 	public static vakiliner.musicpack.base.ModConfig getConfig() {
-		return ModConfig.get();
+		return config;
 	}
 
 	public static void saveConfig() {
-		ModConfig.getSpec().save();
+		byte[] bytes = new Gson().toJson(config).getBytes();
+		try {
+			Files.newOutputStream(CONFIG_FILE.toPath()).write(bytes);
+		} catch (IOException err) {
+			err.printStackTrace();
+		}
 	}
 
-	private void setup(FMLCommonSetupEvent event) {
-		MinecraftForge.EVENT_BUS.register(this);
-		LOGGER.info("Музыкальный пакет активирован");
+	public static void loadConfig() {
+		if (CONFIG_FILE.exists()) {
+			try {
+				config = new ModConfig(new Gson().fromJson(new JsonReader(new FileReader(CONFIG_FILE)), JsonObject.class));
+			} catch (FileNotFoundException err) {
+				err.printStackTrace();
+			}
+		}
+		if (config == null) {
+			config = new ModConfig();
+			saveConfig();
+		}
 	}
 
 	@SubscribeEvent

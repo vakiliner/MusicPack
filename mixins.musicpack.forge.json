@@ -5,7 +5,8 @@
 	"client": [
 		"LocatableSoundMixin",
 		"SoundEngineMixin",
-		"SoundEngineMixin2"
+		"SoundEngineMixin2",
+		"SoundHandlerMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

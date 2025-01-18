@@ -1,81 +1,72 @@
 package vakiliner.musicpack.forge;
 
-import org.apache.commons.lang3.tuple.Pair;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
+import com.google.gson.JsonObject;
+import net.minecraft.util.math.MathHelper;
 
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
-	private static final Pair<ModConfig, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(ModConfig::new);
-	public final ConfigValue<Boolean> enabled;
-	public final ConfigValue<Boolean> hidersMusicEnabled;
-	public final ConfigValue<Boolean> seekersMusicEnabled;
-	public final ConfigValue<Boolean> disableDefaultMusic;
-	public final DoubleValue hidersMusicVolume;
-	public final DoubleValue seekersMusicVolume;
+	private boolean enabled = true;
+	private boolean hidersMusic = true;
+	private boolean seekersMusic = true;
+	private boolean disableDefaultMusic = true;
+	private double hidersMusicVolume = 1;
+	private double seekersMusicVolume = 1;
 
-	public ModConfig(ForgeConfigSpec.Builder builder) {
-		enabled = builder.translation("vakiliner.musicpack.enabled").define("enabled", true);
-		hidersMusicEnabled = builder.translation("vakiliner.musicpack.option.hidersMusic").define("hiders_music", true);
-		seekersMusicEnabled = builder.translation("vakiliner.musicpack.option.seekersMusic").define("seekers_music", true);
-		disableDefaultMusic = builder.translation("vakiliner.musicpack.option.disableDefaultMusic").define("disable_default_music", true);
-		hidersMusicVolume = builder.translation("vakiliner.musicpack.option.hidersMusic").defineInRange("hiders_music_volume", 1d, 0, 1);
-		seekersMusicVolume = builder.translation("vakiliner.musicpack.option.seekersMusic").defineInRange("seekers_music_volume", 1d, 0, 1);
-	}
+	protected ModConfig() { }
 
-	public static ModConfig get() {
-		return pair.getLeft();
-	}
-
-	public static ForgeConfigSpec getSpec() {
-		return pair.getRight();
+	protected ModConfig(JsonObject jsonObject) {
+		if (jsonObject.get("enabled").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("enabled").isBoolean()) this.enabled = jsonObject.get("enabled").getAsBoolean();
+		if (jsonObject.get("hidersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusic").isBoolean()) this.hidersMusic = jsonObject.get("hidersMusic").getAsBoolean();
+		if (jsonObject.get("seekersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusic").isBoolean()) this.seekersMusic = jsonObject.get("seekersMusic").getAsBoolean();
+		if (jsonObject.get("disableDefaultMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("disableDefaultMusic").isBoolean()) this.disableDefaultMusic = jsonObject.get("disableDefaultMusic").getAsBoolean();
+		if (jsonObject.get("hidersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusicVolume").isNumber()) this.hidersMusicVolume = jsonObject.get("hidersMusicVolume").getAsDouble();
+		if (jsonObject.get("seekersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusicVolume").isNumber()) this.seekersMusicVolume = jsonObject.get("seekersMusicVolume").getAsDouble();
 	}
 
 	public boolean enabled() {
-		return this.enabled.get();
+		return this.enabled;
 	}
 
 	public boolean hidersMusicEnabled() {
-		return this.hidersMusicEnabled.get();
+		return this.hidersMusic;
 	}
 
 	public boolean seekersMusicEnabled() {
-		return this.seekersMusicEnabled.get();
+		return this.seekersMusic;
 	}
 
 	public boolean disableDefaultMusic() {
-		return this.disableDefaultMusic.get();
+		return this.disableDefaultMusic;
 	}
 
 	public double hidersMusicVolume() {
-		return this.hidersMusicVolume.get();
+		return MathHelper.clamp(this.hidersMusicVolume, 0, 1);
 	}
 
 	public double seekersMusicVolume() {
-		return this.seekersMusicVolume.get();
+		return MathHelper.clamp(this.seekersMusicVolume, 0, 1);
 	}
 
 	public void enabled(boolean enabled) {
-		this.enabled.set(enabled);
+		this.enabled = enabled;
 	}
 
-	public void hidersMusicEnabled(boolean hidersMusicEnabled) {
-		this.hidersMusicEnabled.set(hidersMusicEnabled);
+	public void hidersMusicEnabled(boolean hidersMusic) {
+		this.hidersMusic = hidersMusic;
 	}
 
-	public void seekersMusicEnabled(boolean seekersMusicEnabled) {
-		this.seekersMusicEnabled.set(seekersMusicEnabled);
+	public void seekersMusicEnabled(boolean seekersMusic) {
+		this.seekersMusic = seekersMusic;
 	}
 
 	public void disableDefaultMusic(boolean disableDefaultMusic) {
-		this.disableDefaultMusic.set(disableDefaultMusic);
+		this.disableDefaultMusic = disableDefaultMusic;
 	}
 
 	public void hidersMusicVolume(double hidersMusicVolume) {
-		this.hidersMusicVolume.set(hidersMusicVolume);
+		this.hidersMusicVolume = hidersMusicVolume;
 	}
 
 	public void seekersMusicVolume(double seekersMusicVolume) {
-		this.seekersMusicVolume.set(seekersMusicVolume);
+		this.seekersMusicVolume = seekersMusicVolume;
 	}
 }

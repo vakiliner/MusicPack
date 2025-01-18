@@ -1,5 +1,8 @@
 package vakiliner.musicpack.fabric;
 
+import com.google.gson.JsonObject;
+import net.minecraft.util.Mth;
+
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	private boolean enabled = true;
 	private boolean hidersMusic = true;
@@ -7,6 +10,17 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	private boolean disableDefaultMusic = true;
 	private double hidersMusicVolume = 1;
 	private double seekersMusicVolume = 1;
+
+	protected ModConfig() { }
+
+	protected ModConfig(JsonObject jsonObject) {
+		if (jsonObject.get("enabled").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("enabled").isBoolean()) this.enabled = jsonObject.get("enabled").getAsBoolean();
+		if (jsonObject.get("hidersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusic").isBoolean()) this.hidersMusic = jsonObject.get("hidersMusic").getAsBoolean();
+		if (jsonObject.get("seekersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusic").isBoolean()) this.seekersMusic = jsonObject.get("seekersMusic").getAsBoolean();
+		if (jsonObject.get("disableDefaultMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("disableDefaultMusic").isBoolean()) this.disableDefaultMusic = jsonObject.get("disableDefaultMusic").getAsBoolean();
+		if (jsonObject.get("hidersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusicVolume").isNumber()) this.hidersMusicVolume = jsonObject.get("hidersMusicVolume").getAsDouble();
+		if (jsonObject.get("seekersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusicVolume").isNumber()) this.seekersMusicVolume = jsonObject.get("seekersMusicVolume").getAsDouble();
+	}
 
 	public boolean enabled() {
 		return this.enabled;
@@ -25,11 +39,11 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	public double hidersMusicVolume() {
-		return this.hidersMusicVolume;
+		return Mth.clamp(this.hidersMusicVolume, 0, 1);
 	}
 
 	public double seekersMusicVolume() {
-		return this.seekersMusicVolume;
+		return Mth.clamp(this.seekersMusicVolume, 0, 1);
 	}
 
 	public void enabled(boolean enabled) {
