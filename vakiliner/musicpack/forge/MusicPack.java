@@ -1,14 +1,11 @@
 package vakiliner.musicpack.forge;
 
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import vakiliner.musicpack.forge.gui.MainSettingsScreen;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
 @Mod(MusicPack.MOD_ID)
-@EventBusSubscriber(modid = MusicPack.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	private static final File CONFIG_FILE = new File(".").toPath().resolve("config").resolve(MusicPack.MOD_ID + ".json").toFile();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
@@ -33,7 +29,11 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	private static ModConfig config = null;
 
 	public MusicPack() {
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (minecraft, parent) -> new MainSettingsScreen(parent));
+		this(ModLoadingContext.get());
+	}
+
+	public MusicPack(ModLoadingContext context) {
+		context.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (minecraft, parent) -> new MainSettingsScreen(parent));
 		MinecraftForge.EVENT_BUS.register(this);
 		loadConfig();
 		LOGGER.info("Музыкальный пакет активирован");

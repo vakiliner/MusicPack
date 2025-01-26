@@ -1,7 +1,6 @@
 package vakiliner.musicpack.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -15,7 +14,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 
 public class MusicPack extends vakiliner.musicpack.base.MusicPack implements ClientModInitializer {
-	private static final File CONFIG_FILE = FabricLoader.getInstance().getConfigDir().resolve(MusicPack.MOD_ID + ".json").toFile();
+	private static final File CONFIG_FILE = new File(".").toPath().resolve("config").resolve(MusicPack.MOD_ID + ".json").toFile();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MusicPack.MOD_ID, "hide.1"));

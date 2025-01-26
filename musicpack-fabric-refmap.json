@@ -1,36 +1,36 @@
 {
-  "mappings": {
-    "vakiliner/musicpack/fabric/mixin/AbstractSoundInstanceMixin": {
-      "volume": "field_5442:F"
-    },
-    "vakiliner/musicpack/fabric/mixin/SoundEngineMixin": {
-      "calculateVolume": "method_4853(Lnet/minecraft/class_1113;)F",
-      "instanceToChannel": "field_18950:Ljava/util/Map;"
-    },
-    "vakiliner/musicpack/fabric/mixin/SoundEngineMixin2": {
-      "play": "Lnet/minecraft/class_1140;method_4854(Lnet/minecraft/class_1113;)V",
-      "stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V": "Lnet/minecraft/class_1140;method_4838(Lnet/minecraft/class_2960;Lnet/minecraft/class_3419;)V"
-    },
-    "vakiliner/musicpack/fabric/mixin/SoundManagerMixin": {
-      "soundEngine": "field_5590:Lnet/minecraft/class_1140;"
-    }
-  },
-  "data": {
-    "named:intermediary": {
-      "vakiliner/musicpack/fabric/mixin/AbstractSoundInstanceMixin": {
-        "volume": "field_5442:F"
-      },
-      "vakiliner/musicpack/fabric/mixin/SoundEngineMixin": {
-        "calculateVolume": "method_4853(Lnet/minecraft/class_1113;)F",
-        "instanceToChannel": "field_18950:Ljava/util/Map;"
-      },
-      "vakiliner/musicpack/fabric/mixin/SoundEngineMixin2": {
-        "play": "Lnet/minecraft/class_1140;method_4854(Lnet/minecraft/class_1113;)V",
-        "stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V": "Lnet/minecraft/class_1140;method_4838(Lnet/minecraft/class_2960;Lnet/minecraft/class_3419;)V"
-      },
-      "vakiliner/musicpack/fabric/mixin/SoundManagerMixin": {
-        "soundEngine": "field_5590:Lnet/minecraft/class_1140;"
-      }
-    }
-  }
+	"mappings": {
+		"vakiliner/musicpack/fabric/mixin/AbstractSoundInstanceMixin": {
+			"volume": "field_5442:F"
+		},
+		"vakiliner/musicpack/fabric/mixin/SoundEngineMixin": {
+			"calculateVolume": "method_4853(Lnet/minecraft/class_1113;)F",
+			"instanceToChannel": "field_18950:Ljava/util/Map;"
+		},
+		"vakiliner/musicpack/fabric/mixin/SoundEngineMixin2": {
+			"play": "Lnet/minecraft/class_1140;method_4854(Lnet/minecraft/class_1113;)V",
+			"stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V": "Lnet/minecraft/class_1140;method_4838(Lnet/minecraft/class_2960;Lnet/minecraft/class_3419;)V"
+		},
+		"vakiliner/musicpack/fabric/mixin/SoundManagerMixin": {
+			"soundEngine": "field_5590:Lnet/minecraft/class_1140;"
+		}
+	},
+	"data": {
+		"named:intermediary": {
+			"vakiliner/musicpack/fabric/mixin/AbstractSoundInstanceMixin": {
+				"volume": "field_5442:F"
+			},
+			"vakiliner/musicpack/fabric/mixin/SoundEngineMixin": {
+				"calculateVolume": "method_4853(Lnet/minecraft/class_1113;)F",
+				"instanceToChannel": "field_18950:Ljava/util/Map;"
+			},
+			"vakiliner/musicpack/fabric/mixin/SoundEngineMixin2": {
+				"play": "Lnet/minecraft/class_1140;method_4854(Lnet/minecraft/class_1113;)V",
+				"stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V": "Lnet/minecraft/class_1140;method_4838(Lnet/minecraft/class_2960;Lnet/minecraft/class_3419;)V"
+			},
+			"vakiliner/musicpack/fabric/mixin/SoundManagerMixin": {
+				"soundEngine": "field_5590:Lnet/minecraft/class_1140;"
+			}
+		}
+	}
 }

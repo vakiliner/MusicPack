@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/vakiliner/MusicPack/issues"
 
 [[mods]]
 modId="musicpack"
-version="1.0.3"
+version="1.0.4"
 displayName="Music Pack"
 description='''
 Музыкальный пакет для VAKiliner Hide And Seek
@@ -19,4 +19,9 @@ displayURL="https://discord.gg/rsDWHrHbEr"
 	modId="minecraft"
 	mandatory=true
 	versionRange="[1.16,1.17)"
+	ordering="NONE"
+[[dependencies.musicpack]]
+	modId="forge"
+	mandatory=true
+	versionRange="[32.0.72,)"
 	ordering="NONE"

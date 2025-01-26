@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicpack",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
@@ -16,7 +16,7 @@
 	],
 	"depends": {
 		"minecraft": ">=1.16",
-		"fabricloader": ">=0.9"
+		"fabricloader": ">=0.5"
 	},
 	"name": "Music Pack",
 	"description": "Музыкальный пакет для VAKiliner Hide And Seek",
@@ -35,8 +35,7 @@
 			"links": {
 				"modmenu.discord": "https://discord.gg/rsDWHrHbEr",
 				"modmenu.youtube": "https://youtube.com/channel/UCrJCX5gqOkVwH-Qq9HYyoxg"
-			},
-			"update_checker": false
+			}
 		}
 	}
 }
