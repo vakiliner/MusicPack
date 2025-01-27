@@ -6,6 +6,5 @@
 	"vakiliner.musicpack.disable": "Disable",
 	"vakiliner.musicpack.option.hidersMusic": "Hiders Music",
 	"vakiliner.musicpack.option.seekersMusic": "Seekers Music",
-	"vakiliner.musicpack.option.defaultMusic": "%s Default Music",
-	"vakiliner.musicpack.option.disableDefaultMusic": "Disable Default Music"
+	"vakiliner.musicpack.option.defaultMusic": "%s Default Music"
 }
