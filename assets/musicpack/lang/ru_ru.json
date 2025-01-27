@@ -6,6 +6,5 @@
 	"vakiliner.musicpack.disable": "Отключить",
 	"vakiliner.musicpack.option.hidersMusic": "Музыка Прячущихся",
 	"vakiliner.musicpack.option.seekersMusic": "Музыка Искателей",
-	"vakiliner.musicpack.option.defaultMusic": "%s Музыку По Умолчанию",
-	"vakiliner.musicpack.option.disableDefaultMusic": "Отключить Музыку По Умолчанию"
+	"vakiliner.musicpack.option.defaultMusic": "%s Музыку По Умолчанию"
 }
