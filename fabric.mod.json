@@ -16,7 +16,11 @@
 	],
 	"depends": {
 		"minecraft": ">=1.16",
-		"fabricloader": ">=0.5"
+		"fabricloader": ">=0.5",
+		"fabric-resource-loader-v0": "*"
+	},
+	"recommends": {
+		"modmenu": "*"
 	},
 	"name": "Music Pack",
 	"description": "Музыкальный пакет для VAKiliner Hide And Seek",
