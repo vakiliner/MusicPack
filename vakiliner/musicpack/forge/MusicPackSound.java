@@ -48,4 +48,8 @@ public class MusicPackSound extends SimpleSound {
 	public static MusicPackSound getSound(String id) {
 		return id.equals("level0") ? MusicPackSound.hideLvl0 : id.equals("level1") ? MusicPackSound.hideLvl1 : id.equals("level2") ? MusicPackSound.hideLvl2 : id.equals("level0glow") ? MusicPackSound.hideGlow : null;
 	}
+
+	public boolean canStartSilent() {
+		return true;
+	}
 }

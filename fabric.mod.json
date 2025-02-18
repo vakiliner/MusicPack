@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicpack",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"environment": "client",
 	"entrypoints": {
 		"client": [
@@ -15,11 +15,13 @@
 		"mixins.musicpack.fabric.json"
 	],
 	"depends": {
-		"minecraft": ">=1.16",
-		"fabricloader": ">=0.5",
+		"fabricloader": ">=0.4",
 		"fabric-resource-loader-v0": "*"
 	},
 	"recommends": {
+		"minecraft": ">=1.16.2"
+	},
+	"suggests": {
 		"modmenu": "*"
 	},
 	"name": "Music Pack",
