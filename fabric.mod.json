@@ -19,7 +19,7 @@
 		"fabric-resource-loader-v0": "*"
 	},
 	"recommends": {
-		"minecraft": ">=1.16.2"
+		"minecraft": "~1.16.2"
 	},
 	"suggests": {
 		"modmenu": "*"
