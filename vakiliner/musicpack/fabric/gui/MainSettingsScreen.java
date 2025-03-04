@@ -8,6 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
+import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.fabric.MusicPack;
 import vakiliner.musicpack.fabric.MusicPackSound;
@@ -16,6 +17,7 @@ import vakiliner.musicpack.fabric.mixin.SoundManagerMixin;
 
 @Environment(EnvType.CLIENT)
 public class MainSettingsScreen extends Screen {
+	private final GsonConfig gsonConfig = new GsonConfig();
 	public final Screen parent;
 	public EnableButton enableButton;
 	public HidersMusicButton hidersMusicButton;
@@ -28,25 +30,30 @@ public class MainSettingsScreen extends Screen {
 	public MainSettingsScreen(Screen parent) {
 		super(new TranslatableComponent("vakiliner.musicpack.title"));
 		this.parent = parent;
+		this.gsonConfig.parse(MusicPack.getConfig());
 	}
 
 	protected void init() {
 		ModConfig config = MusicPack.getConfig();
 		boolean enabled = config.enabled();
-		enableButton = this.addButton(new EnableButton(this));
-		hidersMusicButton = this.addButton(new HidersMusicButton(this, enabled));
-		seekersMusicButton = this.addButton(new SeekersMusicButton(this, enabled));
-		defaultMusicButton = this.addButton(new DefaultMusicButton(this, enabled));
-		hidersMusicSlider = this.addButton(new HidersMusicSlider(this, enabled && config.hidersMusicEnabled()));
-		seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, enabled && config.seekersMusicEnabled()));
-		doneButton = this.addButton(new DoneButton(this));
+		this.enableButton = this.addButton(new EnableButton(this));
+		this.hidersMusicButton = this.addButton(new HidersMusicButton(this, enabled));
+		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this, enabled));
+		this.defaultMusicButton = this.addButton(new DefaultMusicButton(this, enabled));
+		this.hidersMusicSlider = this.addButton(new HidersMusicSlider(this, enabled && config.hidersMusicEnabled()));
+		this.seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, enabled && config.seekersMusicEnabled()));
+		this.doneButton = this.addButton(new DoneButton(this));
 	}
 
 	public void onClose() {
-		MusicPack.saveConfig();
+		ModConfig config = MusicPack.getConfig();
+		if (!this.gsonConfig.equals(config)) try {
+			config.save();
+		} catch (Throwable err) {
+			err.printStackTrace();
+		}
 		this.minecraft.setScreen(this.parent);
 		SoundManager soundManager = this.minecraft.getSoundManager();
-		ModConfig config = MusicPack.getConfig();
 		if (config.enabled()) ((SoundEngineMixin) ((SoundManagerMixin) soundManager).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
 			if (soundInstance.getSource() == SoundSource.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
 				case MusicPack.MOD_ID:

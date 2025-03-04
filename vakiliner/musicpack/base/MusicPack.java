@@ -5,5 +5,9 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class MusicPack {
 	public static final String MOD_ID = "musicpack";
-	public static final Logger LOGGER = LogManager.getLogger(MusicPack.MOD_ID);
+	public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+
+	protected void ready() {
+		LOGGER.info("Музыкальный пакет активирован");
+	}
 }
