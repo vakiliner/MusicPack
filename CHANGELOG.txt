@@ -14,6 +14,8 @@ Date: 18.2.25
 			- Уточнена информация о зависимостях мода
 		Features:
 			- Minecraft больше не является обязательной зависимостью, теперь является рекомендуемой зависимостью
+		Assets:
+			- Удалён ключ перевода "vakiliner.musicpack.option.disableDefaultMusic"
 	Fabric:
 		Bugfixes:
 			- Добавлена потерянная зависимость fabric-resource-loader-v0, которая не была добавлена в прошлом релизе
