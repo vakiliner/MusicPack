@@ -22,4 +22,4 @@ displayURL="https://github.com/vakiliner/MusicPack"
 [[dependencies.musicpack]]
 	modId="minecraft"
 	mandatory=false
-	versionRange="[1.16.2,1.17)"
+	versionRange="[1.16,1.17)"
