@@ -13,29 +13,5 @@
 		"1.16.4-recommended": "1.0.6",
 		"1.16.5-latest": "1.0.6",
 		"1.16.5-recommended": "1.0.6"
-	},
-	"1.16": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
-	},
-	"1.16.1": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
-	},
-	"1.16.2": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
-	},
-	"1.16.3": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
-	},
-	"1.16.4": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
-	},
-	"1.16.5": {
-		"version": "1.0.6",
-		"downloadUrl": "https://github.com/vakiliner/MusicPack/releases/download/1.0.6/musicpack-1.0.6.jar"
 	}
 }
