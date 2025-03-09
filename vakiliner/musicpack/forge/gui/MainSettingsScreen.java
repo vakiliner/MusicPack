@@ -2,6 +2,8 @@ package vakiliner.musicpack.forge.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import net.minecraft.client.audio.SoundSource;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,6 +19,8 @@ import vakiliner.musicpack.forge.mixin.SoundHandlerMixin;
 
 @OnlyIn(Dist.CLIENT)
 public class MainSettingsScreen extends Screen {
+	private static final TranslationTextComponent TITLE = new TranslationTextComponent("vakiliner.musicpack.title");
+	private static final Method drawCenteredString;
 	private final GsonConfig gsonConfig = new GsonConfig();
 	public final Screen parent;
 	public EnableButton enableButton;
@@ -27,14 +31,38 @@ public class MainSettingsScreen extends Screen {
 	public SeekersMusicSlider seekersMusicSlider;
 	public DoneButton doneButton;
 
+	static {
+		Method method = null;
+		try {
+			Class<?>[] parameterTypes = { MatrixStack.class, net.minecraft.client.gui.FontRenderer.class, net.minecraft.util.text.ITextComponent.class, int.class, int.class, int.class };
+			try {
+				method = Screen.class.getMethod("func_238472_a_", parameterTypes);
+			} catch (NoSuchMethodException e) {
+				try {
+					parameterTypes[2] = net.minecraft.util.text.ITextProperties.class;
+					method = Screen.class.getMethod("func_238472_a_", parameterTypes);
+				} catch (NoSuchMethodException err) {
+					err.printStackTrace();
+				}
+			}
+		} catch (SecurityException err) {
+			err.printStackTrace();
+		}
+		drawCenteredString = method;
+	}
+
 	public MainSettingsScreen(Screen parent) {
-		super(new TranslationTextComponent("vakiliner.musicpack.title"));
+		super(TITLE);
 		this.parent = parent;
-		this.gsonConfig.parse(MusicPack.getConfig());
+	}
+
+	public static boolean a() {
+		return drawCenteredString == null;
 	}
 
 	protected void init() {
 		ModConfig config = MusicPack.getConfig();
+		this.gsonConfig.parse(config);
 		boolean enabled = config.enabled();
 		this.enableButton = this.addButton(new EnableButton(this));
 		this.hidersMusicButton = this.addButton(new HidersMusicButton(this, enabled));
@@ -74,7 +102,15 @@ public class MainSettingsScreen extends Screen {
 
 	public void render(@javax.annotation.Nonnull MatrixStack poseStack, int i, int j, float f) {
 		this.renderBackground(poseStack);
-		drawCenteredString(poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
+		this.drawTitle(poseStack);
 		super.render(poseStack, i, j, f);
+	}
+
+	private void drawTitle(MatrixStack poseStack) {
+		try {
+			drawCenteredString.invoke(this, poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
+		} catch (IllegalAccessException | InvocationTargetException err) {
+			throw new RuntimeException(err);
+		}
 	}
 }

@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "musicpack",
-	"version": "1.0.6",
+	"version": "1.0.7-rc1",
 	"environment": "client",
 	"entrypoints": {
 		"client": [

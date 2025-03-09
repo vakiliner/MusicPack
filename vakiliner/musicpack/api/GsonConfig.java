@@ -1,5 +1,6 @@
 package vakiliner.musicpack.api;
 
+import com.google.gson.annotations.Since;
 import vakiliner.musicpack.base.ModConfig;
 
 public class GsonConfig {
@@ -7,7 +8,9 @@ public class GsonConfig {
 	public Boolean hidersMusic;
 	public Boolean seekersMusic;
 	public Boolean disableDefaultMusic;
+	@Since(3)
 	public Double hidersMusicVolume;
+	@Since(3)
 	public Double seekersMusicVolume;
 
 	public void parse(ModConfig config) {

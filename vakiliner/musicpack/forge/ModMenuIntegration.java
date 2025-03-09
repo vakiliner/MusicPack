@@ -11,6 +11,7 @@ import vakiliner.musicpack.forge.gui.MainSettingsScreen;
 @OnlyIn(Dist.CLIENT)
 public class ModMenuIntegration implements Supplier<BiFunction<Minecraft, Screen, Screen>> {
 	public BiFunction<Minecraft, Screen, Screen> get() {
+		if (MainSettingsScreen.a()) return null;
 		return (minecraft, parent) -> new MainSettingsScreen(parent);
 	}
 }

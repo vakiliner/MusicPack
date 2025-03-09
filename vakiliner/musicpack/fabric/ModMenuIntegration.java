@@ -1,6 +1,7 @@
 package vakiliner.musicpack.fabric;
 
 import java.util.function.Function;
+import io.github.prospector.modmenu.api.ConfigScreenFactory;
 import io.github.prospector.modmenu.api.ModMenuApi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,6 +15,11 @@ public class ModMenuIntegration implements ModMenuApi {
 	}
 
 	public Function<Screen, ? extends Screen> getConfigScreenFactory() {
-		return (parent) -> new MainSettingsScreen(parent);
+		return (screen) -> new MainSettingsScreen(screen);
+	}
+
+	public ConfigScreenFactory<?> getModConfigScreenFactory() {
+		if (MainSettingsScreen.a()) return null;
+		return (screen) -> this.getConfigScreenFactory().apply(screen);
 	}
 }
