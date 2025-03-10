@@ -2,8 +2,9 @@ package vakiliner.musicpack.forge;
 
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import vakiliner.musicpack.base.ModConfig;
 
 public class MusicPackSound extends SimpleSound {
@@ -19,7 +20,9 @@ public class MusicPackSound extends SimpleSound {
 	}
 
 	private MusicPackSound(SoundEvent soundEvent, boolean looping) {
-		super(soundEvent.getLocation(), SoundCategory.MUSIC, 1, 1, looping, 0, ISound.AttenuationType.NONE, 0, 0, 0, false);
+		super(soundEvent, SoundCategory.MUSIC, 1, 1, BlockPos.ZERO);
+		this.looping = looping;
+		this.attenuation = ISound.AttenuationType.NONE;
 	}
 
 	public float getVolume() {

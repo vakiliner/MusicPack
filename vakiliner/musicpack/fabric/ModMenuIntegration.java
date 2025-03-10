@@ -15,11 +15,12 @@ public class ModMenuIntegration implements ModMenuApi {
 	}
 
 	public Function<Screen, ? extends Screen> getConfigScreenFactory() {
-		return (screen) -> new MainSettingsScreen(screen);
+		if (MainSettingsScreen.a()) return null;
+		return (parent) -> new MainSettingsScreen(parent);
 	}
 
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		if (MainSettingsScreen.a()) return null;
-		return (screen) -> this.getConfigScreenFactory().apply(screen);
+		Function<Screen, ? extends Screen> function = this.getConfigScreenFactory();
+		return (screen) -> function == null ? null : function.apply(screen);
 	}
 }
