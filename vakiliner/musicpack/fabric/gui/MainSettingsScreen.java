@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import com.mojang.blaze3d.audio.Channel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import vakiliner.musicpack.api.GsonConfig;
@@ -81,19 +80,22 @@ public class MainSettingsScreen extends Screen {
 			err.printStackTrace();
 		}
 		this.minecraft.setScreen(this.parent);
-		SoundManager soundManager = this.minecraft.getSoundManager();
-		if (config.enabled()) ((SoundEngineMixin) ((SoundManagerMixin) soundManager).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
+		boolean enabled = config.enabled();
+		((SoundEngineMixin) ((SoundManagerMixin) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
 			if (soundInstance.getSource() == SoundSource.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
 				case MusicPack.MOD_ID:
-					if (!config.seekersMusicEnabled() && soundInstance == MusicPackSound.seek ||
-						!config.hidersMusicEnabled() && (soundInstance == MusicPackSound.hideLvl0
-						|| soundInstance == MusicPackSound.hideLvl1
-						|| soundInstance == MusicPackSound.hideLvl2
-						|| soundInstance == MusicPackSound.hideGlow)
+					if (!enabled
+						|| soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
+						|| (
+							soundInstance == MusicPackSound.hideLvl0 ||
+							soundInstance == MusicPackSound.hideLvl1 ||
+							soundInstance == MusicPackSound.hideLvl2 ||
+							soundInstance == MusicPackSound.hideGlow
+						) && !config.hidersMusicEnabled()
 					) channelHandle.execute(Channel::stop);
 					break;
 				case "minecraft":
-					if (config.disableDefaultMusic()) channelHandle.execute(Channel::stop);
+					if (enabled && config.disableDefaultMusic()) channelHandle.execute(Channel::stop);
 					break;
 			}
 		});

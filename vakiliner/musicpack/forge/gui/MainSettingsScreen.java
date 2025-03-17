@@ -7,7 +7,6 @@ import java.lang.reflect.Method;
 import net.minecraft.client.audio.SoundSource;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.SoundCategory;
 import vakiliner.musicpack.api.GsonConfig;
@@ -82,19 +81,22 @@ public class MainSettingsScreen extends Screen {
 			err.printStackTrace();
 		}
 		this.minecraft.setScreen(this.parent);
-		SoundHandler soundManager = this.minecraft.getSoundManager();
-		if (config.enabled()) ((SoundEngineMixin) ((SoundHandlerMixin) soundManager).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
+		boolean enabled = config.enabled();
+		((SoundEngineMixin) ((SoundHandlerMixin) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
 			if (soundInstance.getSource() == SoundCategory.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
 				case MusicPack.MOD_ID:
-					if (!config.seekersMusicEnabled() && soundInstance == MusicPackSound.seek ||
-						!config.hidersMusicEnabled() && (soundInstance == MusicPackSound.hideLvl0
-						|| soundInstance == MusicPackSound.hideLvl1
-						|| soundInstance == MusicPackSound.hideLvl2
-						|| soundInstance == MusicPackSound.hideGlow)
+					if (!enabled
+						|| soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
+						|| (
+							soundInstance == MusicPackSound.hideLvl0 ||
+							soundInstance == MusicPackSound.hideLvl1 ||
+							soundInstance == MusicPackSound.hideLvl2 ||
+							soundInstance == MusicPackSound.hideGlow
+						) && !config.hidersMusicEnabled()
 					) channelHandle.execute(SoundSource::stop);
 					break;
 				case "minecraft":
-					if (config.disableDefaultMusic()) channelHandle.execute(SoundSource::stop);
+					if (enabled && config.disableDefaultMusic()) channelHandle.execute(SoundSource::stop);
 					break;
 			}
 		});

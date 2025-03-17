@@ -1,6 +1,5 @@
 package vakiliner.musicpack.fabric;
 
-import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +21,7 @@ public class MusicPackSound extends SimpleSoundInstance {
 	private MusicPackSound(SoundEvent soundEvent, boolean looping) {
 		super(soundEvent, SoundSource.MUSIC, 1, 1, BlockPos.ZERO);
 		this.looping = looping;
-		this.attenuation = SoundInstance.Attenuation.NONE;
+		this.attenuation = Attenuation.NONE;
 	}
 
 	public float getVolume() {

@@ -1,6 +1,5 @@
 package vakiliner.musicpack.forge;
 
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundCategory;
@@ -22,7 +21,7 @@ public class MusicPackSound extends SimpleSound {
 	private MusicPackSound(SoundEvent soundEvent, boolean looping) {
 		super(soundEvent, SoundCategory.MUSIC, 1, 1, BlockPos.ZERO);
 		this.looping = looping;
-		this.attenuation = ISound.AttenuationType.NONE;
+		this.attenuation = AttenuationType.NONE;
 	}
 
 	public float getVolume() {

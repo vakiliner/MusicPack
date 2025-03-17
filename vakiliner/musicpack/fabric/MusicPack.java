@@ -1,20 +1,19 @@
 package vakiliner.musicpack.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import vakiliner.musicpack.api.GsonConfig;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.JsonReader;
 
 public class MusicPack extends vakiliner.musicpack.base.MusicPack implements ClientModInitializer {
 	private static final ModConfig config = new ModConfig();
@@ -26,7 +25,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 
 	public void onInitializeClient() {
 		try {
-			if (ModConfig.FILE.exists()) {
+			if (config.getFile().exists()) {
 				config.load();
 			} else {
 				config.save();
@@ -46,12 +45,8 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	 */
 	@Deprecated
 	public static void saveConfig() {
-		byte[] bytes = new Gson().toJson(config).getBytes();
 		try {
-			if (!ModConfig.FILE.getParentFile().exists()) {
-				Files.createDirectories(ModConfig.FILE.toPath().getParent());
-			}
-			Files.newOutputStream(ModConfig.FILE.toPath()).write(bytes);
+			config.save();
 		} catch (IOException err) {
 			err.printStackTrace();
 		}
@@ -62,9 +57,9 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	 */
 	@Deprecated
 	public static void loadConfig() {
-		if (ModConfig.FILE.exists()) {
+		if (config.getFile().exists()) {
 			try {
-				config.parse((JsonObject) new Gson().fromJson(new JsonReader(new FileReader(ModConfig.FILE)), JsonObject.class));;
+				config.load();
 			} catch (FileNotFoundException err) {
 				err.printStackTrace();
 			}
@@ -85,22 +80,12 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 }
 
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
-	static final File FILE = new File(".").toPath().resolve("config").resolve(MusicPack.MOD_ID + ".json").toFile();
 	boolean enabled = true;
 	boolean hidersMusic = true;
 	boolean seekersMusic = true;
 	boolean disableDefaultMusic = true;
 	double hidersMusicVolume = 1;
 	double seekersMusicVolume = 1;
-
-	void parse(JsonObject jsonObject) {
-		if (jsonObject.get("enabled").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("enabled").isBoolean()) this.enabled = jsonObject.get("enabled").getAsBoolean();
-		if (jsonObject.get("hidersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusic").isBoolean()) this.hidersMusic = jsonObject.get("hidersMusic").getAsBoolean();
-		if (jsonObject.get("seekersMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusic").isBoolean()) this.seekersMusic = jsonObject.get("seekersMusic").getAsBoolean();
-		if (jsonObject.get("disableDefaultMusic").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("disableDefaultMusic").isBoolean()) this.disableDefaultMusic = jsonObject.get("disableDefaultMusic").getAsBoolean();
-		if (jsonObject.get("hidersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("hidersMusicVolume").isNumber()) this.hidersMusicVolume = jsonObject.get("hidersMusicVolume").getAsDouble();
-		if (jsonObject.get("seekersMusicVolume").isJsonPrimitive() && jsonObject.getAsJsonPrimitive("seekersMusicVolume").isNumber()) this.seekersMusicVolume = jsonObject.get("seekersMusicVolume").getAsDouble();
-	}
 
 	public void parse(GsonConfig config) {
 		if (config.enabled != null) this.enabled = config.enabled;
@@ -112,14 +97,15 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	public void load() throws FileNotFoundException, JsonSyntaxException {
-		this.parse(new Gson().fromJson(new FileReader(FILE), GsonConfig.class));
+		this.parse(new Gson().fromJson(new FileReader(this.getFile()), GsonConfig.class));
 	}
 
 	public void save() throws IOException {
-		if (!FILE.getParentFile().exists()) {
-			Files.createDirectories(FILE.toPath().getParent());
-		}
-		Files.write(FILE.toPath(), new Gson().toJson(this).getBytes());
+		Files.write(this.getPath(), new Gson().toJson(this).getBytes());
+	}
+
+	public Path getPath() {
+		return FabricLoader.getInstance().getConfigDirectory().toPath().resolve(MusicPack.MOD_ID + ".json");
 	}
 
 	public boolean enabled() {

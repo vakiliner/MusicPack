@@ -1,7 +1,9 @@
 package vakiliner.musicpack.base;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import com.google.gson.JsonSyntaxException;
 import vakiliner.musicpack.api.GsonConfig;
 
@@ -9,6 +11,12 @@ public interface ModConfig {
 	void parse(GsonConfig config);
 	void load() throws FileNotFoundException, JsonSyntaxException;
 	void save() throws IOException;
+	default Path getPath() {
+		return this.getFile().toPath();
+	};
+	default File getFile() {
+		return this.getPath().toFile();
+	};
 	// Getters
 	boolean enabled();
 	boolean hidersMusicEnabled();
