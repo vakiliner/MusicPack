@@ -1,0 +1,10 @@
+{
+	"vakiliner.musicpack.title": "Налаштування Музичного Пакету",
+	"vakiliner.musicpack.enabled": "Увімкнено",
+	"vakiliner.musicpack.disabled": "Вимкнено",
+	"vakiliner.musicpack.enable": "Увімкнути",
+	"vakiliner.musicpack.disable": "Вимкнути",
+	"vakiliner.musicpack.option.hidersMusic": "Музика Хованців",
+	"vakiliner.musicpack.option.seekersMusic": "Музика Шукачів",
+	"vakiliner.musicpack.option.defaultMusic": "%s Музику За замовчуванням"
+}

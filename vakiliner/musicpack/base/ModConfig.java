@@ -3,6 +3,8 @@ package vakiliner.musicpack.base;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Path;
 import com.google.gson.JsonSyntaxException;
 import vakiliner.musicpack.api.GsonConfig;
@@ -12,10 +14,26 @@ public interface ModConfig {
 	void load() throws FileNotFoundException, JsonSyntaxException;
 	void save() throws IOException;
 	default Path getPath() {
-		return this.getFile().toPath();
+		try {
+			Method method = this.getClass().getMethod("getFile");
+			if (method.getDeclaringClass() == ModConfig.class) {
+				throw new RuntimeException("Unrealized method getFile or getPath");
+			}
+			return ((File) method.invoke(this)).toPath();
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException err) {
+			throw new RuntimeException(err);
+		}
 	};
 	default File getFile() {
-		return this.getPath().toFile();
+		try {
+			Method method = this.getClass().getMethod("getPath");
+			if (method.getDeclaringClass() == ModConfig.class) {
+				throw new RuntimeException("Unrealized method getFile or getPath");
+			}
+			return ((Path) method.invoke(this)).toFile();
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | InvocationTargetException err) {
+			throw new RuntimeException(err);
+		}
 	};
 	// Getters
 	boolean enabled();

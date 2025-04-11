@@ -104,6 +104,7 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		Files.write(this.getPath(), new Gson().toJson(this).getBytes());
 	}
 
+	@SuppressWarnings("deprecation")
 	public Path getPath() {
 		return FabricLoader.getInstance().getConfigDirectory().toPath().resolve(MusicPack.MOD_ID + ".json");
 	}
