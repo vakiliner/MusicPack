@@ -35,13 +35,13 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	public MusicPack(ModLoadingContext context) {
 		context.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, new ModMenuIntegration());
 		MinecraftForge.EVENT_BUS.register(this);
-		try {
-			if (config.getFile().exists()) {
-				config.load();
-			} else {
-				config.save();
-			}
+		if (config.getFile().exists()) try {
+			config.load();
 		} catch (Throwable err) {
+			err.printStackTrace();
+		} else try {
+			config.save();
+		} catch (IOException err) {
 			err.printStackTrace();
 		}
 		this.ready();

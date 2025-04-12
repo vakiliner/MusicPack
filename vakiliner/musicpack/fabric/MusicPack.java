@@ -24,13 +24,13 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MOD_ID, "hide.g"));
 
 	public void onInitializeClient() {
-		try {
-			if (config.getFile().exists()) {
-				config.load();
-			} else {
-				config.save();
-			}
+		if (config.getFile().exists()) try {
+			config.load();
 		} catch (Throwable err) {
+			err.printStackTrace();
+		} else try {
+			config.save();
+		} catch (IOException err) {
 			err.printStackTrace();
 		}
 		this.ready();
