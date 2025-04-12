@@ -8,9 +8,7 @@ public class GsonConfig {
 	public Boolean hidersMusic;
 	public Boolean seekersMusic;
 	public Boolean disableDefaultMusic;
-	@Since(3)
 	public Double hidersMusicVolume;
-	@Since(3)
 	public Double seekersMusicVolume;
 
 	public void parse(ModConfig config) {
