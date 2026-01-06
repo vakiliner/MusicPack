@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[32,)"
-license="CC0-1.0"
+license="${license}"
 issueTrackerURL="https://github.com/vakiliner/MusicPack/issues"
 
 [[mods]]
