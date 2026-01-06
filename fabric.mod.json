@@ -34,7 +34,7 @@
 	"authors": [
 		"VAKiliner"
 	],
-	"license": "CC0-1.0",
+	"license": "${license}",
 	"icon": "pack.png",
 	"custom": {
 		"modmenu": {
