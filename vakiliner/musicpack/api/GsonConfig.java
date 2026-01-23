@@ -1,6 +1,5 @@
 package vakiliner.musicpack.api;
 
-import com.google.gson.annotations.Since;
 import vakiliner.musicpack.base.ModConfig;
 
 public class GsonConfig {
@@ -21,11 +20,15 @@ public class GsonConfig {
 	}
 
 	public boolean equals(ModConfig config) {
-		return (this.enabled == null || this.enabled == config.enabled())
-			&& (this.hidersMusic == null || this.hidersMusic == config.hidersMusicEnabled())
-			&& (this.seekersMusic == null || this.seekersMusic == config.seekersMusicEnabled())
-			&& (this.disableDefaultMusic == null || this.disableDefaultMusic == config.disableDefaultMusic())
-			&& (this.hidersMusicVolume == null || this.hidersMusicVolume == config.hidersMusicVolume())
-			&& (this.seekersMusicVolume == null || this.seekersMusicVolume == config.seekersMusicVolume());
+		return a(this.enabled, config.enabled())
+			&& a(this.hidersMusic, config.hidersMusicEnabled())
+			&& a(this.seekersMusic, config.seekersMusicEnabled())
+			&& a(this.disableDefaultMusic, config.disableDefaultMusic())
+			&& a(this.hidersMusicVolume, config.hidersMusicVolume())
+			&& a(this.seekersMusicVolume, config.seekersMusicVolume());
+	}
+
+	private <V> boolean a(V nullable, V check) {
+		return nullable == null || nullable == check;
 	}
 }

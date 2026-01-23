@@ -16,10 +16,10 @@ public interface ModConfig {
 		try {
 			Method method = this.getClass().getMethod("getFile");
 			if (method.getDeclaringClass() == ModConfig.class) {
-				throw new RuntimeException("Unrealized method getFile or getPath");
+				throw new UnsupportedOperationException("Unrealized method getFile or getPath");
 			}
 			return this.getFile().toPath();
-		} catch (NoSuchMethodException | SecurityException err) {
+		} catch (NoSuchMethodException err) {
 			throw new RuntimeException(err);
 		}
 	};
@@ -27,10 +27,10 @@ public interface ModConfig {
 		try {
 			Method method = this.getClass().getMethod("getPath");
 			if (method.getDeclaringClass() == ModConfig.class) {
-				throw new RuntimeException("Unrealized method getFile or getPath");
+				throw new UnsupportedOperationException("Unrealized method getFile or getPath");
 			}
 			return this.getPath().toFile();
-		} catch (NoSuchMethodException | SecurityException err) {
+		} catch (NoSuchMethodException err) {
 			throw new RuntimeException(err);
 		}
 	};
