@@ -1,0 +1,12 @@
+plugins {
+	id 'java'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compileOnly group: 'com.google.code.gson', name: 'gson', version: project.gson_version
+	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: project.log4j
+}

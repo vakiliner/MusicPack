@@ -1,0 +1,10 @@
+{
+	"vakiliner.musicpack.title": "Настройки Музыкального Пакета",
+	"vakiliner.musicpack.enabled": "Включено",
+	"vakiliner.musicpack.disabled": "Выключено",
+	"vakiliner.musicpack.enable": "Включить",
+	"vakiliner.musicpack.disable": "Отключить",
+	"vakiliner.musicpack.option.hidersMusic": "Музыка Прячущихся",
+	"vakiliner.musicpack.option.seekersMusic": "Музыка Искателей",
+	"vakiliner.musicpack.option.defaultMusic": "%s Музыку По Умолчанию"
+}
