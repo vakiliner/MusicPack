@@ -1,0 +1,49 @@
+plugins {
+	id 'fabric-loom' version "${loom_version}"
+}
+
+repositories {
+	maven {
+		name = 'Terraformers'
+		url = 'https://maven.terraformersmc.com/'
+	}
+}
+
+dependencies {
+	implementation project(':base')
+	minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraft_version
+	mappings loom.officialMojangMappings()
+	modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.loader_version
+
+	modImplementation group: 'com.terraformersmc', name: 'modmenu', version: project.modmenu_version
+}
+
+loom {
+	mixin {
+		defaultRefmapName = "${project.rootProject.base.archivesName.get()}-fabric-refmap.json"
+	}
+}
+
+processResources {
+	var replaceProperties = [
+		version: project.version,
+		license: project.license,
+	]
+	inputs.properties replaceProperties
+
+	filesMatching('fabric.mod.json') {
+		expand replaceProperties
+	}
+}
+
+jar {
+	var task = project(':base').tasks.getByName('jar')
+
+	from(zipTree(task.archiveFile)) {
+		exclude 'LICENSE'
+	}
+
+	manifest {
+		from task.manifest
+	}
+}

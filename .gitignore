@@ -1,0 +1,32 @@
+# Gradle
+.gradle/
+**/build/
+!**/src/**/build/
+classes/
+
+# vscode
+
+.settings/
+.vscode/
+bin/
+
+# fabric
+
+run/
+
+# java
+
+*.class
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr
+
+# Log file
+*.log
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties

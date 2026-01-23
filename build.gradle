@@ -1,0 +1,49 @@
+plugins {
+	id 'java'
+}
+
+var fabric = project(':fabric')
+var forge = project(':forge')
+
+allprojects {
+	apply plugin: 'java'
+
+	sourceCompatibility = JavaVersion.VERSION_1_8
+	targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+subprojects {
+	apply plugin: 'java'
+
+	base {
+		archivesName = "${project.archives_base_name}-${project.display_name}"
+	}
+
+	jar {
+		from '../LICENSE'
+	}
+}
+
+jar {
+	evaluationDependsOn(fabric.getName())
+	evaluationDependsOn(forge.getName())
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+	var fabricJar = fabric.tasks.getByName('jar')
+	var fabricRemapJar = fabric.tasks.getByName('remapJar')
+	var forgeJar = forge.tasks.getByName('jar')
+
+	from 'LICENSE'
+	from(zipTree(fabricRemapJar.archiveFile)) {
+		exclude 'LICENSE'
+	}
+	from(zipTree(forgeJar.archiveFile)) {
+		exclude 'LICENSE'
+	}
+
+	manifest {
+		from fabricJar.manifest
+		from forgeJar.manifest
+	}
+}
