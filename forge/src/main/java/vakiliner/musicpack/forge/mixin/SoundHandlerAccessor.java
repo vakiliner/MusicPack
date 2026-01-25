@@ -6,7 +6,7 @@ import net.minecraft.client.audio.SoundEngine;
 import net.minecraft.client.audio.SoundHandler;
 
 @Mixin(SoundHandler.class)
-public interface SoundHandlerMixin {
+public interface SoundHandlerAccessor {
 	@Accessor("soundEngine")
 	SoundEngine getSoundEngine();
 }

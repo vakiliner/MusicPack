@@ -13,8 +13,8 @@ import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
-import vakiliner.musicpack.forge.mixin.SoundEngineMixin;
-import vakiliner.musicpack.forge.mixin.SoundHandlerMixin;
+import vakiliner.musicpack.forge.mixin.SoundEngineAccessor;
+import vakiliner.musicpack.forge.mixin.SoundHandlerAccessor;
 
 @OnlyIn(Dist.CLIENT)
 public class MainSettingsScreen extends Screen {
@@ -72,7 +72,6 @@ public class MainSettingsScreen extends Screen {
 		this.doneButton = this.addButton(new DoneButton(this));
 	}
 
-	@SuppressWarnings("null")
 	public void onClose() {
 		ModConfig config = MusicPack.getConfig();
 		if (!this.gsonConfig.equals(config)) try {
@@ -82,7 +81,7 @@ public class MainSettingsScreen extends Screen {
 		}
 		this.minecraft.setScreen(this.parent);
 		boolean enabled = config.enabled();
-		((SoundEngineMixin) ((SoundHandlerMixin) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
+		((SoundEngineAccessor) ((SoundHandlerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
 			if (soundInstance.getSource() == SoundCategory.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
 				case MusicPack.MOD_ID:
 					if (!enabled

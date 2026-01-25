@@ -4,10 +4,10 @@
 	"package": "vakiliner.musicpack.forge.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"LocatableSoundMixin",
+		"LocatableSoundAccessor",
+		"SoundEngineAccessor",
 		"SoundEngineMixin",
-		"SoundEngineMixin2",
-		"SoundHandlerMixin"
+		"SoundHandlerAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
