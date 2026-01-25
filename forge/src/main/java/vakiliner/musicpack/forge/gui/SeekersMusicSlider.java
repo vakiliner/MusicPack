@@ -7,8 +7,8 @@ import net.minecraft.client.audio.ChannelManager.Entry;
 import net.minecraft.util.text.TranslationTextComponent;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
-import vakiliner.musicpack.forge.mixin.SoundEngineMixin;
-import vakiliner.musicpack.forge.mixin.SoundHandlerMixin;
+import vakiliner.musicpack.forge.mixin.SoundEngineAccessor;
+import vakiliner.musicpack.forge.mixin.SoundHandlerAccessor;
 
 @OnlyIn(Dist.CLIENT)
 public class SeekersMusicSlider extends Slider {
@@ -22,9 +22,9 @@ public class SeekersMusicSlider extends Slider {
 
 	protected void applyValue() {
 		MusicPack.getConfig().seekersMusicVolume(this.value);
-		SoundEngineMixin soundEngineMixin = (SoundEngineMixin) ((SoundHandlerMixin) Minecraft.getInstance().getSoundManager()).getSoundEngine();
-		Entry channelHandle = soundEngineMixin.getInstanceToChannel().get(MusicPackSound.seek);
-		if (channelHandle != null) channelHandle.execute((channel) -> channel.setVolume(soundEngineMixin.calculateVolume(MusicPackSound.seek)));
+		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundHandlerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
+		Entry channelHandle = accessor.getInstanceToChannel().get(MusicPackSound.seek);
+		if (channelHandle != null) channelHandle.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.seek)));
 	}
 
 	protected void updateMessage() {

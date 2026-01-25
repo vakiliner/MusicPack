@@ -13,8 +13,8 @@ import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.fabric.MusicPack;
 import vakiliner.musicpack.fabric.MusicPackSound;
-import vakiliner.musicpack.fabric.mixin.SoundEngineMixin;
-import vakiliner.musicpack.fabric.mixin.SoundManagerMixin;
+import vakiliner.musicpack.fabric.mixin.SoundEngineAccessor;
+import vakiliner.musicpack.fabric.mixin.SoundManagerAccessor;
 
 @Environment(EnvType.CLIENT)
 public class MainSettingsScreen extends Screen {
@@ -81,7 +81,7 @@ public class MainSettingsScreen extends Screen {
 		}
 		this.minecraft.setScreen(this.parent);
 		boolean enabled = config.enabled();
-		((SoundEngineMixin) ((SoundManagerMixin) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
+		((SoundEngineAccessor) ((SoundManagerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
 			if (soundInstance.getSource() == SoundSource.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
 				case MusicPack.MOD_ID:
 					if (!enabled
