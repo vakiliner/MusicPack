@@ -65,7 +65,8 @@ abstract class SoundEngineMixin {
 						}
 						ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
 						if (channelHandle == null) break;
-						channelHandle.execute((channel) -> channel.setVolume(this.calculateVolume(sound.setVolume(((AbstractSoundInstanceAccessor) soundInstance).getVolume()).tick(tick))));
+						float f = this.calculateVolume(sound.setVolume(((AbstractSoundInstanceAccessor) soundInstance).getVolume()).tick(tick));
+						channelHandle.execute((channel) -> channel.setVolume(f));
 						break;
 					}
 				}
@@ -98,10 +99,11 @@ abstract class SoundEngineMixin {
 					break;
 				}
 				MusicPackSound sound = MusicPackSound.getSound(path[1]);
-				if (sound == null || !soundManager.isActive(sound)) break;
+				if (sound == null || !sound.equalsTick(tick) || !soundManager.isActive(sound)) break;
 				ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
 				if (channelHandle == null) break;
-				if (sound.equalsTick(tick)) channelHandle.execute((channel) -> channel.setVolume(this.calculateVolume(sound.resetVolume())));
+				float f = this.calculateVolume(sound.resetVolume());
+				channelHandle.execute((channel) -> channel.setVolume(f));
 				break;
 			}
 		}
