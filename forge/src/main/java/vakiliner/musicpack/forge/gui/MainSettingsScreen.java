@@ -78,8 +78,9 @@ public class MainSettingsScreen extends Screen {
 		}
 		this.minecraft.setScreen(this.parent);
 		((SoundEngineAccessor) ((SoundHandlerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
-			if (soundInstance.getSource() == SoundCategory.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
-				case MusicPack.MOD_ID:
+			if (soundInstance.getSource() != SoundCategory.MUSIC) return;
+			switch (soundInstance.getLocation().getNamespace()) {
+				case MusicPack.MOD_ID: {
 					if (soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
 						|| (
 							soundInstance == MusicPackSound.hideLvl0 ||
@@ -89,9 +90,11 @@ public class MainSettingsScreen extends Screen {
 						) && !config.hidersMusicEnabled()
 					) channelHandle.execute(SoundSource::stop);
 					break;
-				case "minecraft":
+				}
+				case "minecraft": {
 					if (config.disableDefaultMusic()) channelHandle.execute(SoundSource::stop);
 					break;
+				}
 			}
 		});
 	}
