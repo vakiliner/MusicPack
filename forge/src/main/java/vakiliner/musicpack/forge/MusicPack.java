@@ -84,7 +84,6 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 }
 
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
-	boolean enabled = true;
 	boolean hidersMusic = true;
 	boolean seekersMusic = true;
 	boolean disableDefaultMusic = true;
@@ -92,7 +91,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	double seekersMusicVolume = 1;
 
 	public void parse(GsonConfig config) {
-		if (config.enabled != null) this.enabled = config.enabled;
 		if (config.hidersMusic != null) this.hidersMusic = config.hidersMusic;
 		if (config.seekersMusic != null) this.seekersMusic = config.seekersMusic;
 		if (config.disableDefaultMusic != null) this.disableDefaultMusic = config.disableDefaultMusic;
@@ -120,10 +118,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		return configPath.resolve(MusicPack.MOD_ID + ".json");
 	}
 
-	public boolean enabled() {
-		return this.enabled;
-	}
-
 	public boolean hidersMusicEnabled() {
 		return this.hidersMusic;
 	}
@@ -142,10 +136,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 
 	public double seekersMusicVolume() {
 		return MathHelper.clamp(this.seekersMusicVolume, 0, 1);
-	}
-
-	public void enabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public void hidersMusicEnabled(boolean hidersMusic) {

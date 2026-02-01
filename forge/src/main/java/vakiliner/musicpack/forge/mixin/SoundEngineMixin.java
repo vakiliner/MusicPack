@@ -26,7 +26,7 @@ abstract class SoundEngineMixin {
 	@Inject(at = @At("HEAD"), method = "play", cancellable = true)
 	void play(ISound soundInstance, CallbackInfo callbackInfo) {
 		ModConfig config = MusicPack.getConfig();
-		if (config.enabled() && soundInstance.getSource() == SoundCategory.MUSIC) {
+		if (soundInstance.getSource() == SoundCategory.MUSIC) {
 			switch (soundInstance.getLocation().getNamespace()) {
 				case "minecraft": {
 					if (config.disableDefaultMusic()) callbackInfo.cancel();
@@ -75,7 +75,7 @@ abstract class SoundEngineMixin {
 	@Inject(at = @At(value = "HEAD"), method = "stop(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V", cancellable = true)
 	void stop(@Nullable ResourceLocation resourceLocation, @Nullable SoundCategory soundSource, CallbackInfo callbackInfo) {
 		ModConfig config = MusicPack.getConfig();
-		if (config.enabled() && resourceLocation != null && soundSource == SoundCategory.MUSIC && resourceLocation.getNamespace().equals("music")) {
+		if (resourceLocation != null && soundSource == SoundCategory.MUSIC && resourceLocation.getNamespace().equals("music")) {
 			callbackInfo.cancel();
 			String[] path = resourceLocation.getPath().split("\\.");
 			SoundHandler soundManager = Minecraft.getInstance().getSoundManager();

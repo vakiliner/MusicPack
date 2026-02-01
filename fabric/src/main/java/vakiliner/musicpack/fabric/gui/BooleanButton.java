@@ -10,10 +10,9 @@ import net.minecraft.network.chat.TranslatableComponent;
 public abstract class BooleanButton extends AbstractButton {
 	protected final MainSettingsScreen screen;
 
-	protected BooleanButton(MainSettingsScreen screen, Component component, int x, int y, boolean active) {
+	protected BooleanButton(MainSettingsScreen screen, Component component, int x, int y) {
 		super(screen.width / 2 - 75 + 80 * x, 60 + 25 * y, 150, 20, component);
 		this.screen = screen;
-		this.active = active;
 	}
 
 	public static TranslatableComponent getComponent(boolean enabled, String key) {

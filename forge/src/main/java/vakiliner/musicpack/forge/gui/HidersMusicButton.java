@@ -8,8 +8,8 @@ import vakiliner.musicpack.forge.MusicPack;
 
 @OnlyIn(Dist.CLIENT)
 public class HidersMusicButton extends BooleanButton {
-	public HidersMusicButton(MainSettingsScreen screen, boolean active) {
-		super(screen, getComponent(), -1, 1, active);
+	public HidersMusicButton(MainSettingsScreen screen) {
+		super(screen, getComponent(), -1, 1);
 	}
 
 	public void onPress() {
