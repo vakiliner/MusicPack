@@ -15,7 +15,7 @@ import vakiliner.musicpack.forge.mixin.SoundHandlerAccessor;
 @OnlyIn(Dist.CLIENT)
 public class HidersMusicSlider extends Slider {
 	public HidersMusicSlider(MainSettingsScreen screen, boolean active) {
-		super(screen, getComponent(), -1, 2, MusicPack.getConfig().hidersMusicVolume(), active);
+		super(screen, getComponent(), -1, 1, MusicPack.getConfig().hidersMusicVolume(), active);
 	}
 
 	public static TranslationTextComponent getComponent() {

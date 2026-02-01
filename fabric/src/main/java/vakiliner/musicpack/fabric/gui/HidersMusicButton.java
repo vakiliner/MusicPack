@@ -9,7 +9,7 @@ import vakiliner.musicpack.fabric.MusicPack;
 @Environment(EnvType.CLIENT)
 public class HidersMusicButton extends BooleanButton {
 	public HidersMusicButton(MainSettingsScreen screen) {
-		super(screen, getComponent(), -1, 1);
+		super(screen, getComponent(), -1, 0);
 	}
 
 	public void onPress() {

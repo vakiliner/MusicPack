@@ -9,7 +9,7 @@ import vakiliner.musicpack.forge.MusicPack;
 @OnlyIn(Dist.CLIENT)
 public class DefaultMusicButton extends BooleanButton {
 	public DefaultMusicButton(MainSettingsScreen screen) {
-		super(screen, getComponent(), 0, 3);
+		super(screen, getComponent(), 0, 2);
 	}
 
 	public void onPress() {

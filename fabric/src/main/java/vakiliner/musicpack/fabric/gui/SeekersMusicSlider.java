@@ -13,7 +13,7 @@ import vakiliner.musicpack.fabric.mixin.SoundManagerAccessor;
 @Environment(EnvType.CLIENT)
 public class SeekersMusicSlider extends Slider {
 	public SeekersMusicSlider(MainSettingsScreen screen, boolean active) {
-		super(screen, getComponent(), 1, 2, MusicPack.getConfig().seekersMusicVolume(), active);
+		super(screen, getComponent(), 1, 1, MusicPack.getConfig().seekersMusicVolume(), active);
 	}
 
 	public static TranslatableComponent getComponent() {
