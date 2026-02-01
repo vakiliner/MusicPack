@@ -35,14 +35,19 @@ public interface ModConfig {
 		}
 	};
 	// Getters
-	boolean enabled();
+	@Deprecated
+	default boolean enabled() {
+		return true;
+	}
 	boolean hidersMusicEnabled();
 	boolean seekersMusicEnabled();
 	boolean disableDefaultMusic();
 	double hidersMusicVolume();
 	double seekersMusicVolume();
 	// Setters
-	void enabled(boolean enabled);
+	@Deprecated
+	default void enabled(boolean enabled) {
+	}
 	void hidersMusicEnabled(boolean hidersMusicEnabled);
 	void seekersMusicEnabled(boolean seekersMusicEnabled);
 	void disableDefaultMusic(boolean disableDefaultMusic);

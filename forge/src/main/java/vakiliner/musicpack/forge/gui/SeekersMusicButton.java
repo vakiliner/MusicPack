@@ -8,8 +8,8 @@ import vakiliner.musicpack.forge.MusicPack;
 
 @OnlyIn(Dist.CLIENT)
 public class SeekersMusicButton extends BooleanButton {
-	public SeekersMusicButton(MainSettingsScreen screen, boolean active) {
-		super(screen, getComponent(), 1, 1, active);
+	public SeekersMusicButton(MainSettingsScreen screen) {
+		super(screen, getComponent(), 1, 0);
 	}
 
 	public void onPress() {
