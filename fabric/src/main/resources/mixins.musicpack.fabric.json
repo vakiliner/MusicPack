@@ -4,10 +4,10 @@
 	"package": "vakiliner.musicpack.fabric.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"AbstractSoundInstanceMixin",
+		"AbstractSoundInstanceAccessor",
+		"SoundEngineAccessor",
 		"SoundEngineMixin",
-		"SoundEngineMixin2",
-		"SoundManagerMixin"
+		"SoundManagerAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1

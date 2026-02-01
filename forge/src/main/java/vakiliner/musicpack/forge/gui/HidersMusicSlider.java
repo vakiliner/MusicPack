@@ -5,12 +5,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.ChannelManager.Entry;
+import net.minecraft.client.audio.ChannelManager;
 import net.minecraft.util.text.TranslationTextComponent;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
-import vakiliner.musicpack.forge.mixin.SoundEngineMixin;
-import vakiliner.musicpack.forge.mixin.SoundHandlerMixin;
+import vakiliner.musicpack.forge.mixin.SoundEngineAccessor;
+import vakiliner.musicpack.forge.mixin.SoundHandlerAccessor;
 
 @OnlyIn(Dist.CLIENT)
 public class HidersMusicSlider extends Slider {
@@ -24,16 +24,16 @@ public class HidersMusicSlider extends Slider {
 
 	protected void applyValue() {
 		MusicPack.getConfig().hidersMusicVolume(this.value);
-		SoundEngineMixin soundEngineMixin = (SoundEngineMixin) ((SoundHandlerMixin) Minecraft.getInstance().getSoundManager()).getSoundEngine();
-		Map<ISound, Entry> instanceToChannel = soundEngineMixin.getInstanceToChannel();
-		Entry channelHandle0 = instanceToChannel.get(MusicPackSound.hideLvl0);
-		Entry channelHandle1 = instanceToChannel.get(MusicPackSound.hideLvl1);
-		Entry channelHandle2 = instanceToChannel.get(MusicPackSound.hideLvl2);
-		Entry channelHandleG = instanceToChannel.get(MusicPackSound.hideGlow);
-		if (channelHandle0 != null) channelHandle0.execute((channel) -> channel.setVolume(soundEngineMixin.calculateVolume(MusicPackSound.hideLvl0)));
-		if (channelHandle1 != null) channelHandle1.execute((channel) -> channel.setVolume(soundEngineMixin.calculateVolume(MusicPackSound.hideLvl1)));
-		if (channelHandle2 != null) channelHandle2.execute((channel) -> channel.setVolume(soundEngineMixin.calculateVolume(MusicPackSound.hideLvl2)));
-		if (channelHandleG != null) channelHandleG.execute((channel) -> channel.setVolume(soundEngineMixin.calculateVolume(MusicPackSound.hideGlow)));
+		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundHandlerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
+		Map<ISound, ChannelManager.Entry> instanceToChannel = accessor.getInstanceToChannel();
+		ChannelManager.Entry channelHandle0 = instanceToChannel.get(MusicPackSound.hideLvl0);
+		ChannelManager.Entry channelHandle1 = instanceToChannel.get(MusicPackSound.hideLvl1);
+		ChannelManager.Entry channelHandle2 = instanceToChannel.get(MusicPackSound.hideLvl2);
+		ChannelManager.Entry channelHandleG = instanceToChannel.get(MusicPackSound.hideGlow);
+		if (channelHandle0 != null) channelHandle0.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl0)));
+		if (channelHandle1 != null) channelHandle1.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl1)));
+		if (channelHandle2 != null) channelHandle2.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl2)));
+		if (channelHandleG != null) channelHandleG.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideGlow)));
 	}
 
 	protected void updateMessage() {
