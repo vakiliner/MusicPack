@@ -61,8 +61,8 @@ public class MainSettingsScreen extends Screen {
 	protected void init() {
 		ModConfig config = MusicPack.getConfig();
 		this.gsonConfig.parse(config);
-		this.hidersMusicButton = this.addButton(new HidersMusicButton(this));
-		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this));
+		this.hidersMusicButton = this.addButton(new HidersMusicButton(this, config.hidersMusicEnabled()));
+		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this, config.seekersMusicEnabled()));
 		this.defaultMusicButton = this.addButton(new DefaultMusicButton(this));
 		this.hidersMusicSlider = this.addButton(new HidersMusicSlider(this, config.hidersMusicEnabled()));
 		this.seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, config.seekersMusicEnabled()));
@@ -71,6 +71,8 @@ public class MainSettingsScreen extends Screen {
 
 	public void onClose() {
 		ModConfig config = MusicPack.getConfig();
+		config.hidersMusicEnabled(this.hidersMusicSlider.active);
+		config.seekersMusicEnabled(this.seekersMusicSlider.active);
 		if (!this.gsonConfig.equals(config)) try {
 			config.save();
 		} catch (Throwable err) {
