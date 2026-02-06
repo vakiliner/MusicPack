@@ -3,22 +3,21 @@ package vakiliner.musicpack.forge.gui;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.util.text.TranslationTextComponent;
-import vakiliner.musicpack.base.ModConfig;
-import vakiliner.musicpack.forge.MusicPack;
 
 @OnlyIn(Dist.CLIENT)
 public class DefaultMusicButton extends BooleanButton {
-	public DefaultMusicButton(MainSettingsScreen screen) {
-		super(screen, getComponent(), 0, 2);
+	public boolean disable;
+
+	public DefaultMusicButton(MainSettingsScreen screen, boolean disable) {
+		super(screen, getComponent(disable), 0, 2);
+		this.disable = disable;
 	}
 
 	public void onPress() {
-		ModConfig config = MusicPack.getConfig();
-		config.disableDefaultMusic(!config.disableDefaultMusic());
-		super.onPress(getComponent());
+		super.onPress(getComponent(this.disable = !this.disable));
 	}
 
-	public static TranslationTextComponent getComponent() {
-		return new TranslationTextComponent("vakiliner.musicpack.option.defaultMusic", new TranslationTextComponent("vakiliner.musicpack." + (MusicPack.getConfig().disableDefaultMusic() ? "en" : "dis") + "able"));
+	public static TranslationTextComponent getComponent(boolean disable) {
+		return new TranslationTextComponent("vakiliner.musicpack.option.defaultMusic", new TranslationTextComponent("vakiliner.musicpack." + (disable ? "en" : "dis") + "able"));
 	}
 }

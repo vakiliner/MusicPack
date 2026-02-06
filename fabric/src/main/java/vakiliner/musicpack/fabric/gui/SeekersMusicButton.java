@@ -3,24 +3,19 @@ package vakiliner.musicpack.fabric.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.network.chat.TranslatableComponent;
-import vakiliner.musicpack.base.ModConfig;
-import vakiliner.musicpack.fabric.MusicPack;
 
 @Environment(EnvType.CLIENT)
 public class SeekersMusicButton extends BooleanButton {
-	public SeekersMusicButton(MainSettingsScreen screen) {
-		super(screen, getComponent(), 1, 0);
+	public SeekersMusicButton(MainSettingsScreen screen, boolean enabled) {
+		super(screen, getComponent(enabled), 1, 0);
 	}
 
 	public void onPress() {
-		ModConfig config = MusicPack.getConfig();
-		boolean enabled = !config.seekersMusicEnabled();
-		config.seekersMusicEnabled(enabled);
-		this.screen.seekersMusicSlider.active = enabled;
-		super.onPress(getComponent());
+		SeekersMusicSlider slider = this.screen.seekersMusicSlider;
+		super.onPress(getComponent(slider.active = !slider.active));
 	}
 
-	public static TranslatableComponent getComponent() {
-		return getComponent(MusicPack.getConfig().seekersMusicEnabled(), "vakiliner.musicpack.option.seekersMusic");
+	public static TranslatableComponent getComponent(boolean enabled) {
+		return getComponent(enabled, "vakiliner.musicpack.option.seekersMusic");
 	}
 }

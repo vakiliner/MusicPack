@@ -61,9 +61,9 @@ public class MainSettingsScreen extends Screen {
 	protected void init() {
 		ModConfig config = MusicPack.getConfig();
 		this.gsonConfig.parse(config);
-		this.hidersMusicButton = this.addButton(new HidersMusicButton(this));
-		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this));
-		this.defaultMusicButton = this.addButton(new DefaultMusicButton(this));
+		this.hidersMusicButton = this.addButton(new HidersMusicButton(this, config.hidersMusicEnabled()));
+		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this, config.seekersMusicEnabled()));
+		this.defaultMusicButton = this.addButton(new DefaultMusicButton(this, config.disableDefaultMusic()));
 		this.hidersMusicSlider = this.addButton(new HidersMusicSlider(this, config.hidersMusicEnabled()));
 		this.seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, config.seekersMusicEnabled()));
 		this.doneButton = this.addButton(new DoneButton(this));
@@ -71,6 +71,9 @@ public class MainSettingsScreen extends Screen {
 
 	public void onClose() {
 		ModConfig config = MusicPack.getConfig();
+		config.hidersMusicEnabled(this.hidersMusicSlider.active);
+		config.seekersMusicEnabled(this.seekersMusicSlider.active);
+		config.disableDefaultMusic(this.defaultMusicButton.disable);
 		if (!this.gsonConfig.equals(config)) try {
 			config.save();
 		} catch (Throwable err) {
@@ -78,8 +81,9 @@ public class MainSettingsScreen extends Screen {
 		}
 		this.minecraft.setScreen(this.parent);
 		((SoundEngineAccessor) ((SoundHandlerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
-			if (soundInstance.getSource() == SoundCategory.MUSIC) switch (soundInstance.getLocation().getNamespace()) {
-				case MusicPack.MOD_ID:
+			if (soundInstance.getSource() != SoundCategory.MUSIC) return;
+			switch (soundInstance.getLocation().getNamespace()) {
+				case MusicPack.MOD_ID: {
 					if (soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
 						|| (
 							soundInstance == MusicPackSound.hideLvl0 ||
@@ -89,9 +93,11 @@ public class MainSettingsScreen extends Screen {
 						) && !config.hidersMusicEnabled()
 					) channelHandle.execute(SoundSource::stop);
 					break;
-				case "minecraft":
+				}
+				case "minecraft": {
 					if (config.disableDefaultMusic()) channelHandle.execute(SoundSource::stop);
 					break;
+				}
 			}
 		});
 	}
