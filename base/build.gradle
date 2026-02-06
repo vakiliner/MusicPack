@@ -3,10 +3,15 @@ plugins {
 }
 
 repositories {
+	maven {
+		name = 'MinecraftLibs'
+		url = 'https://libraries.minecraft.net'
+	}
+
 	mavenCentral()
 }
 
 dependencies {
 	compileOnly group: 'com.google.code.gson', name: 'gson', version: project.gson_version
-	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: project.log4j
+	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: project.log4j_version
 }
