@@ -3,24 +3,19 @@ package vakiliner.musicpack.forge.gui;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.util.text.TranslationTextComponent;
-import vakiliner.musicpack.base.ModConfig;
-import vakiliner.musicpack.forge.MusicPack;
 
 @OnlyIn(Dist.CLIENT)
 public class HidersMusicButton extends BooleanButton {
-	public HidersMusicButton(MainSettingsScreen screen) {
-		super(screen, getComponent(), -1, 0);
+	public HidersMusicButton(MainSettingsScreen screen, boolean enabled) {
+		super(screen, getComponent(enabled), -1, 0);
 	}
 
 	public void onPress() {
-		ModConfig config = MusicPack.getConfig();
-		boolean enabled = !config.hidersMusicEnabled();
-		config.hidersMusicEnabled(enabled);
-		this.screen.hidersMusicSlider.active = enabled;
-		super.onPress(getComponent());
+		HidersMusicSlider slider = this.screen.hidersMusicSlider;
+		super.onPress(getComponent(slider.active = !slider.active));
 	}
 
-	public static TranslationTextComponent getComponent() {
-		return getComponent(MusicPack.getConfig().hidersMusicEnabled(), "vakiliner.musicpack.option.hidersMusic");
+	public static TranslationTextComponent getComponent(boolean enabled) {
+		return getComponent(enabled, "vakiliner.musicpack.option.hidersMusic");
 	}
 }
