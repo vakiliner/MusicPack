@@ -60,15 +60,7 @@ processResources {
 }
 
 jar {
-	var task = project(':base').tasks.getByName('jar')
-
-	from(zipTree(task.archiveFile)) {
-		exclude 'LICENSE'
-	}
-
 	manifest {
-		from task.manifest
-
 		attributes([
 			MixinConfigs: 'mixins.musicpack.forge.json'
 		])
