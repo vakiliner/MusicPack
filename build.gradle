@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 }
 
+var base = project(':base')
 var fabric = project(':fabric')
 var forge = project(':forge')
 
@@ -15,34 +16,28 @@ allprojects {
 subprojects {
 	apply plugin: 'java'
 
-	base {
+	it.base {
 		archivesName = "${project.archives_base_name}-${project.display_name}"
-	}
-
-	jar {
-		from '../LICENSE'
 	}
 }
 
 jar {
+	evaluationDependsOn(base.getName())
 	evaluationDependsOn(fabric.getName())
 	evaluationDependsOn(forge.getName())
 
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
+	var baseJar = base.tasks.getByName('jar')
 	var fabricJar = fabric.tasks.getByName('jar')
 	var fabricRemapJar = fabric.tasks.getByName('remapJar')
 	var forgeJar = forge.tasks.getByName('jar')
 
 	from 'LICENSE'
-	from(zipTree(fabricRemapJar.archiveFile)) {
-		exclude 'LICENSE'
-	}
-	from(zipTree(forgeJar.archiveFile)) {
-		exclude 'LICENSE'
-	}
+	from zipTree(baseJar.archiveFile)
+	from zipTree(fabricRemapJar.archiveFile)
+	from zipTree(forgeJar.archiveFile)
 
 	manifest {
+		from baseJar.manifest
 		from fabricJar.manifest
 		from forgeJar.manifest
 	}
