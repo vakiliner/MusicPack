@@ -13,14 +13,17 @@ import net.minecraft.util.SoundCategory;
 import java.util.Map;
 import javax.annotation.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SoundEngine.class)
 abstract class SoundEngineMixin {
+	@Shadow
 	public Map<ISound, ChannelManager.Entry> instanceToChannel;
 
+	@Shadow
 	public abstract float calculateVolume(ISound soundInstance);
 
 	@Inject(at = @At("HEAD"), method = "play", cancellable = true)
