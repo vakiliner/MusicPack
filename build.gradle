@@ -43,7 +43,7 @@ jar {
 		from fabricJar.manifest
 		from forgeJar.manifest
 		attributes([
-			'Build-Timestamp': new Date()
+			'Built-Timestamp': new Date()
 		])
 	}
 }
