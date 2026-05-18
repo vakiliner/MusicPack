@@ -12,7 +12,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'microsoft'
-      - name: Setup Gradle
+      - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
       - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
