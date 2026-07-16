@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"client": [
 		"AbstractSoundInstanceAccessor",
+		"MusicManagerMixin",
 		"SoundEngineAccessor",
 		"SoundEngineMixin",
 		"SoundManagerAccessor"
