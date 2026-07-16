@@ -26,14 +26,17 @@ public class HidersMusicSlider extends Slider {
 		MusicPack.getConfig().hidersMusicVolume(this.value);
 		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundHandlerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
 		Map<ISound, ChannelManager.Entry> instanceToChannel = accessor.getInstanceToChannel();
-		ChannelManager.Entry channelHandle0 = instanceToChannel.get(MusicPackSound.hideLvl0);
-		ChannelManager.Entry channelHandle1 = instanceToChannel.get(MusicPackSound.hideLvl1);
-		ChannelManager.Entry channelHandle2 = instanceToChannel.get(MusicPackSound.hideLvl2);
-		ChannelManager.Entry channelHandleG = instanceToChannel.get(MusicPackSound.hideGlow);
-		if (channelHandle0 != null) channelHandle0.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl0)));
-		if (channelHandle1 != null) channelHandle1.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl1)));
-		if (channelHandle2 != null) channelHandle2.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideLvl2)));
-		if (channelHandleG != null) channelHandleG.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.hideGlow)));
+		MusicPackSound[] sounds = { MusicPackSound.hideLvl0, MusicPackSound.hideLvl1, MusicPackSound.hideLvl2, MusicPackSound.hideGlow };
+		ChannelManager.Entry[] handles = new ChannelManager.Entry[sounds.length];
+		for (int i = 0; i < sounds.length; i++) handles[i] = instanceToChannel.get(sounds[i]);
+		accessor.getExecutor().execute(() -> {
+			for (int i = 0; i < sounds.length; i++) {
+				MusicPackSound sound = sounds[i];
+				handles[i].execute((channel) -> {
+					channel.setVolume(accessor.calculateVolume(sound));
+				});
+			}
+		});
 	}
 
 	protected void updateMessage() {
