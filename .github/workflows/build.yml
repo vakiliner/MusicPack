@@ -14,10 +14,10 @@ jobs:
           distribution: 'microsoft'
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Make Gradle Wrapper executable
-        run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build
+        run: |
+          chmod +x ./gradlew
+          ./gradlew build
       - name: Capture build artifacts
         uses: actions/upload-artifact@v7
         with:
