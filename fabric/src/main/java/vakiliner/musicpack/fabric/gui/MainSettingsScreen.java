@@ -6,7 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import com.mojang.blaze3d.audio.Channel;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundSource;
 import vakiliner.musicpack.api.GsonConfig;
@@ -31,20 +34,16 @@ public class MainSettingsScreen extends Screen {
 
 	static {
 		Method method = null;
+		Class<?>[] parameterTypes = { PoseStack.class, Font.class, Component.class, int.class, int.class, int.class };
 		try {
-			Class<?>[] parameterTypes = { PoseStack.class, net.minecraft.client.gui.Font.class, net.minecraft.network.chat.Component.class, int.class, int.class, int.class };
+			method = Screen.class.getMethod("method_27534", parameterTypes);
+		} catch (NoSuchMethodException a) {
+			parameterTypes[2] = FormattedText.class;
 			try {
 				method = Screen.class.getMethod("method_27534", parameterTypes);
-			} catch (NoSuchMethodException e) {
-				try {
-					parameterTypes[2] = net.minecraft.network.chat.FormattedText.class;
-					method = Screen.class.getMethod("method_27534", parameterTypes);
-				} catch (NoSuchMethodException err) {
-					err.printStackTrace();
-				}
+			} catch (NoSuchMethodException err) {
+				err.printStackTrace();
 			}
-		} catch (SecurityException err) {
-			err.printStackTrace();
 		}
 		drawCenteredString = method;
 	}
@@ -112,7 +111,7 @@ public class MainSettingsScreen extends Screen {
 		try {
 			drawCenteredString.invoke(this, poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
 		} catch (IllegalAccessException | InvocationTargetException err) {
-			throw new RuntimeException(err);
+			throw new IllegalStateException(err);
 		}
 	}
 }

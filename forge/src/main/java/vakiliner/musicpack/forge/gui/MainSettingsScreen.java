@@ -6,7 +6,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import net.minecraft.client.audio.SoundSource;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.SoundCategory;
 import vakiliner.musicpack.api.GsonConfig;
@@ -31,20 +34,16 @@ public class MainSettingsScreen extends Screen {
 
 	static {
 		Method method = null;
+		Class<?>[] parameterTypes = { MatrixStack.class, FontRenderer.class, ITextComponent.class, int.class, int.class, int.class };
 		try {
-			Class<?>[] parameterTypes = { MatrixStack.class, net.minecraft.client.gui.FontRenderer.class, net.minecraft.util.text.ITextComponent.class, int.class, int.class, int.class };
+			method = Screen.class.getMethod("func_238472_a_", parameterTypes);
+		} catch (NoSuchMethodException a) {
+			parameterTypes[2] = ITextProperties.class;
 			try {
 				method = Screen.class.getMethod("func_238472_a_", parameterTypes);
-			} catch (NoSuchMethodException e) {
-				try {
-					parameterTypes[2] = net.minecraft.util.text.ITextProperties.class;
-					method = Screen.class.getMethod("func_238472_a_", parameterTypes);
-				} catch (NoSuchMethodException err) {
-					err.printStackTrace();
-				}
+			} catch (NoSuchMethodException err) {
+				err.printStackTrace();
 			}
-		} catch (SecurityException err) {
-			err.printStackTrace();
 		}
 		drawCenteredString = method;
 	}
@@ -112,7 +111,7 @@ public class MainSettingsScreen extends Screen {
 		try {
 			drawCenteredString.invoke(this, poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
 		} catch (IllegalAccessException | InvocationTargetException err) {
-			throw new RuntimeException(err);
+			throw new IllegalStateException(err);
 		}
 	}
 }
