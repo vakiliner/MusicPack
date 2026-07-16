@@ -2,22 +2,20 @@ package vakiliner.musicpack.fabric.gui;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import com.mojang.blaze3d.audio.Channel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundSource;
 import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.fabric.MusicPack;
 import vakiliner.musicpack.fabric.MusicPackSound;
-import vakiliner.musicpack.fabric.mixin.SoundEngineAccessor;
-import vakiliner.musicpack.fabric.mixin.SoundManagerAccessor;
 
 @Environment(EnvType.CLIENT)
 public class MainSettingsScreen extends Screen {
@@ -75,30 +73,23 @@ public class MainSettingsScreen extends Screen {
 		config.disableDefaultMusic(this.defaultMusicButton.disable);
 		if (!this.gsonConfig.equals(config)) try {
 			config.save();
-		} catch (Throwable err) {
-			err.printStackTrace();
+		} catch (IOException err) {
+			MusicPack.LOGGER.error("Failed to save config", err);
 		}
 		this.minecraft.setScreen(this.parent);
-		((SoundEngineAccessor) ((SoundManagerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
-			if (soundInstance.getSource() != SoundSource.MUSIC) return;
-			switch (soundInstance.getLocation().getNamespace()) {
-				case MusicPack.MOD_ID: {
-					if (soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
-						|| (
-							soundInstance == MusicPackSound.hideLvl0 ||
-							soundInstance == MusicPackSound.hideLvl1 ||
-							soundInstance == MusicPackSound.hideLvl2 ||
-							soundInstance == MusicPackSound.hideGlow
-						) && !config.hidersMusicEnabled()
-					) channelHandle.execute(Channel::stop);
-					break;
-				}
-				case "minecraft": {
-					if (config.disableDefaultMusic()) channelHandle.execute(Channel::stop);
-					break;
-				}
-			}
-		});
+		if (config.disableDefaultMusic()) {
+			this.minecraft.getMusicManager().stopPlaying();
+		}
+		SoundManager soundManager = this.minecraft.getSoundManager();
+		if (!config.seekersMusicEnabled()) {
+			soundManager.stop(MusicPackSound.seek);
+		}
+		if (!config.hidersMusicEnabled()) {
+			soundManager.stop(MusicPackSound.hideLvl0);
+			soundManager.stop(MusicPackSound.hideLvl1);
+			soundManager.stop(MusicPackSound.hideLvl2);
+			soundManager.stop(MusicPackSound.hideGlow);
+		}
 	}
 
 	public void render(PoseStack poseStack, int i, int j, float f) {
