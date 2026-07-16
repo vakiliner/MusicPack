@@ -3,6 +3,7 @@ package vakiliner.musicpack.api;
 import vakiliner.musicpack.base.ModConfig;
 
 public class GsonConfig {
+	@Deprecated
 	public Boolean enabled = true;
 	public Boolean hidersMusic;
 	public Boolean seekersMusic;
@@ -27,6 +28,6 @@ public class GsonConfig {
 	}
 
 	private <V> boolean a(V nullable, V check) {
-		return nullable == null || nullable == check;
+		return nullable == null || nullable.equals(check);
 	}
 }
