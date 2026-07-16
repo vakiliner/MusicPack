@@ -11,8 +11,11 @@ import vakiliner.musicpack.api.GsonConfig;
 
 public interface ModConfig {
 	void parse(GsonConfig config);
+
 	void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException;
+
 	void save() throws IOException;
+
 	default void loadOrSave() throws IOException {
 		boolean exists = this.getFile().exists();
 		if (exists) try {
@@ -26,6 +29,7 @@ public interface ModConfig {
 			this.save();
 		}
 	}
+
 	default Path getPath() {
 		final Method method;
 		try {
@@ -38,6 +42,7 @@ public interface ModConfig {
 		}
 		return this.getFile().toPath();
 	};
+
 	default File getFile() {
 		final Method method;
 		try {
@@ -50,23 +55,33 @@ public interface ModConfig {
 		}
 		return this.getPath().toFile();
 	};
-	// Getters
+
 	@Deprecated
 	default boolean enabled() {
 		return true;
 	}
+
 	boolean hidersMusicEnabled();
+
 	boolean seekersMusicEnabled();
+
 	boolean disableDefaultMusic();
+
 	double hidersMusicVolume();
+
 	double seekersMusicVolume();
-	// Setters
+
 	@Deprecated
 	default void enabled(boolean enabled) {
 	}
+
 	void hidersMusicEnabled(boolean hidersMusicEnabled);
+
 	void seekersMusicEnabled(boolean seekersMusicEnabled);
+
 	void disableDefaultMusic(boolean disableDefaultMusic);
+
 	void hidersMusicVolume(double hidersMusicVolume);
+
 	void seekersMusicVolume(double seekersMusicVolume);
 }
