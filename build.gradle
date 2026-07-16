@@ -34,6 +34,10 @@ subprojects {
 	it.base {
 		archivesName = "${project.archives_base_name}-${project.display_name}"
 	}
+
+	jar {
+		from '../LICENSE'
+	}
 }
 
 def generateManifestAttributes() {
@@ -59,9 +63,15 @@ jar {
 	var forgeJar = forge.tasks.getByName('jar')
 
 	from 'LICENSE'
-	from zipTree(baseJar.archiveFile)
-	from zipTree(fabricRemapJar.archiveFile)
-	from zipTree(forgeJar.archiveFile)
+	from zipTree(baseJar.archiveFile) {
+		exclude 'LICENSE'
+	}
+	from zipTree(fabricRemapJar.archiveFile) {
+		exclude 'LICENSE'
+	}
+	from zipTree(forgeJar.archiveFile) {
+		exclude 'LICENSE'
+	}
 
 	manifest {
 		from baseJar.manifest
