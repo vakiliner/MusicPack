@@ -39,7 +39,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 		try {
 			CONFIG.loadOrSave();
 		} catch (IOException err) {
-			err.printStackTrace();
+			throw new IllegalStateException("Failed to load config", err);
 		}
 		this.ready();
 	}
