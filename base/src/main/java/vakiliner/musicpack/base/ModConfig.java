@@ -5,12 +5,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import vakiliner.musicpack.api.GsonConfig;
 
 public interface ModConfig {
 	void parse(GsonConfig config);
-	void load() throws FileNotFoundException, JsonSyntaxException;
+	void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException;
 	void save() throws IOException;
 	default Path getPath() {
 		try {

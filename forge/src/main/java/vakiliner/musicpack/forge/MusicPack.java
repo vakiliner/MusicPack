@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -98,7 +99,7 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		if (config.seekersMusicVolume != null) this.seekersMusicVolume = config.seekersMusicVolume;
 	}
 
-	public void load() throws FileNotFoundException, JsonSyntaxException {
+	public void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException {
 		this.parse(new Gson().fromJson(new FileReader(this.getFile()), GsonConfig.class));
 	}
 
