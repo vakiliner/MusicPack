@@ -2,19 +2,20 @@ package vakiliner.musicpack.forge.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import net.minecraft.client.audio.SoundSource;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.util.SoundCategory;
 import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
-import vakiliner.musicpack.forge.mixin.SoundEngineAccessor;
-import vakiliner.musicpack.forge.mixin.SoundHandlerAccessor;
 
 @OnlyIn(Dist.CLIENT)
 public class MainSettingsScreen extends Screen {
@@ -31,20 +32,16 @@ public class MainSettingsScreen extends Screen {
 
 	static {
 		Method method = null;
+		Class<?>[] parameterTypes = { MatrixStack.class, FontRenderer.class, ITextComponent.class, int.class, int.class, int.class };
 		try {
-			Class<?>[] parameterTypes = { MatrixStack.class, net.minecraft.client.gui.FontRenderer.class, net.minecraft.util.text.ITextComponent.class, int.class, int.class, int.class };
+			method = Screen.class.getMethod("func_238472_a_", parameterTypes);
+		} catch (NoSuchMethodException a) {
+			parameterTypes[2] = ITextProperties.class;
 			try {
 				method = Screen.class.getMethod("func_238472_a_", parameterTypes);
-			} catch (NoSuchMethodException e) {
-				try {
-					parameterTypes[2] = net.minecraft.util.text.ITextProperties.class;
-					method = Screen.class.getMethod("func_238472_a_", parameterTypes);
-				} catch (NoSuchMethodException err) {
-					err.printStackTrace();
-				}
+			} catch (NoSuchMethodException err) {
+				err.printStackTrace();
 			}
-		} catch (SecurityException err) {
-			err.printStackTrace();
 		}
 		drawCenteredString = method;
 	}
@@ -76,30 +73,23 @@ public class MainSettingsScreen extends Screen {
 		config.disableDefaultMusic(this.defaultMusicButton.disable);
 		if (!this.gsonConfig.equals(config)) try {
 			config.save();
-		} catch (Throwable err) {
-			err.printStackTrace();
+		} catch (IOException err) {
+			MusicPack.LOGGER.error("Failed to save config", err);
 		}
 		this.minecraft.setScreen(this.parent);
-		((SoundEngineAccessor) ((SoundHandlerAccessor) this.minecraft.getSoundManager()).getSoundEngine()).getInstanceToChannel().forEach((soundInstance, channelHandle) -> {
-			if (soundInstance.getSource() != SoundCategory.MUSIC) return;
-			switch (soundInstance.getLocation().getNamespace()) {
-				case MusicPack.MOD_ID: {
-					if (soundInstance == MusicPackSound.seek && !config.seekersMusicEnabled()
-						|| (
-							soundInstance == MusicPackSound.hideLvl0 ||
-							soundInstance == MusicPackSound.hideLvl1 ||
-							soundInstance == MusicPackSound.hideLvl2 ||
-							soundInstance == MusicPackSound.hideGlow
-						) && !config.hidersMusicEnabled()
-					) channelHandle.execute(SoundSource::stop);
-					break;
-				}
-				case "minecraft": {
-					if (config.disableDefaultMusic()) channelHandle.execute(SoundSource::stop);
-					break;
-				}
-			}
-		});
+		if (config.disableDefaultMusic()) {
+			this.minecraft.getMusicManager().stopPlaying();
+		}
+		SoundHandler soundManager = this.minecraft.getSoundManager();
+		if (!config.seekersMusicEnabled()) {
+			soundManager.stop(MusicPackSound.seek);
+		}
+		if (!config.hidersMusicEnabled()) {
+			soundManager.stop(MusicPackSound.hideLvl0);
+			soundManager.stop(MusicPackSound.hideLvl1);
+			soundManager.stop(MusicPackSound.hideLvl2);
+			soundManager.stop(MusicPackSound.hideGlow);
+		}
 	}
 
 	public void render(@javax.annotation.Nonnull MatrixStack poseStack, int i, int j, float f) {
@@ -112,7 +102,7 @@ public class MainSettingsScreen extends Screen {
 		try {
 			drawCenteredString.invoke(this, poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
 		} catch (IllegalAccessException | InvocationTargetException err) {
-			throw new RuntimeException(err);
+			throw new IllegalStateException(err);
 		}
 	}
 }
