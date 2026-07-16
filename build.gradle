@@ -63,13 +63,13 @@ jar {
 	var forgeJar = forge.tasks.getByName('jar')
 
 	from 'LICENSE'
-	from zipTree(baseJar.archiveFile) {
+	from(zipTree(baseJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
-	from zipTree(fabricRemapJar.archiveFile) {
+	from(zipTree(fabricRemapJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
-	from zipTree(forgeJar.archiveFile) {
+	from(zipTree(forgeJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
 
