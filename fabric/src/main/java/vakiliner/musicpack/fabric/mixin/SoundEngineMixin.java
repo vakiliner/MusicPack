@@ -28,49 +28,41 @@ abstract class SoundEngineMixin {
 
 	@Inject(at = @At("HEAD"), method = "play", cancellable = true)
 	void play(SoundInstance soundInstance, CallbackInfo callbackInfo) {
-		if (soundInstance.getSource() != SoundSource.MUSIC) return;
 		ResourceLocation resourceLocation = soundInstance.getLocation();
+		if (!resourceLocation.getNamespace().equals("music")) return;
+		callbackInfo.cancel();
+		if (soundInstance.getSource() != SoundSource.MUSIC) return;
 		ModConfig config = MusicPack.getConfig();
-		switch (resourceLocation.getNamespace()) {
-			case "minecraft": {
-				if (config.disableDefaultMusic()) callbackInfo.cancel();
+		String[] path = resourceLocation.getPath().split("\\.");
+		SoundManager soundManager = Minecraft.getInstance().getSoundManager();
+		switch (path[0]) {
+			case "seek": {
+				if (path.length != 1) break;
+				if (config.seekersMusicEnabled()) soundManager.play(MusicPackSound.seek);
 				break;
 			}
-			case "music": {
-				callbackInfo.cancel();
-				String[] path = resourceLocation.getPath().split("\\.");
-				SoundManager soundManager = Minecraft.getInstance().getSoundManager();
-				switch (path[0]) {
-					case "seek": {
-						if (path.length != 1) break;
-						if (config.seekersMusicEnabled()) soundManager.play(MusicPackSound.seek);
-						break;
-					}
-					case "hide": {
-						if (path.length != 3) break;
-						if (!config.hidersMusicEnabled()) break;
-						final short tick;
-						try {
-							tick = Short.parseShort(path[2]);
-						} catch (NumberFormatException err) {
-							break;
-						}
-						MusicPackSound sound = MusicPackSound.getSound(path[1]);
-						if (sound == null) break;
-						if (tick == 1) {
-							if (!soundManager.isActive(MusicPackSound.hideLvl0)) soundManager.play(MusicPackSound.hideLvl0.resetVolume());
-							if (!soundManager.isActive(MusicPackSound.hideLvl1)) soundManager.play(MusicPackSound.hideLvl1.resetVolume());
-							if (!soundManager.isActive(MusicPackSound.hideLvl2)) soundManager.play(MusicPackSound.hideLvl2.resetVolume());
-							if (!soundManager.isActive(MusicPackSound.hideGlow)) soundManager.play(MusicPackSound.hideGlow.resetVolume());
-						}
-						ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
-						if (channelHandle == null) break;
-						channelHandle.execute((channel) -> {
-							channel.setVolume(this.calculateVolume(sound.setVolume(((AbstractSoundInstanceAccessor) soundInstance).getVolume()).tick(tick)));
-						});
-						break;
-					}
+			case "hide": {
+				if (path.length != 3) break;
+				if (!config.hidersMusicEnabled()) break;
+				final short tick;
+				try {
+					tick = Short.parseShort(path[2]);
+				} catch (NumberFormatException err) {
+					break;
 				}
+				MusicPackSound sound = MusicPackSound.getSound(path[1]);
+				if (sound == null) break;
+				if (tick == 1) {
+					if (!soundManager.isActive(MusicPackSound.hideLvl0)) soundManager.play(MusicPackSound.hideLvl0.resetVolume());
+					if (!soundManager.isActive(MusicPackSound.hideLvl1)) soundManager.play(MusicPackSound.hideLvl1.resetVolume());
+					if (!soundManager.isActive(MusicPackSound.hideLvl2)) soundManager.play(MusicPackSound.hideLvl2.resetVolume());
+					if (!soundManager.isActive(MusicPackSound.hideGlow)) soundManager.play(MusicPackSound.hideGlow.resetVolume());
+				}
+				ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
+				if (channelHandle == null) break;
+				channelHandle.execute((channel) -> {
+					channel.setVolume(this.calculateVolume(sound.setVolume(((AbstractSoundInstanceAccessor) soundInstance).getVolume()).tick(tick)));
+				});
 				break;
 			}
 		}
@@ -78,12 +70,12 @@ abstract class SoundEngineMixin {
 
 	@Inject(at = @At(value = "HEAD"), method = "stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V", cancellable = true)
 	void stop(@Nullable ResourceLocation resourceLocation, @Nullable SoundSource soundSource, CallbackInfo callbackInfo) {
-		if (soundSource != SoundSource.MUSIC) return;
 		if (resourceLocation == null || !resourceLocation.getNamespace().equals("music")) return;
 		callbackInfo.cancel();
+		if (soundSource != SoundSource.MUSIC) return;
+		ModConfig config = MusicPack.getConfig();
 		String[] path = resourceLocation.getPath().split("\\.");
-		Minecraft minecraft = Minecraft.getInstance();
-		SoundManager soundManager = minecraft.getSoundManager();
+		SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 		switch (path[0]) {
 			case "seek": {
 				if (path.length != 1) break;
@@ -92,7 +84,7 @@ abstract class SoundEngineMixin {
 			}
 			case "hide": {
 				if (path.length != 3) break;
-				if (!MusicPack.getConfig().hidersMusicEnabled()) break;
+				if (!config.hidersMusicEnabled()) break;
 				final short tick;
 				try {
 					tick = Short.parseShort(path[2]);

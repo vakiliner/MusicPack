@@ -1,11 +1,14 @@
 package vakiliner.musicpack.forge;
 
 import java.util.function.DoubleSupplier;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 
+@OnlyIn(Dist.CLIENT)
 public class MusicPackSound extends SimpleSound {
 	public static final MusicPackSound seek = new MusicPackSound(MusicPack.SEEK, MusicPack.getConfig()::seekersMusicVolume, false);
 	public static final MusicPackSound hideLvl0 = new MusicPackSound(MusicPack.HIDE_0, MusicPack.getConfig()::hidersMusicVolume);
