@@ -3,7 +3,7 @@ package vakiliner.musicpack.forge.gui;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ChannelManager.Entry;
+import net.minecraft.client.audio.ChannelManager;
 import net.minecraft.util.text.TranslationTextComponent;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
@@ -23,8 +23,10 @@ public class SeekersMusicSlider extends Slider {
 	protected void applyValue() {
 		MusicPack.getConfig().seekersMusicVolume(this.value);
 		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundHandlerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
-		Entry channelHandle = accessor.getInstanceToChannel().get(MusicPackSound.seek);
-		if (channelHandle != null) channelHandle.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.seek)));
+		ChannelManager.Entry handle = accessor.getInstanceToChannel().get(MusicPackSound.seek);
+		if (handle != null) {
+			handle.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.seek)));
+		}
 	}
 
 	protected void updateMessage() {

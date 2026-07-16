@@ -7,9 +7,13 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import net.minecraft.client.audio.ChannelManager;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundEngine;
+import net.minecraft.client.audio.SoundEngineExecutor;
 
 @Mixin(SoundEngine.class)
 public interface SoundEngineAccessor {
+	@Accessor("executor")
+	SoundEngineExecutor getExecutor();
+
 	@Accessor("instanceToChannel")
 	Map<ISound, ChannelManager.Entry> getInstanceToChannel();
 

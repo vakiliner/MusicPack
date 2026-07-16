@@ -3,7 +3,7 @@ package vakiliner.musicpack.fabric.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.sounds.ChannelAccess.ChannelHandle;
+import net.minecraft.client.sounds.ChannelAccess;
 import net.minecraft.network.chat.TranslatableComponent;
 import vakiliner.musicpack.fabric.MusicPack;
 import vakiliner.musicpack.fabric.MusicPackSound;
@@ -23,8 +23,10 @@ public class SeekersMusicSlider extends Slider {
 	protected void applyValue() {
 		MusicPack.getConfig().seekersMusicVolume(this.value);
 		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundManagerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
-		ChannelHandle channelHandle = accessor.getInstanceToChannel().get(MusicPackSound.seek);
-		if (channelHandle != null) channelHandle.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.seek)));
+		ChannelAccess.ChannelHandle handle = accessor.getInstanceToChannel().get(MusicPackSound.seek);
+		if (handle != null) {
+			handle.execute((channel) -> channel.setVolume(accessor.calculateVolume(MusicPackSound.seek)));
+		}
 	}
 
 	protected void updateMessage() {

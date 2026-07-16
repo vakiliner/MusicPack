@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -21,7 +22,7 @@ import net.minecraft.util.math.MathHelper;
 
 @Mod(MusicPack.MOD_ID)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
-	private static final ModConfig config = new ModConfig();
+	private static final ModConfig CONFIG = new ModConfig();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.1"));
@@ -35,20 +36,16 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	public MusicPack(ModLoadingContext context) {
 		context.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, new ModMenuIntegration());
 		MinecraftForge.EVENT_BUS.register(this);
-		if (config.getFile().exists()) try {
-			config.load();
-		} catch (Throwable err) {
-			err.printStackTrace();
-		} else try {
-			config.save();
+		try {
+			CONFIG.loadOrSave();
 		} catch (IOException err) {
-			err.printStackTrace();
+			throw new IllegalStateException("Failed to load config", err);
 		}
 		this.ready();
 	}
 
 	public static vakiliner.musicpack.base.ModConfig getConfig() {
-		return config;
+		return CONFIG;
 	}
 
 	/**
@@ -57,7 +54,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	@Deprecated
 	public static void saveConfig() {
 		try {
-			config.save();
+			getConfig().save();
 		} catch (IOException err) {
 			err.printStackTrace();
 		}
@@ -68,6 +65,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	 */
 	@Deprecated
 	public static void loadConfig() {
+		vakiliner.musicpack.base.ModConfig config = getConfig();
 		if (config.getFile().exists()) {
 			try {
 				config.load();
@@ -98,7 +96,7 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		if (config.seekersMusicVolume != null) this.seekersMusicVolume = config.seekersMusicVolume;
 	}
 
-	public void load() throws FileNotFoundException, JsonSyntaxException {
+	public void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException {
 		this.parse(new Gson().fromJson(new FileReader(this.getFile()), GsonConfig.class));
 	}
 
@@ -107,15 +105,13 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	public Path getPath() {
-		Path configPath = new File(".").toPath().resolve("config");
-		if (!configPath.toFile().exists()) {
-			try {
-				Files.createDirectories(configPath);
-			} catch (IOException e) {
-				throw new RuntimeException("Creating config directory", e);
-			}
+		Path folderPath = new File(".").toPath().resolve("config");
+		if (!folderPath.toFile().exists()) try {
+			Files.createDirectories(folderPath);
+		} catch (IOException err) {
+			throw new IllegalStateException("Failed to create config directory", err);
 		}
-		return configPath.resolve(MusicPack.MOD_ID + ".json");
+		return folderPath.resolve(MusicPack.MOD_ID + ".json");
 	}
 
 	public boolean hidersMusicEnabled() {
