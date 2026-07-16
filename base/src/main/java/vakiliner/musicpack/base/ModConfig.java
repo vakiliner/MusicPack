@@ -13,6 +13,19 @@ public interface ModConfig {
 	void parse(GsonConfig config);
 	void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException;
 	void save() throws IOException;
+	default void loadOrSave() throws IOException {
+		boolean exists = this.getFile().exists();
+		if (exists) try {
+			this.load();
+		} catch (FileNotFoundException err) {
+			exists = false;
+		} catch (JsonIOException err) {
+			throw new IOException(err);
+		}
+		if (!exists) {
+			this.save();
+		}
+	}
 	default Path getPath() {
 		final Method method;
 		try {
