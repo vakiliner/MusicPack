@@ -109,15 +109,13 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	public Path getPath() {
-		Path configPath = new File(".").toPath().resolve("config");
-		if (!configPath.toFile().exists()) {
-			try {
-				Files.createDirectories(configPath);
-			} catch (IOException e) {
-				throw new RuntimeException("Creating config directory", e);
-			}
+		Path folderPath = new File(".").toPath().resolve("config");
+		if (!folderPath.toFile().exists()) try {
+			Files.createDirectories(folderPath);
+		} catch (IOException err) {
+			throw new IllegalStateException("Failed to create config directory", err);
 		}
-		return configPath.resolve(MusicPack.MOD_ID + ".json");
+		return folderPath.resolve(MusicPack.MOD_ID + ".json");
 	}
 
 	public boolean hidersMusicEnabled() {
