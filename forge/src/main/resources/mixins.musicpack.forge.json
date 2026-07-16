@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"client": [
 		"LocatableSoundAccessor",
+		"MusicTickerMixin",
 		"SoundEngineAccessor",
 		"SoundEngineMixin",
 		"SoundHandlerAccessor"
