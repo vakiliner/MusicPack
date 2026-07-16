@@ -48,14 +48,8 @@ mixin {
 }
 
 processResources {
-	var replaceProperties = [
-		version: project.version,
-		license: project.license,
-	]
-	inputs.properties replaceProperties
-
 	filesMatching('META-INF/mods.toml') {
-		expand replaceProperties
+		expand inputs.properties
 	}
 }
 

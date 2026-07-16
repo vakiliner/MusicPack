@@ -13,6 +13,19 @@ allprojects {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
 	}
+
+	var replaceProperties = [
+		version: project.version,
+		license: project.license,
+	]
+
+	processResources {
+		inputs.properties replaceProperties
+	}
+
+	tasks.withType(JavaCompile).configureEach {
+		options.encoding = 'UTF-8'
+	}
 }
 
 subprojects {
@@ -21,6 +34,22 @@ subprojects {
 	it.base {
 		archivesName = "${project.archives_base_name}-${project.display_name}"
 	}
+
+	jar {
+		from '../LICENSE'
+	}
+}
+
+def generateManifestAttributes() {
+	var attributes = [
+		'Built-Timestamp': new Date(),
+		'Built-OS': System.getProperty('os.name'),
+	]
+	var githubActions = System.getenv('GITHUB_ACTIONS')
+	var termProgram = System.getenv('TERM_PROGRAM')
+	if (githubActions != null) attributes['Built-GitHub-Actions'] = githubActions
+	if (termProgram != null) attributes['Built-Term-Program'] = termProgram
+	return attributes
 }
 
 jar {
@@ -34,16 +63,20 @@ jar {
 	var forgeJar = forge.tasks.getByName('jar')
 
 	from 'LICENSE'
-	from zipTree(baseJar.archiveFile)
-	from zipTree(fabricRemapJar.archiveFile)
-	from zipTree(forgeJar.archiveFile)
+	from(zipTree(baseJar.archiveFile)) {
+		exclude 'LICENSE'
+	}
+	from(zipTree(fabricRemapJar.archiveFile)) {
+		exclude 'LICENSE'
+	}
+	from(zipTree(forgeJar.archiveFile)) {
+		exclude 'LICENSE'
+	}
 
 	manifest {
 		from baseJar.manifest
 		from fabricJar.manifest
 		from forgeJar.manifest
-		attributes([
-			'Built-Timestamp': new Date()
-		])
+		attributes(generateManifestAttributes())
 	}
 }
