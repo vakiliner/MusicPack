@@ -1,6 +1,8 @@
 {
 	"pack": {
-		"description": "Музыкальный пакет для VAKiliner Hide And Seek",
+		"description": {
+			"translate": "vakiliner.musicpack.description"
+		},
 		"pack_format": 6
 	}
 }
