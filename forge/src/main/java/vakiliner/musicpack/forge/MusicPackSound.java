@@ -29,6 +29,7 @@ public class MusicPackSound extends SimpleSound {
 		this.attenuation = AttenuationType.NONE;
 	}
 
+	@Override
 	public float getVolume() {
 		return super.getVolume() * (float) this.setting.getAsDouble();
 	}
@@ -61,6 +62,7 @@ public class MusicPackSound extends SimpleSound {
 		}
 	}
 
+	@Override
 	public boolean canStartSilent() {
 		return true;
 	}

@@ -10,6 +10,7 @@ public class HidersMusicButton extends BooleanButton {
 		super(screen, getComponent(enabled), -1, 0);
 	}
 
+	@Override
 	public void onPress() {
 		HidersMusicSlider slider = this.screen.hidersMusicSlider;
 		super.onPress(getComponent(slider.active = !slider.active));

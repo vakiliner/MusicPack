@@ -10,6 +10,7 @@ public class SeekersMusicButton extends BooleanButton {
 		super(screen, getComponent(enabled), 1, 0);
 	}
 
+	@Override
 	public void onPress() {
 		SeekersMusicSlider slider = this.screen.seekersMusicSlider;
 		super.onPress(getComponent(slider.active = !slider.active));

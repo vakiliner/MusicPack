@@ -14,6 +14,7 @@ public class DoneButton extends AbstractButton {
 		this.screen = screen;
 	}
 
+	@Override
 	public void onPress() {
 		this.screen.onClose();
 	}

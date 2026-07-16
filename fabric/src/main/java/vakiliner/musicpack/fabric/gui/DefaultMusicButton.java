@@ -13,6 +13,7 @@ public class DefaultMusicButton extends BooleanButton {
 		this.disable = disable;
 	}
 
+	@Override
 	public void onPress() {
 		super.onPress(getComponent(this.disable = !this.disable));
 	}
