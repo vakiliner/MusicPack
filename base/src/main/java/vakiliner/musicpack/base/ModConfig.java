@@ -14,26 +14,28 @@ public interface ModConfig {
 	void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException;
 	void save() throws IOException;
 	default Path getPath() {
+		final Method method;
 		try {
-			Method method = this.getClass().getMethod("getFile");
-			if (method.getDeclaringClass() == ModConfig.class) {
-				throw new UnsupportedOperationException("Unrealized method getFile or getPath");
-			}
-			return this.getFile().toPath();
+			method = this.getClass().getMethod("getFile");
 		} catch (NoSuchMethodException err) {
-			throw new RuntimeException(err);
+			throw new IllegalStateException(err);
 		}
+		if (method.getDeclaringClass() == ModConfig.class) {
+			throw new UnsupportedOperationException("Unimplemented methods getFile & getPath");
+		}
+		return this.getFile().toPath();
 	};
 	default File getFile() {
+		final Method method;
 		try {
-			Method method = this.getClass().getMethod("getPath");
-			if (method.getDeclaringClass() == ModConfig.class) {
-				throw new UnsupportedOperationException("Unrealized method getFile or getPath");
-			}
-			return this.getPath().toFile();
+			method = this.getClass().getMethod("getPath");
 		} catch (NoSuchMethodException err) {
-			throw new RuntimeException(err);
+			throw new IllegalStateException(err);
 		}
+		if (method.getDeclaringClass() == ModConfig.class) {
+			throw new UnsupportedOperationException("Unimplemented methods getFile & getPath");
+		}
+		return this.getPath().toFile();
 	};
 	// Getters
 	@Deprecated
