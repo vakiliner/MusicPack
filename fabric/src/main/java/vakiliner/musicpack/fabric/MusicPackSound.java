@@ -1,11 +1,14 @@
 package vakiliner.musicpack.fabric;
 
 import java.util.function.DoubleSupplier;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.core.BlockPos;
 
+@Environment(EnvType.CLIENT)
 public class MusicPackSound extends SimpleSoundInstance {
 	public static final MusicPackSound seek = new MusicPackSound(MusicPack.SEEK, MusicPack.getConfig()::seekersMusicVolume, false);
 	public static final MusicPackSound hideLvl0 = new MusicPackSound(MusicPack.HIDE_0, MusicPack.getConfig()::hidersMusicVolume);
