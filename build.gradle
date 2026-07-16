@@ -36,6 +36,18 @@ subprojects {
 	}
 }
 
+def generateManifestAttributes() {
+	var attributes = [
+		'Built-Timestamp': new Date(),
+		'Built-OS': System.getProperty('os.name'),
+	]
+	var githubActions = System.getenv('GITHUB_ACTIONS')
+	var termProgram = System.getenv('TERM_PROGRAM')
+	if (githubActions != null) attributes['Built-GitHub-Actions'] = githubActions
+	if (termProgram != null) attributes['Built-Term-Program'] = termProgram
+	return attributes
+}
+
 jar {
 	evaluationDependsOn(base.getName())
 	evaluationDependsOn(fabric.getName())
@@ -55,8 +67,6 @@ jar {
 		from baseJar.manifest
 		from fabricJar.manifest
 		from forgeJar.manifest
-		attributes([
-			'Built-Timestamp': new Date()
-		])
+		attributes(generateManifestAttributes())
 	}
 }
