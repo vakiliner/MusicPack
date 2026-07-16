@@ -22,7 +22,7 @@ import net.minecraft.util.math.MathHelper;
 
 @Mod(MusicPack.MOD_ID)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
-	private static final ModConfig config = new ModConfig();
+	private static final ModConfig CONFIG = new ModConfig();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.1"));
@@ -36,12 +36,8 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	public MusicPack(ModLoadingContext context) {
 		context.registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, new ModMenuIntegration());
 		MinecraftForge.EVENT_BUS.register(this);
-		if (config.getFile().exists()) try {
-			config.load();
-		} catch (Throwable err) {
-			err.printStackTrace();
-		} else try {
-			config.save();
+		try {
+			CONFIG.loadOrSave();
 		} catch (IOException err) {
 			err.printStackTrace();
 		}
@@ -49,7 +45,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	}
 
 	public static vakiliner.musicpack.base.ModConfig getConfig() {
-		return config;
+		return CONFIG;
 	}
 
 	/**

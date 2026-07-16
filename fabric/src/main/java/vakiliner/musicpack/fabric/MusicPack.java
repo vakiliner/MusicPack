@@ -17,7 +17,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 public class MusicPack extends vakiliner.musicpack.base.MusicPack implements ClientModInitializer {
-	private static final ModConfig config = new ModConfig();
+	private static final ModConfig CONFIG = new ModConfig();
 	public static final SoundEvent SEEK = new SoundEvent(new ResourceLocation(MOD_ID, "seek"));
 	public static final SoundEvent HIDE_0 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.0"));
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.1"));
@@ -25,12 +25,8 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MOD_ID, "hide.g"));
 
 	public void onInitializeClient() {
-		if (config.getFile().exists()) try {
-			config.load();
-		} catch (Throwable err) {
-			err.printStackTrace();
-		} else try {
-			config.save();
+		try {
+			CONFIG.loadOrSave();
 		} catch (IOException err) {
 			err.printStackTrace();
 		}
@@ -38,7 +34,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	}
 
 	public static vakiliner.musicpack.base.ModConfig getConfig() {
-		return config;
+		return CONFIG;
 	}
 
 	/**
