@@ -47,7 +47,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	@Deprecated
 	public static void saveConfig() {
 		try {
-			config.save();
+			getConfig().save();
 		} catch (IOException err) {
 			err.printStackTrace();
 		}
@@ -58,6 +58,7 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack implements Cli
 	 */
 	@Deprecated
 	public static void loadConfig() {
+		vakiliner.musicpack.base.ModConfig config = getConfig();
 		if (config.getFile().exists()) {
 			try {
 				config.load();
