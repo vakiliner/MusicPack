@@ -22,6 +22,7 @@ public class HidersMusicSlider extends Slider {
 		return getComponent("vakiliner.musicpack.option.hidersMusic", MusicPack.getConfig().hidersMusicVolume());
 	}
 
+	@Override
 	protected void applyValue() {
 		MusicPack.getConfig().hidersMusicVolume(this.value);
 		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundManagerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
@@ -39,6 +40,7 @@ public class HidersMusicSlider extends Slider {
 		});
 	}
 
+	@Override
 	protected void updateMessage() {
 		this.setMessage(getComponent());
 	}

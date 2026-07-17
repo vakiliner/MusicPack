@@ -20,6 +20,7 @@ public class SeekersMusicSlider extends Slider {
 		return getComponent("vakiliner.musicpack.option.seekersMusic", MusicPack.getConfig().seekersMusicVolume());
 	}
 
+	@Override
 	protected void applyValue() {
 		MusicPack.getConfig().seekersMusicVolume(this.value);
 		SoundEngineAccessor accessor = (SoundEngineAccessor) ((SoundHandlerAccessor) Minecraft.getInstance().getSoundManager()).getSoundEngine();
@@ -29,6 +30,7 @@ public class SeekersMusicSlider extends Slider {
 		}
 	}
 
+	@Override
 	protected void updateMessage() {
 		this.setMessage(getComponent());
 	}

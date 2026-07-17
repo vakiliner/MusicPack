@@ -55,6 +55,7 @@ public class MainSettingsScreen extends Screen {
 		return drawCenteredString == null;
 	}
 
+	@Override
 	protected void init() {
 		ModConfig config = MusicPack.getConfig();
 		this.gsonConfig.parse(config);
@@ -66,6 +67,7 @@ public class MainSettingsScreen extends Screen {
 		this.doneButton = this.addButton(new DoneButton(this));
 	}
 
+	@Override
 	public void onClose() {
 		ModConfig config = MusicPack.getConfig();
 		config.hidersMusicEnabled(this.hidersMusicSlider.active);
@@ -92,6 +94,7 @@ public class MainSettingsScreen extends Screen {
 		}
 	}
 
+	@Override
 	public void render(PoseStack poseStack, int i, int j, float f) {
 		this.renderBackground(poseStack);
 		this.drawTitle(poseStack);
