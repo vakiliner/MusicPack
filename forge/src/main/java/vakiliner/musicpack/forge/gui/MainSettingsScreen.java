@@ -34,11 +34,11 @@ public class MainSettingsScreen extends Screen {
 		Method method = null;
 		Class<?>[] parameterTypes = { PoseStack.class, Font.class, Component.class, int.class, int.class, int.class };
 		try {
-			method = Screen.class.getMethod("method_27534", parameterTypes);
+			method = Screen.class.getMethod("func_238472_a_", parameterTypes);
 		} catch (NoSuchMethodException a) {
 			parameterTypes[2] = FormattedText.class;
 			try {
-				method = Screen.class.getMethod("method_27534", parameterTypes);
+				method = Screen.class.getMethod("func_238472_a_", parameterTypes);
 			} catch (NoSuchMethodException err) {
 				err.printStackTrace();
 			}
