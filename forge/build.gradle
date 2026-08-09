@@ -30,3 +30,5 @@ processTestResources {
 		expand inputs.properties
 	}
 }
+
+java.withSourcesJar()
