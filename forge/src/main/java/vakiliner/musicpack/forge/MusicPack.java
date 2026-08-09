@@ -1,5 +1,8 @@
 package vakiliner.musicpack.forge;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,9 +19,6 @@ import java.nio.file.Path;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
 
 @Mod(MusicPack.MOD_ID)
 public class MusicPack extends vakiliner.musicpack.base.MusicPack {
@@ -135,12 +135,12 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 
 	@Override
 	public double hidersMusicVolume() {
-		return MathHelper.clamp(this.hidersMusicVolume, 0, 1);
+		return Mth.clamp(this.hidersMusicVolume, 0, 1);
 	}
 
 	@Override
 	public double seekersMusicVolume() {
-		return MathHelper.clamp(this.seekersMusicVolume, 0, 1);
+		return Mth.clamp(this.seekersMusicVolume, 0, 1);
 	}
 
 	@Override

@@ -4,14 +4,13 @@
 	"package": "vakiliner.musicpack.forge.mixin",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"LocatableSoundAccessor",
-		"MusicTickerMixin",
+		"AbstractSoundInstanceAccessor",
+		"MusicManagerMixin",
 		"SoundEngineAccessor",
 		"SoundEngineMixin",
-		"SoundHandlerAccessor"
+		"SoundManagerAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
-	},
-	"refmap": "MusicPack-forge-refmap.json"
+	}
 }

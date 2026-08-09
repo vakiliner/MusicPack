@@ -2,7 +2,7 @@ package vakiliner.musicpack.forge.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 @OnlyIn(Dist.CLIENT)
 public class DefaultMusicButton extends BooleanButton {
@@ -18,7 +18,7 @@ public class DefaultMusicButton extends BooleanButton {
 		super.onPress(getComponent(this.disable = !this.disable));
 	}
 
-	public static TranslationTextComponent getComponent(boolean disable) {
-		return new TranslationTextComponent("vakiliner.musicpack.option.defaultMusic", new TranslationTextComponent("vakiliner.musicpack." + (disable ? "en" : "dis") + "able"));
+	public static TranslatableComponent getComponent(boolean disable) {
+		return new TranslatableComponent("vakiliner.musicpack.option.defaultMusic", new TranslatableComponent("vakiliner.musicpack." + (disable ? "en" : "dis") + "able"));
 	}
 }

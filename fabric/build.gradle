@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version "${loom_version}"
+	id 'dev.architectury.loom'
 }
 
 repositories {
@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
 	implementation project(':base')
-	minecraft group: 'com.mojang', name: 'minecraft', version: project.minecraft_version
+	minecraft group: 'net.minecraft', name: 'minecraft', version: project.minecraft_version
 	mappings loom.officialMojangMappings()
 	modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.loader_version
 
@@ -20,7 +20,7 @@ dependencies {
 
 loom {
 	mixin {
-		defaultRefmapName = "${project.rootProject.base.archivesName.get()}-fabric-refmap.json"
+		defaultRefmapName = "${project.archives_base_name}-fabric-refmap.json"
 	}
 }
 
