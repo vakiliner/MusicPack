@@ -29,3 +29,9 @@ processResources {
 		expand inputs.properties
 	}
 }
+
+processTestResources {
+	filesMatching('fabric.mod.json') {
+		expand inputs.properties
+	}
+}

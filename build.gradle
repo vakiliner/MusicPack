@@ -2,9 +2,9 @@ plugins {
 	id 'java'
 }
 
-var base = project(':base')
-var fabric = project(':fabric')
-var forge = project(':forge')
+var base = findProject(':base')
+var fabric = findProject(':fabric')
+var forge = findProject(':forge')
 
 allprojects {
 	apply plugin: 'java'
@@ -20,6 +20,10 @@ allprojects {
 	]
 
 	processResources {
+		inputs.properties replaceProperties
+	}
+
+	processTestResources {
 		inputs.properties replaceProperties
 	}
 
@@ -46,37 +50,39 @@ def generateManifestAttributes() {
 		'Built-OS': System.getProperty('os.name'),
 	]
 	var githubActions = System.getenv('GITHUB_ACTIONS')
+	var githubSha = System.getenv('GITHUB_SHA')
 	var termProgram = System.getenv('TERM_PROGRAM')
 	if (githubActions != null) attributes['Built-GitHub-Actions'] = githubActions
+	if (githubSha != null) attributes['Built-GitHub-Sha'] = githubSha
 	if (termProgram != null) attributes['Built-Term-Program'] = termProgram
 	return attributes
 }
 
 jar {
-	evaluationDependsOn(base.getName())
-	evaluationDependsOn(fabric.getName())
-	evaluationDependsOn(forge.getName())
+	if (base != null) evaluationDependsOn(base.getName())
+	if (fabric != null) evaluationDependsOn(fabric.getName())
+	if (forge != null) evaluationDependsOn(forge.getName())
 
-	var baseJar = base.tasks.getByName('jar')
-	var fabricJar = fabric.tasks.getByName('jar')
-	var fabricRemapJar = fabric.tasks.getByName('remapJar')
-	var forgeJar = forge.tasks.getByName('jar')
+	var baseJar = base != null ? base.tasks.getByName('jar') : null
+	var fabricJar = fabric != null ? fabric.tasks.getByName('jar') : null
+	var fabricRemapJar = fabric != null ? fabric.tasks.getByName('remapJar') : null
+	var forgeJar = forge != null ? forge.tasks.getByName('jar') : null
 
 	from 'LICENSE'
-	from(zipTree(baseJar.archiveFile)) {
+	if (baseJar != null) from(zipTree(baseJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
-	from(zipTree(fabricRemapJar.archiveFile)) {
+	if (fabricRemapJar != null) from(zipTree(fabricRemapJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
-	from(zipTree(forgeJar.archiveFile)) {
+	if (forgeJar != null) from(zipTree(forgeJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
 
 	manifest {
-		from baseJar.manifest
-		from fabricJar.manifest
-		from forgeJar.manifest
+		if (baseJar != null) from baseJar.manifest
+		if (fabricJar != null) from fabricJar.manifest
+		if (forgeJar != null) from forgeJar.manifest
 		attributes(generateManifestAttributes())
 	}
 }
