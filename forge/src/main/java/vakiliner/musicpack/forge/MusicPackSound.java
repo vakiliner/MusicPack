@@ -3,13 +3,13 @@ package vakiliner.musicpack.forge;
 import java.util.function.DoubleSupplier;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.core.BlockPos;
 
 @OnlyIn(Dist.CLIENT)
-public class MusicPackSound extends SimpleSound {
+public class MusicPackSound extends SimpleSoundInstance {
 	public static final MusicPackSound seek = new MusicPackSound(MusicPack.SEEK, MusicPack.getConfig()::seekersMusicVolume, false);
 	public static final MusicPackSound hideLvl0 = new MusicPackSound(MusicPack.HIDE_0, MusicPack.getConfig()::hidersMusicVolume);
 	public static final MusicPackSound hideLvl1 = new MusicPackSound(MusicPack.HIDE_1, MusicPack.getConfig()::hidersMusicVolume);
@@ -23,10 +23,10 @@ public class MusicPackSound extends SimpleSound {
 	}
 
 	private MusicPackSound(SoundEvent soundEvent, DoubleSupplier setting, boolean looping) {
-		super(soundEvent, SoundCategory.MUSIC, 1, 1, BlockPos.ZERO);
+		super(soundEvent, SoundSource.MUSIC, 1, 1, BlockPos.ZERO);
 		this.setting = setting;
 		this.looping = looping;
-		this.attenuation = AttenuationType.NONE;
+		this.attenuation = Attenuation.NONE;
 	}
 
 	@Override

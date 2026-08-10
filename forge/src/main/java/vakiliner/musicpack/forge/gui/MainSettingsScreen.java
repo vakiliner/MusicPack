@@ -1,17 +1,17 @@
 package vakiliner.musicpack.forge.gui;
 
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.TranslationTextComponent;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TranslatableComponent;
 import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.forge.MusicPack;
@@ -19,7 +19,7 @@ import vakiliner.musicpack.forge.MusicPackSound;
 
 @OnlyIn(Dist.CLIENT)
 public class MainSettingsScreen extends Screen {
-	private static final TranslationTextComponent TITLE = new TranslationTextComponent("vakiliner.musicpack.title");
+	private static final TranslatableComponent TITLE = new TranslatableComponent("vakiliner.musicpack.title");
 	private static final Method drawCenteredString;
 	private final GsonConfig gsonConfig = new GsonConfig();
 	public final Screen parent;
@@ -32,11 +32,11 @@ public class MainSettingsScreen extends Screen {
 
 	static {
 		Method method = null;
-		Class<?>[] parameterTypes = { MatrixStack.class, FontRenderer.class, ITextComponent.class, int.class, int.class, int.class };
+		Class<?>[] parameterTypes = { PoseStack.class, Font.class, Component.class, int.class, int.class, int.class };
 		try {
 			method = Screen.class.getMethod("func_238472_a_", parameterTypes);
 		} catch (NoSuchMethodException a) {
-			parameterTypes[2] = ITextProperties.class;
+			parameterTypes[2] = FormattedText.class;
 			try {
 				method = Screen.class.getMethod("func_238472_a_", parameterTypes);
 			} catch (NoSuchMethodException err) {
@@ -82,7 +82,7 @@ public class MainSettingsScreen extends Screen {
 		if (config.disableDefaultMusic()) {
 			this.minecraft.getMusicManager().stopPlaying();
 		}
-		SoundHandler soundManager = this.minecraft.getSoundManager();
+		SoundManager soundManager = this.minecraft.getSoundManager();
 		if (!config.seekersMusicEnabled()) {
 			soundManager.stop(MusicPackSound.seek);
 		}
@@ -95,13 +95,13 @@ public class MainSettingsScreen extends Screen {
 	}
 
 	@Override
-	public void render(@javax.annotation.Nonnull MatrixStack poseStack, int i, int j, float f) {
+	public void render(PoseStack poseStack, int i, int j, float f) {
 		this.renderBackground(poseStack);
 		this.drawTitle(poseStack);
 		super.render(poseStack, i, j, f);
 	}
 
-	private void drawTitle(MatrixStack poseStack) {
+	private void drawTitle(PoseStack poseStack) {
 		try {
 			drawCenteredString.invoke(this, poseStack, this.font, this.title, this.width / 2, 15, 0xffffff);
 		} catch (IllegalAccessException | InvocationTargetException err) {

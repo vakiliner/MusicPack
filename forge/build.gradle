@@ -1,50 +1,22 @@
 plugins {
-	id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-	id 'org.spongepowered.mixin' version '0.7.+'
+	id 'dev.architectury.loom'
 }
-
-minecraft {
-	mappings channel: mapping_channel, version: minecraft_version
-
-	runs {
-		configureEach {
-			workingDirectory project.file('run')
-
-			property 'forge.logging.markers', 'REGISTRIES'
-			property 'forge.logging.console.level', 'debug'
-
-			mods {
-				musicpack {
-					source sourceSets.main
-				}
-			}
-		}
-
-		client {
-		}
-
-		server {
-			args '--nogui'
-		}
-
-		data {
-			workingDirectory project.file('run-data')
-
-			args '--mod', 'musicpack', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-		}
-	}
-}
-
-sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
 	implementation project(':base')
-	minecraft group: 'net.minecraftforge', name: 'forge', version: "${project.minecraft_version}-${project.forge_version}"
-	annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+	minecraft group: 'net.minecraft', name: 'minecraft', version: project.minecraft_version
+	mappings loom.officialMojangMappings()
+	forge group: 'net.minecraftforge', name: 'forge', version: "${project.minecraft_version}-${project.forge_version}"
 }
 
-mixin {
-	add sourceSets.main, "${project.rootProject.base.archivesName.get()}-forge-refmap.json"
+loom {
+	mixin {
+		defaultRefmapName = "${project.archives_base_name}-forge-refmap.json"
+	}
+
+	forge {
+		mixinConfigs = ['mixins.musicpack.forge.json']
+	}
 }
 
 processResources {
@@ -53,12 +25,10 @@ processResources {
 	}
 }
 
-jar {
-	manifest {
-		attributes([
-			MixinConfigs: 'mixins.musicpack.forge.json'
-		])
+processTestResources {
+	filesMatching('META-INF/mods.toml') {
+		expand inputs.properties
 	}
 }
 
-jar.finalizedBy('reobfJar')
+java.withSourcesJar()

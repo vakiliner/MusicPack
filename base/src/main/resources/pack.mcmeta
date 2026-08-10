@@ -3,6 +3,6 @@
 		"description": {
 			"translate": "vakiliner.musicpack.description"
 		},
-		"pack_format": 6
+		"pack_format": ${pack_format}
 	}
 }
