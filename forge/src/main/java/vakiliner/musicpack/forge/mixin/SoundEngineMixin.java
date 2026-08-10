@@ -30,18 +30,19 @@ abstract class SoundEngineMixin {
 	void play(SoundInstance soundInstance, CallbackInfo callbackInfo) {
 		ResourceLocation resourceLocation = soundInstance.getLocation();
 		if (!resourceLocation.getNamespace().equals("music")) return;
-		callbackInfo.cancel();
 		if (soundInstance.getSource() != SoundSource.MUSIC) return;
 		ModConfig config = MusicPack.getConfig();
 		String[] path = resourceLocation.getPath().split("\\.");
 		SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 		switch (path[0]) {
 			case "seek": {
+				callbackInfo.cancel();
 				if (path.length != 1) break;
 				if (config.seekersMusicEnabled()) soundManager.play(MusicPackSound.seek);
 				break;
 			}
 			case "hide": {
+				callbackInfo.cancel();
 				if (path.length != 3) break;
 				if (!config.hidersMusicEnabled()) break;
 				final short tick;
