@@ -4,14 +4,14 @@ import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.forge.MusicPack;
 import vakiliner.musicpack.forge.MusicPackSound;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.ChannelManager;
-import net.minecraft.client.audio.SoundEngine;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.ChannelAccess;
+import net.minecraft.client.sounds.SoundEngine;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import java.util.Map;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,20 +21,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(SoundEngine.class)
 abstract class SoundEngineMixin {
 	@Shadow
-	public Map<ISound, ChannelManager.Entry> instanceToChannel;
+	public Map<SoundInstance, ChannelAccess.ChannelHandle> instanceToChannel;
 
 	@Shadow
-	public abstract float calculateVolume(ISound soundInstance);
+	public abstract float calculateVolume(SoundInstance soundInstance);
 
 	@Inject(at = @At("HEAD"), method = "play", cancellable = true)
-	void play(ISound soundInstance, CallbackInfo callbackInfo) {
+	void play(SoundInstance soundInstance, CallbackInfo callbackInfo) {
 		ResourceLocation resourceLocation = soundInstance.getLocation();
 		if (!resourceLocation.getNamespace().equals("music")) return;
 		callbackInfo.cancel();
-		if (soundInstance.getSource() != SoundCategory.MUSIC) return;
+		if (soundInstance.getSource() != SoundSource.MUSIC) return;
 		ModConfig config = MusicPack.getConfig();
 		String[] path = resourceLocation.getPath().split("\\.");
-		SoundHandler soundManager = Minecraft.getInstance().getSoundManager();
+		SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 		switch (path[0]) {
 			case "seek": {
 				if (path.length != 1) break;
@@ -58,24 +58,24 @@ abstract class SoundEngineMixin {
 					if (!soundManager.isActive(MusicPackSound.hideLvl2)) soundManager.play(MusicPackSound.hideLvl2.resetVolume());
 					if (!soundManager.isActive(MusicPackSound.hideGlow)) soundManager.play(MusicPackSound.hideGlow.resetVolume());
 				}
-				ChannelManager.Entry channelHandle = this.instanceToChannel.get(sound);
+				ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
 				if (channelHandle == null) break;
 				channelHandle.execute((channel) -> {
-					channel.setVolume(this.calculateVolume(sound.setVolume(((LocatableSoundAccessor) soundInstance).getVolume()).tick(tick)));
+					channel.setVolume(this.calculateVolume(sound.setVolume(((AbstractSoundInstanceAccessor) soundInstance).getVolume()).tick(tick)));
 				});
 				break;
 			}
 		}
 	}
 
-	@Inject(at = @At(value = "HEAD"), method = "stop(Lnet/minecraft/util/ResourceLocation;Lnet/minecraft/util/SoundCategory;)V", cancellable = true)
-	void stop(@Nullable ResourceLocation resourceLocation, @Nullable SoundCategory soundSource, CallbackInfo callbackInfo) {
+	@Inject(at = @At(value = "HEAD"), method = "stop(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/sounds/SoundSource;)V", cancellable = true)
+	void stop(@Nullable ResourceLocation resourceLocation, @Nullable SoundSource soundSource, CallbackInfo callbackInfo) {
 		if (resourceLocation == null || !resourceLocation.getNamespace().equals("music")) return;
 		callbackInfo.cancel();
-		if (soundSource != SoundCategory.MUSIC) return;
+		if (soundSource != SoundSource.MUSIC) return;
 		ModConfig config = MusicPack.getConfig();
 		String[] path = resourceLocation.getPath().split("\\.");
-		SoundHandler soundManager = Minecraft.getInstance().getSoundManager();
+		SoundManager soundManager = Minecraft.getInstance().getSoundManager();
 		switch (path[0]) {
 			case "seek": {
 				if (path.length != 1) break;
@@ -93,7 +93,7 @@ abstract class SoundEngineMixin {
 				}
 				MusicPackSound sound = MusicPackSound.getSound(path[1]);
 				if (sound == null || !soundManager.isActive(sound)) break;
-				ChannelManager.Entry channelHandle = this.instanceToChannel.get(sound);
+				ChannelAccess.ChannelHandle channelHandle = this.instanceToChannel.get(sound);
 				if (channelHandle == null) break;
 				channelHandle.execute((channel) -> {
 					if (!sound.equalsTick(tick)) return;

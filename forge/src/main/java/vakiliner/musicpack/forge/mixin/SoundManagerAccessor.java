@@ -2,11 +2,11 @@ package vakiliner.musicpack.forge.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
-import net.minecraft.client.audio.SoundEngine;
-import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.sounds.SoundEngine;
+import net.minecraft.client.sounds.SoundManager;
 
-@Mixin(SoundHandler.class)
-public interface SoundHandlerAccessor {
+@Mixin(SoundManager.class)
+public interface SoundManagerAccessor {
 	@Accessor("soundEngine")
 	SoundEngine getSoundEngine();
 }

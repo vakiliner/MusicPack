@@ -2,7 +2,7 @@ package vakiliner.musicpack.forge.gui;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 @OnlyIn(Dist.CLIENT)
 public class HidersMusicButton extends BooleanButton {
@@ -16,7 +16,7 @@ public class HidersMusicButton extends BooleanButton {
 		super.onPress(getComponent(slider.active = !slider.active));
 	}
 
-	public static TranslationTextComponent getComponent(boolean enabled) {
+	public static TranslatableComponent getComponent(boolean enabled) {
 		return getComponent(enabled, "vakiliner.musicpack.option.hidersMusic");
 	}
 }

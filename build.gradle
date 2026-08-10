@@ -1,5 +1,5 @@
 plugins {
-	id 'java'
+	id 'dev.architectury.loom' version "${loom_version}" apply false
 }
 
 var base = findProject(':base')
@@ -9,10 +9,7 @@ var forge = findProject(':forge')
 allprojects {
 	apply plugin: 'java'
 
-	java {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-	}
+	java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 	var replaceProperties = [
 		version: project.version,
@@ -67,6 +64,7 @@ jar {
 	var fabricJar = fabric != null ? fabric.tasks.getByName('jar') : null
 	var fabricRemapJar = fabric != null ? fabric.tasks.getByName('remapJar') : null
 	var forgeJar = forge != null ? forge.tasks.getByName('jar') : null
+	var forgeRemapJar = forge != null ? forge.tasks.getByName('remapJar') : null
 
 	from 'LICENSE'
 	if (baseJar != null) from(zipTree(baseJar.archiveFile)) {
@@ -75,7 +73,7 @@ jar {
 	if (fabricRemapJar != null) from(zipTree(fabricRemapJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
-	if (forgeJar != null) from(zipTree(forgeJar.archiveFile)) {
+	if (forgeRemapJar != null) from(zipTree(forgeRemapJar.archiveFile)) {
 		exclude 'LICENSE'
 	}
 

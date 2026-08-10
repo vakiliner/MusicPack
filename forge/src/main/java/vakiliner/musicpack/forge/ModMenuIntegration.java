@@ -3,7 +3,7 @@ package vakiliner.musicpack.forge;
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import vakiliner.musicpack.forge.gui.MainSettingsScreen;
