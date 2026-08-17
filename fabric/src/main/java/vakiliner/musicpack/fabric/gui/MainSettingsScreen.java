@@ -8,10 +8,12 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.Musics;
 import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.fabric.MusicPack;
@@ -25,9 +27,9 @@ public class MainSettingsScreen extends Screen {
 	public final Screen parent;
 	public HidersMusicButton hidersMusicButton;
 	public SeekersMusicButton seekersMusicButton;
-	public DefaultMusicButton defaultMusicButton;
 	public HidersMusicSlider hidersMusicSlider;
 	public SeekersMusicSlider seekersMusicSlider;
+	public DisableMusicManagerButton disableMusicManagerButton;
 	public DoneButton doneButton;
 
 	static {
@@ -61,9 +63,9 @@ public class MainSettingsScreen extends Screen {
 		this.gsonConfig.parse(config);
 		this.hidersMusicButton = this.addButton(new HidersMusicButton(this, config.hidersMusicEnabled()));
 		this.seekersMusicButton = this.addButton(new SeekersMusicButton(this, config.seekersMusicEnabled()));
-		this.defaultMusicButton = this.addButton(new DefaultMusicButton(this, config.disableDefaultMusic()));
 		this.hidersMusicSlider = this.addButton(new HidersMusicSlider(this, config.hidersMusicEnabled()));
 		this.seekersMusicSlider = this.addButton(new SeekersMusicSlider(this, config.seekersMusicEnabled()));
+		this.disableMusicManagerButton = this.addButton(new DisableMusicManagerButton(this, config.disableMusicManager()));
 		this.doneButton = this.addButton(new DoneButton(this));
 	}
 
@@ -72,15 +74,21 @@ public class MainSettingsScreen extends Screen {
 		ModConfig config = MusicPack.getConfig();
 		config.hidersMusicEnabled(this.hidersMusicSlider.active);
 		config.seekersMusicEnabled(this.seekersMusicSlider.active);
-		config.disableDefaultMusic(this.defaultMusicButton.disable);
+		config.disableMusicManager(this.disableMusicManagerButton.value());
 		if (!this.gsonConfig.equals(config)) try {
 			config.save();
 		} catch (IOException err) {
 			MusicPack.LOGGER.error("Failed to save config", err);
 		}
 		this.minecraft.setScreen(this.parent);
-		if (config.disableDefaultMusic()) {
-			this.minecraft.getMusicManager().stopPlaying();
+		MusicManager musicManager = this.minecraft.getMusicManager();
+		switch (config.disableMusicManager()) {
+			case ONLY_IN_GAME:
+				if (this.minecraft.getSituationalMusic() == Musics.MENU) break;
+			case EVERYWHERE:
+				musicManager.stopPlaying();
+				break;
+			default: break;
 		}
 		SoundManager soundManager = this.minecraft.getSoundManager();
 		if (!config.seekersMusicEnabled()) {

@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -82,19 +83,21 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 }
 
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
-	boolean hidersMusic = true;
-	boolean seekersMusic = true;
-	boolean disableDefaultMusic = true;
-	double hidersMusicVolume = 1;
-	double seekersMusicVolume = 1;
+	private boolean hidersMusic = true;
+	private boolean seekersMusic = true;
+	private double hidersMusicVolume = 1;
+	private double seekersMusicVolume = 1;
+	private DisableMusicManager disableMusicManager = DisableMusicManager.NO;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void parse(GsonConfig config) {
 		if (config.hidersMusic != null) this.hidersMusic = config.hidersMusic;
 		if (config.seekersMusic != null) this.seekersMusic = config.seekersMusic;
-		if (config.disableDefaultMusic != null) this.disableDefaultMusic = config.disableDefaultMusic;
 		if (config.hidersMusicVolume != null) this.hidersMusicVolume = config.hidersMusicVolume;
 		if (config.seekersMusicVolume != null) this.seekersMusicVolume = config.seekersMusicVolume;
+		if (config.disableMusicManager != null) this.disableMusicManager = DisableMusicManager.getByInt(config.disableMusicManager, this.disableMusicManager);
+		else if (config.disableDefaultMusic != null) this.disableMusicManager = DisableMusicManager.getByBool(config.disableDefaultMusic);
 	}
 
 	@Override
@@ -129,11 +132,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	@Override
-	public boolean disableDefaultMusic() {
-		return this.disableDefaultMusic;
-	}
-
-	@Override
 	public double hidersMusicVolume() {
 		return Mth.clamp(this.hidersMusicVolume, 0, 1);
 	}
@@ -141,6 +139,11 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	@Override
 	public double seekersMusicVolume() {
 		return Mth.clamp(this.seekersMusicVolume, 0, 1);
+	}
+
+	@Override
+	public DisableMusicManager disableMusicManager() {
+		return this.disableMusicManager;
 	}
 
 	@Override
@@ -154,11 +157,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	@Override
-	public void disableDefaultMusic(boolean disableDefaultMusic) {
-		this.disableDefaultMusic = disableDefaultMusic;
-	}
-
-	@Override
 	public void hidersMusicVolume(double hidersMusicVolume) {
 		this.hidersMusicVolume = hidersMusicVolume;
 	}
@@ -166,5 +164,10 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	@Override
 	public void seekersMusicVolume(double seekersMusicVolume) {
 		this.seekersMusicVolume = seekersMusicVolume;
+	}
+
+	@Override
+	public void disableMusicManager(DisableMusicManager disableMusicManager) {
+		this.disableMusicManager = Objects.requireNonNull(disableMusicManager);
 	}
 }
