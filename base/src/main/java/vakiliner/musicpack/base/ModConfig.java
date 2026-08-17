@@ -14,6 +14,8 @@ import vakiliner.musicpack.api.GsonConfig;
 public interface ModConfig {
 	void parse(GsonConfig config);
 
+	GsonConfig toGson();
+
 	void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException;
 
 	void save() throws IOException;
