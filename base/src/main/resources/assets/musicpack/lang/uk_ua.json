@@ -1,9 +1,9 @@
 {
 	"vakiliner.musicpack.description": "Музичний пакет для VAKiliner Hide And Seek",
-	"vakiliner.musicpack.title": "Налаштування Музичного Пакету",
+	"vakiliner.musicpack.title": "Налаштування музичного пакету",
 	"vakiliner.musicpack.enable": "Увімкнути",
 	"vakiliner.musicpack.disable": "Вимкнути",
-	"vakiliner.musicpack.option.hidersMusic": "Музика Хованців",
-	"vakiliner.musicpack.option.seekersMusic": "Музика Шукачів",
-	"vakiliner.musicpack.option.defaultMusic": "%s Музику За замовчуванням"
+	"vakiliner.musicpack.option.hidersMusic": "Музика хованців",
+	"vakiliner.musicpack.option.seekersMusic": "Музика шукачів",
+	"vakiliner.musicpack.option.defaultMusic": "%s музику за замовчуванням"
 }
