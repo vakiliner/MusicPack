@@ -100,7 +100,7 @@ public interface ModConfig {
 	void disableMusicManager(DisableMusicManager disableMusicManager);
 
 	public static enum DisableMusicManager {
-		NO(0),
+		NOWHERE(0),
 		EVERYWHERE(1),
 		ONLY_IN_GAME(2);
 
@@ -117,7 +117,7 @@ public interface ModConfig {
 
 		@Deprecated
 		public boolean bool() {
-			return this != NO;
+			return this != NOWHERE;
 		}
 
 		public static DisableMusicManager getByInt(int value) {
@@ -129,7 +129,7 @@ public interface ModConfig {
 		}
 
 		public static DisableMusicManager getByBool(boolean value) {
-			return value ? EVERYWHERE : NO;
+			return value ? EVERYWHERE : NOWHERE;
 		}
 
 		static {

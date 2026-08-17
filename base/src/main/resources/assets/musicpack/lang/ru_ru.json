@@ -6,7 +6,7 @@
 	"vakiliner.musicpack.option.hidersMusic": "Музыка прячущихся",
 	"vakiliner.musicpack.option.seekersMusic": "Музыка искателей",
 	"vakiliner.musicpack.option.disableMusicManager": "Отключить музыку по умолчанию: %s",
-	"vakiliner.musicpack.option.disableMusicManager.no": "Нет",
+	"vakiliner.musicpack.option.disableMusicManager.nowhere": "Нет",
 	"vakiliner.musicpack.option.disableMusicManager.everywhere": "Везде",
 	"vakiliner.musicpack.option.disableMusicManager.only_in_game": "Только в игре"
 }

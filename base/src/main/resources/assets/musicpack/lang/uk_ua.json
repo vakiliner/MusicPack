@@ -6,7 +6,7 @@
 	"vakiliner.musicpack.option.hidersMusic": "Музика хованців",
 	"vakiliner.musicpack.option.seekersMusic": "Музика шукачів",
 	"vakiliner.musicpack.option.disableMusicManager": "Вимкнути музику за замовчуванням: %s",
-	"vakiliner.musicpack.option.disableMusicManager.no": "Ні",
+	"vakiliner.musicpack.option.disableMusicManager.nowhere": "Ні",
 	"vakiliner.musicpack.option.disableMusicManager.everywhere": "Скрізь",
 	"vakiliner.musicpack.option.disableMusicManager.only_in_game": "Тільки в грі"
 }

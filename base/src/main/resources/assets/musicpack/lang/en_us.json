@@ -6,7 +6,7 @@
 	"vakiliner.musicpack.option.hidersMusic": "Hiders Music",
 	"vakiliner.musicpack.option.seekersMusic": "Seekers Music",
 	"vakiliner.musicpack.option.disableMusicManager": "Disable Default Music: %s",
-	"vakiliner.musicpack.option.disableMusicManager.no": "No",
+	"vakiliner.musicpack.option.disableMusicManager.nowhere": "No",
 	"vakiliner.musicpack.option.disableMusicManager.everywhere": "Everywhere",
 	"vakiliner.musicpack.option.disableMusicManager.only_in_game": "Only In Game"
 }
