@@ -128,6 +128,7 @@ public interface ModConfig {
 			return map.getOrDefault(value, def);
 		}
 
+		@Deprecated
 		public static DisableMusicManager getByBool(boolean value) {
 			return value ? EVERYWHERE : NOWHERE;
 		}
