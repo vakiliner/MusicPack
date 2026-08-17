@@ -1,22 +1,25 @@
 package vakiliner.musicpack.forge.mixin;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.sounds.Music;
 import net.minecraft.sounds.Musics;
 import vakiliner.musicpack.forge.MusicPack;
 
 @Mixin(MusicManager.class)
 abstract class MusicManagerMixin {
-	@Inject(at = @At("HEAD"), method = "tick", cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
-	void tick(CallbackInfo callbackInfo, Music music) {
+	@Shadow
+	private Minecraft minecraft;
+
+	@Inject(at = @At("HEAD"), method = "tick", cancellable = true)
+	void tick(CallbackInfo callbackInfo) {
 		switch (MusicPack.getConfig().disableMusicManager()) {
 			case ONLY_IN_GAME:
-				if (music == Musics.MENU) break;
+				if (this.minecraft.getSituationalMusic() == Musics.MENU) break;
 			case EVERYWHERE:
 				callbackInfo.cancel();
 				break;
