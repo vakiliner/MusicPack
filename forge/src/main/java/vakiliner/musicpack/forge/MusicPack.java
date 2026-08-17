@@ -82,11 +82,11 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 }
 
 class ModConfig implements vakiliner.musicpack.base.ModConfig {
-	boolean hidersMusic = true;
-	boolean seekersMusic = true;
-	boolean disableDefaultMusic = true;
-	double hidersMusicVolume = 1;
-	double seekersMusicVolume = 1;
+	private boolean hidersMusic = true;
+	private boolean seekersMusic = true;
+	private boolean disableDefaultMusic = true;
+	private double hidersMusicVolume = 1;
+	private double seekersMusicVolume = 1;
 
 	@Override
 	public void parse(GsonConfig config) {
@@ -98,13 +98,20 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	@Override
+	public GsonConfig toGson() {
+		GsonConfig config = new GsonConfig();
+		config.parse(this);
+		return config;
+	}
+
+	@Override
 	public void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException {
 		this.parse(new Gson().fromJson(new FileReader(this.getFile()), GsonConfig.class));
 	}
 
 	@Override
 	public void save() throws IOException {
-		Files.write(this.getPath(), new Gson().toJson(this).getBytes());
+		Files.write(this.getPath(), new Gson().toJson(this.toGson()).getBytes());
 	}
 
 	@Override
