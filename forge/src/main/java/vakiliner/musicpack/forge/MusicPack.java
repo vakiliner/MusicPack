@@ -1,5 +1,6 @@
 package vakiliner.musicpack.forge;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -14,6 +15,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -29,6 +32,39 @@ public class MusicPack extends vakiliner.musicpack.base.MusicPack {
 	public static final SoundEvent HIDE_1 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.1"));
 	public static final SoundEvent HIDE_2 = new SoundEvent(new ResourceLocation(MOD_ID, "hide.2"));
 	public static final SoundEvent HIDE_G = new SoundEvent(new ResourceLocation(MOD_ID, "hide.g"));
+	private static final Method SITUATIONAL_MUSIC;
+	private static final Object MUSIC_MENU;
+
+	static {
+		try {
+			SITUATIONAL_MUSIC = Minecraft.class.getMethod("func_238178_U_");
+		} catch (NoSuchMethodException err) {
+			throw new IllegalStateException(err);
+		}
+		Object musicMenu;
+		try {
+			try {
+				musicMenu = Class.forName("net.minecraft.client.audio.BackgroundMusicTracks").getField("field_232670_a_").get(null);
+			} catch (ClassNotFoundException a) {
+				try {
+					musicMenu = Class.forName("net.minecraft.client.audio.MusicTicker$MusicType").getField("MENU").get(null);
+				} catch (ClassNotFoundException err) {
+					throw new IllegalStateException(err);
+				}
+			}
+		} catch (NoSuchFieldException | IllegalAccessException err) {
+			throw new IllegalStateException(err);
+		}
+		MUSIC_MENU = musicMenu;
+	}
+
+	public static boolean isMusicMenuPlayed(Minecraft minecraft) {
+		try {
+			return SITUATIONAL_MUSIC.invoke(minecraft) == MUSIC_MENU;
+		} catch (IllegalAccessException | InvocationTargetException err) {
+			throw new IllegalStateException(err);
+		}
+	}
 
 	public MusicPack() {
 		this(ModLoadingContext.get());

@@ -8,7 +8,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.sounds.MusicManager;
-import net.minecraft.sounds.Musics;
 import vakiliner.musicpack.forge.MusicPack;
 
 @Mixin(MusicManager.class)
@@ -21,7 +20,7 @@ abstract class MusicManagerMixin {
 	void tick(CallbackInfo callbackInfo) {
 		switch (MusicPack.getConfig().disableMusicManager()) {
 			case ONLY_IN_GAME:
-				if (this.minecraft.getSituationalMusic() == Musics.MENU) break;
+				if (MusicPack.isMusicMenuPlayed(this.minecraft)) break;
 			case EVERYWHERE:
 				callbackInfo.cancel();
 				break;

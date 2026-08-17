@@ -13,7 +13,6 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.Musics;
 import vakiliner.musicpack.api.GsonConfig;
 import vakiliner.musicpack.base.ModConfig;
 import vakiliner.musicpack.forge.MusicPack;
@@ -84,7 +83,7 @@ public class MainSettingsScreen extends Screen {
 		MusicManager musicManager = this.minecraft.getMusicManager();
 		switch (config.disableMusicManager()) {
 			case ONLY_IN_GAME:
-				if (this.minecraft.getSituationalMusic() == Musics.MENU) break;
+				if (MusicPack.isMusicMenuPlayed(this.minecraft)) break;
 			case EVERYWHERE:
 				musicManager.stopPlaying();
 				break;
