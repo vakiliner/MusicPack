@@ -1,9 +1,10 @@
 {
 	"vakiliner.musicpack.description": "MusicPack for VAKiliner Hide And Seek",
 	"vakiliner.musicpack.title": "Music Pack Settings",
-	"vakiliner.musicpack.enable": "Enable",
-	"vakiliner.musicpack.disable": "Disable",
 	"vakiliner.musicpack.option.hidersMusic": "Hiders Music",
 	"vakiliner.musicpack.option.seekersMusic": "Seekers Music",
-	"vakiliner.musicpack.option.defaultMusic": "%s Default Music"
+	"vakiliner.musicpack.option.disableMusicManager": "Disable Default Music: %s",
+	"vakiliner.musicpack.option.disableMusicManager.nowhere": "No",
+	"vakiliner.musicpack.option.disableMusicManager.everywhere": "Everywhere",
+	"vakiliner.musicpack.option.disableMusicManager.only_in_game": "Only In Game"
 }

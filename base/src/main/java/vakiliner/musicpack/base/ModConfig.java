@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
+import java.util.Map;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import vakiliner.musicpack.api.GsonConfig;
@@ -67,11 +69,16 @@ public interface ModConfig {
 
 	boolean seekersMusicEnabled();
 
-	boolean disableDefaultMusic();
+	@Deprecated
+	default boolean disableDefaultMusic() {
+		return this.disableMusicManager().bool();
+	}
 
 	double hidersMusicVolume();
 
 	double seekersMusicVolume();
+
+	DisableMusicManager disableMusicManager();
 
 	@Deprecated
 	default void enabled(boolean enabled) {
@@ -81,9 +88,55 @@ public interface ModConfig {
 
 	void seekersMusicEnabled(boolean seekersMusicEnabled);
 
-	void disableDefaultMusic(boolean disableDefaultMusic);
+	@Deprecated
+	default void disableDefaultMusic(boolean disableDefaultMusic) {
+		this.disableMusicManager(DisableMusicManager.getByBool(disableDefaultMusic));
+	}
 
 	void hidersMusicVolume(double hidersMusicVolume);
 
 	void seekersMusicVolume(double seekersMusicVolume);
+
+	void disableMusicManager(DisableMusicManager disableMusicManager);
+
+	public static enum DisableMusicManager {
+		NOWHERE(0),
+		EVERYWHERE(1),
+		ONLY_IN_GAME(2);
+
+		private static final Map<Integer, DisableMusicManager> map = Maps.newHashMap();
+		private final int value;
+
+		private DisableMusicManager(int value) {
+			this.value = value;
+		}
+
+		public int value() {
+			return this.value;
+		}
+
+		@Deprecated
+		public boolean bool() {
+			return this != NOWHERE;
+		}
+
+		public static DisableMusicManager getByInt(int value) {
+			return map.get(value);
+		}
+
+		public static DisableMusicManager getByInt(int value, DisableMusicManager def) {
+			return map.getOrDefault(value, def);
+		}
+
+		@Deprecated
+		public static DisableMusicManager getByBool(boolean value) {
+			return value ? EVERYWHERE : NOWHERE;
+		}
+
+		static {
+			for (DisableMusicManager type : values()) {
+				map.put(type.value, type);
+			}
+		}
+	}
 }

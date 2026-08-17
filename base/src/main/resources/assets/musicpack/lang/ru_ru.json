@@ -1,9 +1,10 @@
 {
 	"vakiliner.musicpack.description": "Музыкальный пакет для VAKiliner Hide And Seek",
 	"vakiliner.musicpack.title": "Настройки музыкального пакета",
-	"vakiliner.musicpack.enable": "Включить",
-	"vakiliner.musicpack.disable": "Отключить",
 	"vakiliner.musicpack.option.hidersMusic": "Музыка прячущихся",
 	"vakiliner.musicpack.option.seekersMusic": "Музыка искателей",
-	"vakiliner.musicpack.option.defaultMusic": "%s музыку по умолчанию"
+	"vakiliner.musicpack.option.disableMusicManager": "Отключить музыку по умолчанию: %s",
+	"vakiliner.musicpack.option.disableMusicManager.nowhere": "Нет",
+	"vakiliner.musicpack.option.disableMusicManager.everywhere": "Везде",
+	"vakiliner.musicpack.option.disableMusicManager.only_in_game": "Только в игре"
 }
