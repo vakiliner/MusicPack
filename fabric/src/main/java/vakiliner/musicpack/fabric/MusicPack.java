@@ -84,7 +84,7 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	private boolean seekersMusic = true;
 	private double hidersMusicVolume = 1;
 	private double seekersMusicVolume = 1;
-	private DisableMusicManager disableMusicManager = DisableMusicManager.NO;
+	private DisableMusicManager disableMusicManager = DisableMusicManager.NOWHERE;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -95,13 +95,6 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 		if (config.seekersMusicVolume != null) this.seekersMusicVolume = config.seekersMusicVolume;
 		if (config.disableMusicManager != null) this.disableMusicManager = DisableMusicManager.getByInt(config.disableMusicManager, this.disableMusicManager);
 		else if (config.disableDefaultMusic != null) this.disableMusicManager = DisableMusicManager.getByBool(config.disableDefaultMusic);
-	}
-
-	@Override
-	public GsonConfig toGson() {
-		GsonConfig config = new GsonConfig();
-		config.parse(this);
-		return config;
 	}
 
 	@Override
