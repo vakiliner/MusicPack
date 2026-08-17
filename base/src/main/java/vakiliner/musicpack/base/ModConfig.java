@@ -104,7 +104,7 @@ public interface ModConfig {
 		EVERYWHERE(1),
 		ONLY_IN_GAME(2);
 
-		private static final Map<Integer, DisableMusicManager> byInt = Maps.newHashMap();
+		private static final Map<Integer, DisableMusicManager> map = Maps.newHashMap();
 		private final int value;
 
 		private DisableMusicManager(int value) {
@@ -121,11 +121,11 @@ public interface ModConfig {
 		}
 
 		public static DisableMusicManager getByInt(int value) {
-			return byInt.get(value);
+			return map.get(value);
 		}
 
 		public static DisableMusicManager getByInt(int value, DisableMusicManager def) {
-			return byInt.getOrDefault(value, def);
+			return map.getOrDefault(value, def);
 		}
 
 		public static DisableMusicManager getByBool(boolean value) {
@@ -134,7 +134,7 @@ public interface ModConfig {
 
 		static {
 			for (DisableMusicManager type : values()) {
-				byInt.put(type.value, type);
+				map.put(type.value, type);
 			}
 		}
 	}

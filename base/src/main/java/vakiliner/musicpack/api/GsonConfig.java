@@ -17,15 +17,17 @@ public class GsonConfig {
 	public void parse(ModConfig config) {
 		this.hidersMusic = config.hidersMusicEnabled();
 		this.seekersMusic = config.seekersMusicEnabled();
+		this.disableDefaultMusic = config.disableDefaultMusic();
 		this.hidersMusicVolume = config.hidersMusicVolume();
 		this.seekersMusicVolume = config.seekersMusicVolume();
 		this.disableMusicManager = config.disableMusicManager().value();
-		this.disableDefaultMusic = config.disableMusicManager().bool();
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean equals(ModConfig config) {
 		return a(this.hidersMusic, config.hidersMusicEnabled())
 			&& a(this.seekersMusic, config.seekersMusicEnabled())
+			&& a(this.disableDefaultMusic, config.disableDefaultMusic())
 			&& a(this.hidersMusicVolume, config.hidersMusicVolume())
 			&& a(this.seekersMusicVolume, config.seekersMusicVolume())
 			&& a(this.disableMusicManager, config.disableMusicManager().value());

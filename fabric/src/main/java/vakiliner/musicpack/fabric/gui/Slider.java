@@ -11,7 +11,7 @@ public abstract class Slider extends AbstractSliderButton {
 	protected final MainSettingsScreen screen;
 
 	protected Slider(MainSettingsScreen screen, Component component, int x, int y, double volume, boolean active) {
-		super(screen.width / 2 - 75 + 80 * x, 60 + 25 * y, 150, 20, component, volume);
+		super(screen.width / 2 - 75 + 80 * x, 60 + 25 * y, x == 0 ? 180 : 150, 20, component, volume);
 		this.screen = screen;
 		this.active = active;
 	}
