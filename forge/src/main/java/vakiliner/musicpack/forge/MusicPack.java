@@ -108,6 +108,13 @@ class ModConfig implements vakiliner.musicpack.base.ModConfig {
 	}
 
 	@Override
+	public GsonConfig toGson() {
+		GsonConfig config = new GsonConfig();
+		config.parse(this);
+		return config;
+	}
+
+	@Override
 	public void load() throws FileNotFoundException, JsonSyntaxException, JsonIOException {
 		this.parse(new Gson().fromJson(new FileReader(this.getFile()), GsonConfig.class));
 	}
