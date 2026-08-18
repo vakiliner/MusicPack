@@ -11,7 +11,7 @@ public abstract class BooleanButton extends AbstractButton {
 	protected final MainSettingsScreen screen;
 
 	protected BooleanButton(MainSettingsScreen screen, Component component, int x, int y) {
-		super(screen.width / 2 - 75 + 80 * x, 60 + 25 * y, x == 0 ? 180 : 150, 20, component);
+		super(screen.width / 2 - (x == 0 ? 100 : 75) + 80 * x, 60 + 25 * y, x == 0 ? 200 : 150, 20, component);
 		this.screen = screen;
 	}
 
