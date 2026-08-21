@@ -19,5 +19,9 @@ public abstract class ConfigOption<T> {
 		return this.getMessage.apply(value);
 	}
 
-	public abstract AbstractWidget createButton(MainSettingsScreen screen, int size, int x, int y);
+	public AbstractWidget createButton(MainSettingsScreen screen, int size, int x, int y) {
+		return this.createButton((screen.width - size) / 2 + x, y, size);
+	}
+
+	public abstract AbstractWidget createButton(int x, int y, int size);
 }

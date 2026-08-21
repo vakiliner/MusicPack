@@ -35,8 +35,8 @@ public class ConfigPressOption<T> extends ConfigOption<T> {
 	}
 
 	@Override
-	public Button createButton(MainSettingsScreen screen, int size, int x, int y) {
-		return new Button((screen.width - size) / 2 + x, y, size, 20, this.getMessage(), this::onPress);
+	public Button createButton(int x, int y, int size) {
+		return new Button(x, y, size, 20, this.getMessage(), this::onPress);
 	}
 
 	protected void onPress(Button button) {
