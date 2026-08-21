@@ -9,6 +9,8 @@ import vakiliner.musicpack.fabric.gui.MainSettingsScreen;
 @SuppressWarnings("deprecation")
 @Environment(EnvType.CLIENT)
 public class ModMenuIntegration implements ModMenuApi {
+	public static boolean fail = false;
+
 	@Override
 	public String getModId() {
 		return MusicPack.MOD_ID;
@@ -16,7 +18,13 @@ public class ModMenuIntegration implements ModMenuApi {
 
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		if (MainSettingsScreen.a()) return (screen) -> null;
-		return (parent) -> new MainSettingsScreen(parent);
+		if (!fail) try {
+			MainSettingsScreen.test();
+			return MainSettingsScreen::new;
+		} catch (Throwable err) {
+			err.printStackTrace();
+			fail = true;
+		}
+		return (screen) -> null;
 	}
 }
