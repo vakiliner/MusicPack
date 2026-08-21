@@ -34,7 +34,7 @@ public class ConfigProgressOption extends ConfigOption<Double> {
 
 	@Override
 	public AbstractSliderButton createButton(MainSettingsScreen screen, int size, int x, int y) {
-		return new AbstractSliderButton((screen.width + size) / 2 + x, y, size, 20, this.getMessage(), this.getValue()) {
+		return new AbstractSliderButton((screen.width - size) / 2 + x, y, size, 20, this.getMessage(), this.getValue()) {
 			@Override
 			protected void applyValue() {
 				ConfigProgressOption.this.applyValue(this.value);

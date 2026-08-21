@@ -103,7 +103,7 @@ public class MainSettingsScreen extends Screen {
 		this.seekersMusicSlider = this.addButton(this.seekersMusicVolume.createButton(this, 150, 80, 85));
 		this.seekersMusicSlider.active = this.config.seekersMusicEnabled();
 		this.addButton(this.disableMusicManager.createButton(this, 200, 0, 110));
-		this.addButton(new Button((this.width + 200) / 2, 175, 200, 20, CommonComponents.GUI_DONE, (button) -> this.onClose()));
+		this.addButton(new Button((this.width - 200) / 2, 175, 200, 20, CommonComponents.GUI_DONE, (button) -> this.onClose()));
 	}
 
 	@Override
