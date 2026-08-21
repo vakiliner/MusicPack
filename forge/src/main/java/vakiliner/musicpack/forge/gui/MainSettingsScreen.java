@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.sounds.MusicManager;
@@ -35,8 +35,8 @@ public class MainSettingsScreen extends Screen {
 	public final ConfigProgressOption hidersMusicVolume;
 	public final ConfigProgressOption seekersMusicVolume;
 	public final ConfigPressOption<DisableMusicManager> disableMusicManager;
-	public AbstractSliderButton hidersMusicSlider;
-	public AbstractSliderButton seekersMusicSlider;
+	public AbstractWidget hidersMusicSlider;
+	public AbstractWidget seekersMusicSlider;
 
 	static {
 		Method method = null;

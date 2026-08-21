@@ -7,6 +7,7 @@ import java.util.function.Function;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraft.client.gui.components.AbstractSliderButton;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 
 @OnlyIn(Dist.CLIENT)
@@ -33,7 +34,7 @@ public class ConfigProgressOption extends ConfigOption<Double> {
 	}
 
 	@Override
-	public AbstractSliderButton createButton(int x, int y, int size) {
+	public AbstractWidget createButton(int x, int y, int size) {
 		return new AbstractSliderButton(x, y, size, 20, this.getMessage(), this.getValue()) {
 			@Override
 			protected void applyValue() {

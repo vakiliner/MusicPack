@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
@@ -35,7 +36,7 @@ public class ConfigPressOption<T> extends ConfigOption<T> {
 	}
 
 	@Override
-	public Button createButton(int x, int y, int size) {
+	public AbstractWidget createButton(int x, int y, int size) {
 		return new Button(x, y, size, 20, this.getMessage(), this::onPress);
 	}
 
