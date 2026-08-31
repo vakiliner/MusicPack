@@ -1,0 +1,14 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+tab_width = 4
+indent_style = tab
+
+[.vscode/**]
+insert_final_newline = false
+
+[**/src/*/resources/**]
+insert_final_newline = false
