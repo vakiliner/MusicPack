@@ -1,32 +1,21 @@
 # Gradle
-.gradle/
-**/build/
-!**/src/**/build/
-classes/
+.gradle
 
-# vscode
-
+# VSCode
 .settings/
 .vscode/
+
+# Build artifacts
 bin/
+build/
+classes/
 
-# fabric
+# Generated sources
+# The trailing * is important, otherwise Git wouldn't evaluate the directories at all and we wouldn't be able to un-ignore some of them.
+**/src/generated/*
 
-run/
-
-# java
-
-*.class
-hs_err_*.log
-replay_*.log
-*.hprof
-*.jfr
-
-# Log file
+# Debug artifacts
+run
 *.log
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
+*.log.gz
+.mixin.out/

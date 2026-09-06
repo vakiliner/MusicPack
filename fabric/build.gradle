@@ -22,6 +22,10 @@ loom {
 	mixin {
 		defaultRefmapName = "${project.archives_base_name}-fabric-refmap.json"
 	}
+
+	runs {
+		remove server
+	}
 }
 
 processResources {

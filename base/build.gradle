@@ -16,19 +16,3 @@ dependencies {
 	compileOnly group: 'com.google.guava', name: 'guava', version: project.google_guava_version
 	compileOnly group: 'org.apache.logging.log4j', name: 'log4j-api', version: project.log4j_version
 }
-
-processResources {
-	inputs.property 'pack_format', project.pack_format
-
-	filesMatching('pack.mcmeta') {
-		expand inputs.properties
-	}
-}
-
-processTestResources {
-	inputs.property 'pack_format', project.pack_format
-
-	filesMatching('pack.mcmeta') {
-		expand inputs.properties
-	}
-}
