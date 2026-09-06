@@ -2,7 +2,7 @@ plugins {
 	id 'dev.architectury.loom' version "${loom_version}" apply false
 }
 
-var base = project(':base')
+var core = project(':core')
 var fabric = findProject(':fabric')
 var forge = findProject(':forge')
 
@@ -32,7 +32,7 @@ allprojects {
 subprojects {
 	apply plugin: 'java'
 
-	it.base {
+	base {
 		archivesName = "${project.archives_base_name}-${project.display_name}"
 	}
 }
@@ -52,23 +52,23 @@ def generateManifestAttributes() {
 }
 
 jar {
-	evaluationDependsOn(base.getName())
+	evaluationDependsOn(core.getName())
 	if (fabric != null) evaluationDependsOn(fabric.getName())
 	if (forge != null) evaluationDependsOn(forge.getName())
 
-	var baseJar = base.tasks.getByName('jar')
+	var coreJar = core.tasks.getByName('jar')
 	var fabricJar = fabric != null ? fabric.tasks.getByName('jar') : null
 	var fabricRemapJar = fabric != null ? fabric.tasks.getByName('remapJar') : null
 	var forgeJar = forge != null ? forge.tasks.getByName('jar') : null
 	var forgeRemapJar = forge != null ? forge.tasks.getByName('remapJar') : null
 
 	from 'LICENSE'
-	from(zipTree(baseJar.archiveFile))
+	from(zipTree(coreJar.archiveFile))
 	if (fabricRemapJar != null) from(zipTree(fabricRemapJar.archiveFile))
 	if (forgeRemapJar != null) from(zipTree(forgeRemapJar.archiveFile))
 
 	manifest {
-		from baseJar.manifest
+		from coreJar.manifest
 		if (fabricJar != null) from fabricJar.manifest
 		if (forgeJar != null) from forgeJar.manifest
 		attributes(generateManifestAttributes())

@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-	implementation project(':base')
+	implementation project(':core')
 	minecraft "net.minecraft:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
 	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
