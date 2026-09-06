@@ -2,7 +2,7 @@ plugins {
 	id 'dev.architectury.loom' version "${loom_version}" apply false
 }
 
-var base = findProject(':base')
+var base = project(':base')
 var fabric = findProject(':fabric')
 var forge = findProject(':forge')
 
@@ -35,10 +35,6 @@ subprojects {
 	it.base {
 		archivesName = "${project.archives_base_name}-${project.display_name}"
 	}
-
-	jar {
-		from '../LICENSE'
-	}
 }
 
 def generateManifestAttributes() {
@@ -56,29 +52,23 @@ def generateManifestAttributes() {
 }
 
 jar {
-	if (base != null) evaluationDependsOn(base.getName())
+	evaluationDependsOn(base.getName())
 	if (fabric != null) evaluationDependsOn(fabric.getName())
 	if (forge != null) evaluationDependsOn(forge.getName())
 
-	var baseJar = base != null ? base.tasks.getByName('jar') : null
+	var baseJar = base.tasks.getByName('jar')
 	var fabricJar = fabric != null ? fabric.tasks.getByName('jar') : null
 	var fabricRemapJar = fabric != null ? fabric.tasks.getByName('remapJar') : null
 	var forgeJar = forge != null ? forge.tasks.getByName('jar') : null
 	var forgeRemapJar = forge != null ? forge.tasks.getByName('remapJar') : null
 
 	from 'LICENSE'
-	if (baseJar != null) from(zipTree(baseJar.archiveFile)) {
-		exclude 'LICENSE'
-	}
-	if (fabricRemapJar != null) from(zipTree(fabricRemapJar.archiveFile)) {
-		exclude 'LICENSE'
-	}
-	if (forgeRemapJar != null) from(zipTree(forgeRemapJar.archiveFile)) {
-		exclude 'LICENSE'
-	}
+	from(zipTree(baseJar.archiveFile))
+	if (fabricRemapJar != null) from(zipTree(fabricRemapJar.archiveFile))
+	if (forgeRemapJar != null) from(zipTree(forgeRemapJar.archiveFile))
 
 	manifest {
-		if (baseJar != null) from baseJar.manifest
+		from baseJar.manifest
 		if (fabricJar != null) from fabricJar.manifest
 		if (forgeJar != null) from forgeJar.manifest
 		attributes(generateManifestAttributes())
