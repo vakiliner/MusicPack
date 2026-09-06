@@ -4,16 +4,16 @@ license="${license}"
 issueTrackerURL="https://github.com/vakiliner/MusicPack/issues"
 
 [[mods]]
-modId="musicpack"
-version="${version}"
-displayName="Music Pack"
-description='''
-Музыкальный пакет для VAKiliner Hide And Seek
-'''
-logoFile="pack.png"
-updateJSONURL="https://raw.githubusercontent.com/vakiliner/MusicPack/refs/heads/main/update.json"
-authors="VAKiliner"
-displayURL="https://github.com/vakiliner/MusicPack"
+	modId="musicpack"
+	version="${version}"
+	displayName="Music Pack"
+	description='''
+	Музыкальный пакет для VAKiliner Hide And Seek
+	'''
+	logoFile="pack.png"
+	updateJSONURL="https://raw.githubusercontent.com/vakiliner/MusicPack/refs/heads/main/update.json"
+	authors="VAKiliner"
+	displayURL="https://github.com/vakiliner/MusicPack"
 
 [[dependencies.musicpack]]
 	modId="forge"

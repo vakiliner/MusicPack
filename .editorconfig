@@ -8,7 +8,7 @@ tab_width = 4
 indent_style = tab
 
 [.vscode/**]
-insert_final_newline = false
+insert_final_newline = unset
 
 [**/src/*/resources/**]
-insert_final_newline = false
+insert_final_newline = unset

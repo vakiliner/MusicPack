@@ -17,6 +17,10 @@ loom {
 	forge {
 		mixinConfigs = ['mixins.musicpack.forge.json']
 	}
+
+	runs {
+		remove server
+	}
 }
 
 processResources {
