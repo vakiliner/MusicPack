@@ -4,9 +4,9 @@ plugins {
 
 dependencies {
 	implementation project(':base')
-	minecraft group: 'net.minecraft', name: 'minecraft', version: project.minecraft_version
+	minecraft "net.minecraft:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
-	forge group: 'net.minecraftforge', name: 'forge', version: "${project.minecraft_version}-${project.forge_version}"
+	forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 }
 
 loom {

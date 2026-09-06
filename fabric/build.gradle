@@ -11,11 +11,11 @@ repositories {
 
 dependencies {
 	implementation project(':base')
-	minecraft group: 'net.minecraft', name: 'minecraft', version: project.minecraft_version
+	minecraft "net.minecraft:minecraft:${project.minecraft_version}"
 	mappings loom.officialMojangMappings()
-	modImplementation group: 'net.fabricmc', name: 'fabric-loader', version: project.loader_version
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation group: 'com.terraformersmc', name: 'modmenu', version: project.modmenu_version
+	modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 }
 
 loom {
