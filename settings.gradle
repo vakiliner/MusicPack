@@ -17,6 +17,6 @@ pluginManagement {
 	}
 }
 
-include 'base'
+include 'core'
 include 'fabric'
 include 'forge'
