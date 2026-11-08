@@ -32,9 +32,7 @@ allprojects {
 subprojects {
 	apply plugin: 'java'
 
-	base {
-		archivesName = "${project.archives_base_name}-${project.display_name}"
-	}
+	base.archivesName = "${project.archives_base_name}-${project.display_name}"
 }
 
 def generateManifestAttributes() {
