@@ -1,6 +1,16 @@
 name: Java CI with Gradle
 on: [push, pull_request]
 jobs:
+  editorconfig:
+    name: Check Style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up editorconfig-checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+      - name: Run editorconfig-checker
+        run: editorconfig-checker
   build:
     name: Build
     runs-on: ubuntu-latest
