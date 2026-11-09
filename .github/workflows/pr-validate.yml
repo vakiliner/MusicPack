@@ -15,7 +15,7 @@ jobs:
         env:
           TITLE: ${{ github.event.pull_request.title }}
         run: |
-          REGEX="^(revert: )?(feat|fix|refactor|perf|test|build|ci|chore)(\\(.+\\))?!?: .+$"
+          REGEX="^(revert: )?(feat|fix|refactor|perf|test|build|ci|chore|style)(\\(.+\\))?!?: .+$"
 
           if [[ ! "$TITLE" =~ $REGEX ]]; then
             exit 1
