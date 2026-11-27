@@ -35,7 +35,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const { version, tag_suffix: suffix, recommended } = context.payload.inputs
-            const versionMatch = version.match(/^(?<num>\d+\.\d+\.\d+)(-(?<pre>(alpha|beta|rc)\d+))?$/)
+            const versionMatch = version.match(/^(?<num>\d+(\.\d+){1,3})(-(?<pre>(alpha|beta|rc)\d+))?$/)
             if (!versionMatch) throw new TypeError(`Invalid version ${version}`)
             const { num, pre } = versionMatch.groups
             const head = `chore/release-${version}`, title = `chore: Релиз обновления ${version}`
@@ -62,11 +62,8 @@ jobs:
             execSync(`git commit -m "${title}"`)
             execSync(`git push origin ${head}`)
 
-            const data = {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-            }
+            const { repo } = context
 
-            const pr = await github.rest.pulls.create({ ...data, title, head, base: context.refName })
-            await github.rest.issues.addLabels({ ...data, issue_number: pr.data.number, labels: ['release'] })
-            await github.rest.repos.createRelease({ ...data, tag_name: `${version}${suffix ? `-${suffix}` : ''}`, name: `v${version}`, draft: true, prerelease: pre !== undefined })
+            const pr = await github.rest.pulls.create({ ...repo, title, head, base: context.refName ?? process.env.GITHUB_REF_NAME })
+            await github.rest.issues.addLabels({ ...repo, issue_number: pr.data.number, labels: ['release'] })
+            await github.rest.repos.createRelease({ ...repo, tag_name: `${version}${suffix ? `-${suffix}` : ''}`, name: `v${version}`, draft: true, prerelease: pre !== undefined })
