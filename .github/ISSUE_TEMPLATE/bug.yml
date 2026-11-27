@@ -1,6 +1,7 @@
 name: Отчет об ошибке
 description: Создайте отчет об ошибке или неисправности
-labels: ["bug"]
+labels: [bug]
+type: Bug
 body:
   - type: textarea
     id: description
